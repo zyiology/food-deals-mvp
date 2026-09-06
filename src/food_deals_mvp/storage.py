@@ -68,6 +68,33 @@ def atomic_write(path: Path, value: BaseModel) -> None:
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(temporary, path)
+        # Persist the rename too: budget reservations must survive a power loss.
+        directory_fd = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
+        try:
+            os.fsync(directory_fd)
+        finally:
+            os.close(directory_fd)
     finally:
         if temporary is not None:
             Path(temporary).unlink(missing_ok=True)
+
+
+def load_normalized(data_dir: Path):
+    """Require the completion marker before exposing a normalized snapshot."""
+    from .models import ImportReport, MediaManifest, Posts
+
+    report = ImportReport.model_validate(read_json(data_dir / "reports/normalize.json"))
+    if report.status != "success" or report.errors:
+        raise ValueError("normalization did not succeed; rerun normalize")
+    posts = Posts.model_validate(read_json(data_dir / "intermediate/posts.json"))
+    media = MediaManifest.model_validate(
+        read_json(data_dir / "intermediate/media.json")
+    )
+    if not (posts.dataset_id == media.dataset_id == report.dataset_id):
+        raise ValueError(
+            "artifact dataset IDs differ; rerun normalize before downstream processing"
+        )
+    ids = [post.post_id for post in posts.posts]
+    if len(ids) != len(set(ids)):
+        raise ValueError("duplicate normalized post IDs")
+    return posts, media, report

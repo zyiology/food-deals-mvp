@@ -1,0 +1,2556 @@
+{
+  "schema_version": 1,
+  "status": "awaiting_user_review",
+  "prepared_on": "2026-09-06",
+  "annotation_method": "Assistant-authored from captions; not human-approved ground truth yet. No image or linked-page interpretation.",
+  "source_dataset_id": "641baf8c0b850cee11d7e73d5454f74fba329954ea561f22a6ae3b2a16943bfc",
+  "frozen_prompt_hash": "8b6bb22e62344016c81fe8b96419df678b1de5b5f4b66763e2f5b691599a439b",
+  "frozen_schema_hash": "17608da6a2d7e880a00a5be05b90866d880742bad4a1df18947631a0ba1f202c",
+  "frozen_settings_hash": "ef91670f29c81171408f85912707062f6f0aa5720a8bd563fe666511006fcf2a",
+  "holdout_policy": "Three per channel. No pilot captions or expected answers are prompt examples. Freeze the initial prompt/schema before scoring. Infrastructure fixes do not tune semantic instructions. If held-out errors inform prompt changes, report later runs as re-evaluation.",
+  "semantic_comparison_rules": [
+    "Compare benefits, terms and effective location schedules, not title wording, IDs or array order.",
+    "Equivalent redundant range boundaries around an unchanged exact-date set are acceptable; date gaps must remain excluded.",
+    "Missing dates are null. A date-status review flag is not equivalent to an unspecified schedule.",
+    "Preserve full source links; never follow them to add extraction facts.",
+    "Record every missing or extra offer/location and classification/date/restriction/review error. Manual corrections must not change the scored model output."
+  ],
+  "entries": [
+    {
+      "post_id": "telegram:1204657101:4858",
+      "source_name": "SGFoodDeals",
+      "message_id": 4858,
+      "split": "development",
+      "coverage": [
+        "building_in_prose",
+        "mixed_promotion",
+        "offer_splitting",
+        "unknown_expiry"
+      ],
+      "mandatory": false,
+      "input_hash": "efa569aa413134239e9e3fcdd273faf3401be45d74c94587829e0ca4acc7a5ee",
+      "posted_at": "2026-08-02T12:01:03+08:00",
+      "edited_at": "2026-08-02T12:06:05+08:00",
+      "caption": "$1 Drinks Deal at City Square Mall 🎊\n\n🔹 Enjoy $1 drinks, including Taiwan Milk Tea (U.P. $5.90), Watermelon Juice (U.P. $2.70), Dunkin' Coffee (U.P. $2) & Fun Toast Coffee O or Tea O (U.P. $2.30)\n🔹 Get an additional gift with your drink redemption when you use the CSM Floral Thermal Flask\n🔹 Redeem a $5 CDL E-Voucher plus a Bag Charm Plushie with min. spend\n🔹 Redeem $5 Food Republic voucher, $10 Canton Paradise or LeNu E-Voucher with min. spend at B2 shops\n🔹 Limited redemptions only\n\nT&Cs apply.\n\nFind out more: tco.sg/csmallxsgfd\n\n@sgfooddeals",
+      "telegram_url": "https://t.me/sgfooddeals/4858",
+      "links": [
+        {
+          "destination": "tco.sg/csmallxsgfd",
+          "labels": [
+            "tco.sg/csmallxsgfd"
+          ],
+          "clickable_url": "https://tco.sg/csmallxsgfd"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "mixed_promotion",
+        "offer_count": 3,
+        "explicit_location_count": 3,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "$1 Drinks Deal at City Square Mall 🎊"
+        ],
+        "offers": [
+          {
+            "benefit": "$1 drinks with optional additional flask-redemption gift",
+            "evidence": [
+              "Enjoy $1 drinks",
+              "Get an additional gift with your drink redemption when you use the CSM Floral Thermal Flask"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "unspecified",
+              "evidence": []
+            },
+            "locations": [
+              {
+                "label": "City Square Mall",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": null,
+                  "end_date": null,
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "unspecified",
+                  "evidence": []
+                },
+                "evidence": [
+                  "City Square Mall"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "Limited redemptions only",
+              "T&Cs apply."
+            ],
+            "notes": "Listed drinks are alternatives in one $1 promotion, and the flask gift stays attached to that redemption.",
+            "merchant": null
+          },
+          {
+            "benefit": "$5 Food Republic voucher with minimum spend at B2 shops",
+            "evidence": [
+              "Redeem $5 Food Republic voucher, $10 Canton Paradise or LeNu E-Voucher with min. spend at B2 shops"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "unspecified",
+              "evidence": []
+            },
+            "locations": [
+              {
+                "label": "City Square Mall",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": null,
+                  "end_date": null,
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "unspecified",
+                  "evidence": []
+                },
+                "evidence": [
+                  "City Square Mall"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "with min. spend at B2 shops",
+              "Limited redemptions only",
+              "T&Cs apply."
+            ],
+            "notes": null,
+            "merchant": "Food Republic"
+          },
+          {
+            "benefit": "$10 Canton Paradise or LeNu e-voucher with minimum spend at B2 shops",
+            "evidence": [
+              "Redeem $5 Food Republic voucher, $10 Canton Paradise or LeNu E-Voucher with min. spend at B2 shops"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "unspecified",
+              "evidence": []
+            },
+            "locations": [
+              {
+                "label": "City Square Mall",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": null,
+                  "end_date": null,
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "unspecified",
+                  "evidence": []
+                },
+                "evidence": [
+                  "City Square Mall"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "with min. spend at B2 shops",
+              "Limited redemptions only",
+              "T&Cs apply."
+            ],
+            "notes": null,
+            "merchant": "Canton Paradise or LeNu"
+          }
+        ]
+      },
+      "review_notes": "Review proposed three-offer split. The generic CDL voucher and bag charm have no stated food benefit and are excluded. Minimum spend amounts and redemption dates remain unspecified; do not invent them. Mall location is campaign context, not a claim about unlisted branch addresses."
+    },
+    {
+      "post_id": "telegram:1204657101:4870",
+      "source_name": "SGFoodDeals",
+      "message_id": 4870,
+      "split": "development",
+      "coverage": [
+        "mixed_promotion",
+        "unspecified_scope"
+      ],
+      "mandatory": false,
+      "input_hash": "ed40dcab8a75932ef77a2a93d7d0c269c83553e658ce9e3e0b205a035dad3e61",
+      "posted_at": "2026-08-08T12:01:04+08:00",
+      "edited_at": "2026-08-08T12:02:22+08:00",
+      "caption": "7-Eleven: 4-Day Specials Sale up to 55% off 🛒\n\n🔹 Enjoy huge savings on everyday snacks & essentials\n🔹 Expect protein drinks, fresh eggs, snacks & more\n🔹 While stocks last\n📅 Now till 9 Aug\n📍 Online & in-stores \n\nMore info: tco.sg/Z54juGVH9\n\n@sgfooddeals #deals",
+      "telegram_url": "https://t.me/sgfooddeals/4870",
+      "links": [
+        {
+          "destination": "tco.sg/Z54juGVH9",
+          "labels": [
+            "tco.sg/Z54juGVH9"
+          ],
+          "clickable_url": "https://tco.sg/Z54juGVH9"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "mixed_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "7-Eleven: 4-Day Specials Sale up to 55% off 🛒"
+        ],
+        "offers": [
+          {
+            "benefit": "Up to 55% off snacks, drinks, eggs and other groceries",
+            "evidence": [
+              "4-Day Specials Sale up to 55% off",
+              "Expect protein drinks, fresh eggs, snacks & more"
+            ],
+            "location_scope": "unspecified",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-08",
+              "end_date": "2026-08-09",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Now till 9 Aug"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "While stocks last",
+              "Online & in-stores"
+            ],
+            "notes": "Caption gives no branches and does not say all outlets. Do not derive an earlier start from the headline 4-Day duration.",
+            "merchant": "7-Eleven"
+          }
+        ]
+      },
+      "review_notes": "Now till 9 Aug is the actionable caption period. The four-day headline does not justify replacing the posting-date start."
+    },
+    {
+      "post_id": "telegram:1204657101:4871",
+      "source_name": "SGFoodDeals",
+      "message_id": 4871,
+      "split": "held_out",
+      "coverage": [
+        "online_only",
+        "unknown_expiry"
+      ],
+      "mandatory": false,
+      "input_hash": "7d3e162cf1a58f85bce1bdd09ece5cb0ba161fd953b2ca29e37d69b2dfe082ae",
+      "posted_at": "2026-08-08T18:01:17+08:00",
+      "edited_at": "2026-08-08T18:09:23+08:00",
+      "caption": "Mr. Farmer 8.8 Grocery Sale from $2.80 🔥\n\n🔹 Whip up your next meal with quality meats that are ethically & sustainably farmed\n🔹 Browse a wide selection of fresh chickens, ready-to-eat meats, beef & more\n🔹 Limited time only\n📍 Online only\n\nShop here: tco.sg/Vm5ANIsJy \n\n@sgfooddeals #deals",
+      "telegram_url": "https://t.me/sgfooddeals/4871",
+      "links": [
+        {
+          "destination": "http://tco.sg/Vm5ANIsJy",
+          "labels": [
+            "tco.sg/Vm5ANIsJy"
+          ],
+          "clickable_url": "http://tco.sg/Vm5ANIsJy"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "Mr. Farmer 8.8 Grocery Sale from $2.80 🔥"
+        ],
+        "offers": [
+          {
+            "benefit": "Grocery sale from $2.80",
+            "evidence": [
+              "Mr. Farmer 8.8 Grocery Sale from $2.80"
+            ],
+            "location_scope": "online_only",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "unspecified",
+              "evidence": []
+            },
+            "locations": [],
+            "material_restrictions": [
+              "Limited time only"
+            ],
+            "notes": "8.8 names the sale; no explicit end boundary or today-only wording is supplied.",
+            "merchant": "Mr. Farmer"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1204657101:4881",
+      "source_name": "SGFoodDeals",
+      "message_id": 4881,
+      "split": "held_out",
+      "coverage": [
+        "redemption_conditions",
+        "explicit_dates_after_edit"
+      ],
+      "mandatory": false,
+      "input_hash": "38f0db3f171e3a056a7254a022c9a417e83067b3784269574231a0c249a3c924",
+      "posted_at": "2026-08-13T18:01:11+08:00",
+      "edited_at": "2026-08-14T09:32:21+08:00",
+      "caption": "Tavola Aperta: Free Linguine al Limone Pasta 🍋\n\n🔹 Redeem a free plate of Linguine Al Limone pasta by simply trading in a lemon\n🔹 Limited to 1 free plate of pasta per table with min. 2 diners\n🔹 Redeemable with the purchase of 1 other main course\n📅 14 - 16 Aug\n⏰ 11AM - 10PM\n📍 Plaza Singapura, #01-60\n\nMore info: tco.sg/lSAXSCQlj \n\n@sgfooddeals #deals",
+      "telegram_url": "https://t.me/sgfooddeals/4881",
+      "links": [
+        {
+          "destination": "http://tco.sg/lSAXSCQlj",
+          "labels": [
+            "tco.sg/lSAXSCQlj"
+          ],
+          "clickable_url": "http://tco.sg/lSAXSCQlj"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 1,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "Tavola Aperta: Free Linguine al Limone Pasta 🍋"
+        ],
+        "offers": [
+          {
+            "benefit": "Free Linguine al Limone by trading a lemon and buying another main",
+            "evidence": [
+              "Redeem a free plate of Linguine Al Limone pasta by simply trading in a lemon"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-14",
+              "end_date": "2026-08-16",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "14 - 16 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Plaza Singapura",
+                "unit": "#01-60",
+                "effective_availability": {
+                  "start_date": "2026-08-14",
+                  "end_date": "2026-08-16",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "14 - 16 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Plaza Singapura"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "Limited to 1 free plate of pasta per table with min. 2 diners",
+              "Redeemable with the purchase of 1 other main course",
+              "11AM - 10PM"
+            ],
+            "notes": null,
+            "merchant": "Tavola Aperta"
+          }
+        ]
+      },
+      "review_notes": "Edit is on the following day, but the schedule is absolute, so it does not create relative-date ambiguity."
+    },
+    {
+      "post_id": "telegram:1204657101:4883",
+      "source_name": "SGFoodDeals",
+      "message_id": 4883,
+      "split": "development",
+      "coverage": [
+        "outlet_specific_dates",
+        "building_in_prose"
+      ],
+      "mandatory": true,
+      "input_hash": "7d99aa6825e2b7dfc366daa1eb06d522a50e731e5ea93bad6e24616468af091c",
+      "posted_at": "2026-08-14T12:01:07+08:00",
+      "edited_at": "2026-08-14T12:01:42+08:00",
+      "caption": "More Yogurt: 1-for-1 Opening Deals 🥑\n\n🔹 Celebrate the opening of 2 new outlets from one of China’s largest yoghurt drink chains\n🔹 Applicable to their popular Original Avocado Yogurt Shake, Almond Avocado Yogurt Shake & Mango Yogurt Shake\n📅 Jewel Changi Airport: Now till 16 Aug\n📅 Waterway Point: 17 - 19 Aug\n\n@sgfooddeals #deals",
+      "telegram_url": "https://t.me/sgfooddeals/4883",
+      "links": [
+        {
+          "destination": "https://tco.sg/inLWoLGOG",
+          "labels": [
+            "Jewel Changi Airport:"
+          ],
+          "clickable_url": "https://tco.sg/inLWoLGOG"
+        },
+        {
+          "destination": "https://tco.sg/0IDAWDLdg",
+          "labels": [
+            "Waterway Point:"
+          ],
+          "clickable_url": "https://tco.sg/0IDAWDLdg"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 2,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "More Yogurt: 1-for-1 Opening Deals 🥑"
+        ],
+        "offers": [
+          {
+            "benefit": "1-for-1 selected yogurt shakes",
+            "evidence": [
+              "More Yogurt: 1-for-1 Opening Deals",
+              "Original Avocado Yogurt Shake, Almond Avocado Yogurt Shake & Mango Yogurt Shake"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "unspecified",
+              "evidence": []
+            },
+            "locations": [
+              {
+                "label": "Jewel Changi Airport",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": "2026-08-14",
+                  "end_date": "2026-08-16",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Jewel Changi Airport: Now till 16 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Jewel Changi Airport"
+                ],
+                "resolution_note": null
+              },
+              {
+                "label": "Waterway Point",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": "2026-08-17",
+                  "end_date": "2026-08-19",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Waterway Point: 17 - 19 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Waterway Point"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [],
+            "notes": "Units are absent from this caption and cannot be copied from the GoodLobang post.",
+            "merchant": "More Yogurt"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1204657101:4884",
+      "source_name": "SGFoodDeals",
+      "message_id": 4884,
+      "split": "development",
+      "coverage": [
+        "pure_listing",
+        "roundup"
+      ],
+      "mandatory": false,
+      "input_hash": "4a1fba52c9aca79a2dcfc2e1cbdeb936a693e8a13c969ffea3106a25f623fe31",
+      "posted_at": "2026-08-14T18:01:11+08:00",
+      "edited_at": "2026-08-14T18:08:21+08:00",
+      "caption": "6 Food Events Happening This Aug\n\n🔹 Check out these night bazaars, food fairs & festivals happening around SG:\n1️⃣ Sentosa GrillFest (Till 16 Aug) \n2️⃣ Hougang Food Fair (Till 19 Aug) \n3️⃣ Tiong Bahru Food Fair (Till 23 Aug)\n4️⃣ APAC F&B Expo (21 - 23 Aug) \n5️⃣ Celebfest Food Festival (21 - 23 Aug)\n6️⃣ Punggol Central Night Bazaar (Till 30 Aug)\n\n@sgfooddeals #shoutout",
+      "telegram_url": "https://t.me/sgfooddeals/4884",
+      "links": [
+        {
+          "destination": "https://tco.sg/XDsndrIbx",
+          "labels": [
+            "Sentosa GrillFest"
+          ],
+          "clickable_url": "https://tco.sg/XDsndrIbx"
+        },
+        {
+          "destination": "https://tco.sg/5eFeOHp65",
+          "labels": [
+            "Hougang Food Fair"
+          ],
+          "clickable_url": "https://tco.sg/5eFeOHp65"
+        },
+        {
+          "destination": "https://tco.sg/IBS14YCvt",
+          "labels": [
+            "Tiong Bahru Food Fair"
+          ],
+          "clickable_url": "https://tco.sg/IBS14YCvt"
+        },
+        {
+          "destination": "https://tco.sg/BYQIWO4pR",
+          "labels": [
+            "APAC F&B Expo"
+          ],
+          "clickable_url": "https://tco.sg/BYQIWO4pR"
+        },
+        {
+          "destination": "https://tco.sg/NJCCXBj83",
+          "labels": [
+            "Celebfest Food Festival"
+          ],
+          "clickable_url": "https://tco.sg/NJCCXBj83"
+        },
+        {
+          "destination": "https://tco.sg/RZcDfmjdP",
+          "labels": [
+            "Punggol Central Night Bazaar"
+          ],
+          "clickable_url": "https://tco.sg/RZcDfmjdP"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "pure_listing",
+        "offer_count": 0,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "6 Food Events Happening This Aug"
+        ],
+        "offers": []
+      },
+      "review_notes": "Six event listings give dates but no concrete food price, discount, sample or redemption benefit. Expected zero offers; event names and dates alone do not create deals."
+    },
+    {
+      "post_id": "telegram:1204657101:4900",
+      "source_name": "SGFoodDeals",
+      "message_id": 4900,
+      "split": "development",
+      "coverage": [
+        "ambiguous_location",
+        "time_cutoff",
+        "membership"
+      ],
+      "mandatory": false,
+      "input_hash": "5ed832062e53f471cc7bbb23c0918bca794d7c78746bf7fed3274b7071046184",
+      "posted_at": "2026-08-24T12:01:02+08:00",
+      "edited_at": "2026-08-24T12:10:44+08:00",
+      "caption": "[GIVEAWAY] Cai-Ca: 1-for-1 Soy Blend Series 🥤\n\n🔹 Redeem 1-for-1 on SG's first-ever Soy Blend Series for bubble tea \n🔹 Choose any drinks from Strawberry Soy Latte, Sea Salt Soy Latte, Mocha Soy Latte & more\n🔹 Limited to 1 redemption per person in-store\n🔹 To redeem, simply:\n1️⃣ Follow @sgadulting101 & Cai-Ca on IG\n2️⃣ Flash this post at the counter\n📅 Giveaway ends 28 Aug, 10PM or when fully redeemed\n📍 Bugis #03-08 & Northpoint #01-06 outlets\n\nFind out more: tco.sg/caicasgxcollab \n\n@sgfooddeals exclusive",
+      "telegram_url": "https://t.me/sgfooddeals/4900",
+      "links": [
+        {
+          "destination": "https://tco.sg/solcoffeeinstaxcollab",
+          "labels": [
+            " "
+          ],
+          "clickable_url": "https://tco.sg/solcoffeeinstaxcollab"
+        },
+        {
+          "destination": "https://tco.sg/caicaigxcollab",
+          "labels": [
+            "Cai-Ca"
+          ],
+          "clickable_url": "https://tco.sg/caicaigxcollab"
+        },
+        {
+          "destination": "tco.sg/caicasgxcollab",
+          "labels": [
+            "tco.sg/caicasgxcollab"
+          ],
+          "clickable_url": "https://tco.sg/caicasgxcollab"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 2,
+        "disposition": "needs_review",
+        "review_reasons": [
+          "Bugis unit does not identify a building unambiguously."
+        ],
+        "classification_evidence": [
+          "[GIVEAWAY] Cai-Ca: 1-for-1 Soy Blend Series 🥤"
+        ],
+        "offers": [
+          {
+            "benefit": "1-for-1 Soy Blend Series giveaway",
+            "evidence": [
+              "Redeem 1-for-1 on SG's first-ever Soy Blend Series for bubble tea"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": "2026-08-28",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Giveaway ends 28 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Bugis",
+                "unit": "#03-08",
+                "effective_availability": {
+                  "start_date": null,
+                  "end_date": "2026-08-28",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Giveaway ends 28 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Bugis"
+                ],
+                "resolution_note": "Do not expand Bugis to Bugis Junction or Bugis+ from model memory."
+              },
+              {
+                "label": "Northpoint",
+                "unit": "#01-06",
+                "effective_availability": {
+                  "start_date": null,
+                  "end_date": "2026-08-28",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Giveaway ends 28 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Northpoint"
+                ],
+                "resolution_note": "Preserve caption label; geocoding must later resolve it."
+              }
+            ],
+            "material_restrictions": [
+              "Limited to 1 redemption per person in-store",
+              "Follow @sgadulting101 & Cai-Ca on IG",
+              "Flash this post at the counter",
+              "10PM or when fully redeemed"
+            ],
+            "notes": null,
+            "merchant": "Cai-Ca"
+          }
+        ]
+      },
+      "review_notes": "Expected two literal labels and an ambiguity flag, not invented building names. Conservative review of both rows is acceptable under the offer-level review schema."
+    },
+    {
+      "post_id": "telegram:1204657101:4901",
+      "source_name": "SGFoodDeals",
+      "message_id": 4901,
+      "split": "development",
+      "coverage": [
+        "separate_dates",
+        "cross_month"
+      ],
+      "mandatory": true,
+      "input_hash": "5e0e11ffc005bbe7c16583a3d1707c3d25f978260fe9d26d80b6ba60f736685c",
+      "posted_at": "2026-08-25T12:01:03+08:00",
+      "edited_at": "2026-08-25T12:01:56+08:00",
+      "caption": "Pizza Hut: $10 Large Pizza Takeaway Deal 🍕\n\n🔹 Choose from BBQ Chunky Chic, Very Beefy, Chic Ham N Shroom & more\n🔹 Valid for walk-in takeaway & self-collection via App & Web\n🔹 Limited to 2 redemptions per transaction\n📅 25 & 26 Aug | 1 & 2 Sep | 8 & 9 Sep\n📍 All outlets\n\nOrder here: tco.sg/BCdJfH9cb\n\n@sgfooddeals #deals",
+      "telegram_url": "https://t.me/sgfooddeals/4901",
+      "links": [
+        {
+          "destination": "tco.sg/BCdJfH9cb",
+          "labels": [
+            "tco.sg/BCdJfH9cb"
+          ],
+          "clickable_url": "https://tco.sg/BCdJfH9cb"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "Pizza Hut: $10 Large Pizza Takeaway Deal 🍕"
+        ],
+        "offers": [
+          {
+            "benefit": "$10 large pizza for takeaway or self-collection",
+            "evidence": [
+              "Pizza Hut: $10 Large Pizza Takeaway Deal"
+            ],
+            "location_scope": "all_outlets",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": [
+                "2026-08-25",
+                "2026-08-26",
+                "2026-09-01",
+                "2026-09-02",
+                "2026-09-08",
+                "2026-09-09"
+              ],
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "25 & 26 Aug | 1 & 2 Sep | 8 & 9 Sep"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "Valid for walk-in takeaway & self-collection via App & Web",
+              "Limited to 2 redemptions per transaction"
+            ],
+            "notes": null,
+            "merchant": "Pizza Hut"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1204657101:4904",
+      "source_name": "SGFoodDeals",
+      "message_id": 4904,
+      "split": "development",
+      "coverage": [
+        "offer_splitting",
+        "cross_month"
+      ],
+      "mandatory": true,
+      "input_hash": "36b33eb7cd81776906072d9ba2c6f2b4bd8ce1101f2c08bc05addf69d9c039e1",
+      "posted_at": "2026-08-26T18:01:02+08:00",
+      "edited_at": "2026-08-26T18:31:09+08:00",
+      "caption": "Gelare: 1-for-1 Dessert Deals 🧇\n\n🔹 Share the joy of a sweet treat with 1-for-1 deals at Gelare\n🔹 Valid for dine-in only\n📅 Single Scoop Ice Cream: Now till 30 Aug\n📅 Coffee & Mocktails: 31 Aug - 6 Sep\n📅 Croffles: 7 - 13 Sep\n⏰ 11AM - 9.30PM\n📍 Gelare Westgate, 04-07\n\nMore info: tco.sg/aBuXbktKy\n\n@sgfooddeals #deals",
+      "telegram_url": "https://t.me/sgfooddeals/4904",
+      "links": [
+        {
+          "destination": "tco.sg/aBuXbktKy",
+          "labels": [
+            "tco.sg/aBuXbktKy"
+          ],
+          "clickable_url": "https://tco.sg/aBuXbktKy"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 3,
+        "explicit_location_count": 3,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "Gelare: 1-for-1 Dessert Deals 🧇"
+        ],
+        "offers": [
+          {
+            "benefit": "1-for-1 Single Scoop Ice Cream",
+            "evidence": [
+              "1-for-1 deals at Gelare",
+              "Single Scoop Ice Cream: Now till 30 Aug"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-26",
+              "end_date": "2026-08-30",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Single Scoop Ice Cream: Now till 30 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Gelare Westgate",
+                "unit": "04-07",
+                "effective_availability": {
+                  "start_date": "2026-08-26",
+                  "end_date": "2026-08-30",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Single Scoop Ice Cream: Now till 30 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Gelare Westgate"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "Valid for dine-in only",
+              "11AM - 9.30PM"
+            ],
+            "notes": null,
+            "merchant": "Gelare"
+          },
+          {
+            "benefit": "1-for-1 Coffee & Mocktails",
+            "evidence": [
+              "1-for-1 deals at Gelare",
+              "Coffee & Mocktails: 31 Aug - 6 Sep"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-31",
+              "end_date": "2026-09-06",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Coffee & Mocktails: 31 Aug - 6 Sep"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Gelare Westgate",
+                "unit": "04-07",
+                "effective_availability": {
+                  "start_date": "2026-08-31",
+                  "end_date": "2026-09-06",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Coffee & Mocktails: 31 Aug - 6 Sep"
+                  ]
+                },
+                "evidence": [
+                  "Gelare Westgate"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "Valid for dine-in only",
+              "11AM - 9.30PM"
+            ],
+            "notes": null,
+            "merchant": "Gelare"
+          },
+          {
+            "benefit": "1-for-1 Croffles",
+            "evidence": [
+              "1-for-1 deals at Gelare",
+              "Croffles: 7 - 13 Sep"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-09-07",
+              "end_date": "2026-09-13",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Croffles: 7 - 13 Sep"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Gelare Westgate",
+                "unit": "04-07",
+                "effective_availability": {
+                  "start_date": "2026-09-07",
+                  "end_date": "2026-09-13",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Croffles: 7 - 13 Sep"
+                  ]
+                },
+                "evidence": [
+                  "Gelare Westgate"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "Valid for dine-in only",
+              "11AM - 9.30PM"
+            ],
+            "notes": null,
+            "merchant": "Gelare"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1204657101:4912",
+      "source_name": "SGFoodDeals",
+      "message_id": 4912,
+      "split": "held_out",
+      "coverage": [
+        "weekdays",
+        "unknown_expiry",
+        "unrelated_footer"
+      ],
+      "mandatory": true,
+      "input_hash": "e6b8cc1680ed3af76d8d9f6373d3ca2b4640456c67472d6e1ffd2891b11a5eda",
+      "posted_at": "2026-08-30T18:01:04+08:00",
+      "edited_at": "2026-08-30T19:41:51+08:00",
+      "caption": "Common Grill: $9.90 Lunch Sets 🍝\n\n🔹 Choose from appetising mains like Grilled Chicken Chop, Fish & Chips, Angus Beef Bolognese & more \n🔹 Each dish comes with a free Wild Mushroom Soup worth $3.50\n📅 Mon - Fri\n⏰ 11AM - 3PM \n📍 All outlets \n\nT&Cs apply. \n\nMore info: tco.sg/lmm5hfaTJ \n\n@sgfooddeals #deals\n——————————————————\n🏠 @renodealssg - Home reno deals\n🇲🇾 @myfoodpromos - M'sia food deals\n🇲🇾 @mymakanmurah - M'sia food deals (In Malay)",
+      "telegram_url": "https://t.me/sgfooddeals/4912",
+      "links": [
+        {
+          "destination": "tco.sg/lmm5hfaTJ",
+          "labels": [
+            "tco.sg/lmm5hfaTJ"
+          ],
+          "clickable_url": "https://tco.sg/lmm5hfaTJ"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "Common Grill: $9.90 Lunch Sets 🍝"
+        ],
+        "offers": [
+          {
+            "benefit": "$9.90 lunch set with free Wild Mushroom Soup",
+            "evidence": [
+              "Common Grill: $9.90 Lunch Sets",
+              "Each dish comes with a free Wild Mushroom Soup worth $3.50"
+            ],
+            "location_scope": "all_outlets",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "date_status": "parsed",
+              "evidence": [
+                "Mon - Fri"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "11AM - 3PM",
+              "T&Cs apply."
+            ],
+            "notes": "Menu choices and included soup form one set offer. Footer channels do not change source identity.",
+            "merchant": "Common Grill"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1216422279:4602",
+      "source_name": "GoodLobang",
+      "message_id": 4602,
+      "split": "development",
+      "coverage": [
+        "non_food"
+      ],
+      "mandatory": false,
+      "input_hash": "7e0ee083a3d9a209a140f8da4a14dab0b92c53294cbb9030347fb25e98427cc3",
+      "posted_at": "2026-08-03T10:00:06+08:00",
+      "edited_at": "2026-08-03T10:21:37+08:00",
+      "caption": "💆‍♀️ Yun Nam Hair Care 💆‍♀️\n\n🇸🇬 NDP SPECIAL: FREE FastGro™ Hair Treatment + 3pc Hair Care Kit (worth $643)\n➡️ Tackles hair loss, dandruff, oily scalp, premature greying & more\n📆 Now - 15 Aug\n📍 All outlets\n❗️ For first-time customers aged 18 & above. Redeem by 15 Aug. T&Cs apply.\n👉 Redeem now: bit.ly/4x43m7W\n\n@goodlobang",
+      "telegram_url": "https://t.me/goodlobang/4602",
+      "links": [
+        {
+          "destination": "bit.ly/4x43m7W",
+          "labels": [
+            "bit.ly/4x43m7W"
+          ],
+          "clickable_url": "https://bit.ly/4x43m7W"
+        }
+      ],
+      "expected": {
+        "relevance": "non_food",
+        "promotion_kind": "uncertain",
+        "offer_count": 0,
+        "explicit_location_count": 0,
+        "disposition": "needs_review",
+        "review_reasons": [
+          "The current promotion-kind enum has no non-food promotion category."
+        ],
+        "classification_evidence": [
+          "💆‍♀️ Yun Nam Hair Care 💆‍♀️"
+        ],
+        "offers": []
+      },
+      "review_notes": "Clear non-food exclusion. Under the current schema, uncertain promotion kind triggers review even though relevance is certain. Review this taxonomy choice; do not create a food offer."
+    },
+    {
+      "post_id": "telegram:1216422279:4604",
+      "source_name": "GoodLobang",
+      "message_id": 4604,
+      "split": "development",
+      "coverage": [
+        "all_outlets",
+        "exclusions"
+      ],
+      "mandatory": false,
+      "input_hash": "ef6a4b7a18223387d6519c2e6141fbcf0c89512d98e67302fba7f016ec8fdd06",
+      "posted_at": "2026-08-03T17:34:53+08:00",
+      "edited_at": "2026-08-03T17:34:57+08:00",
+      "caption": "🍲 A Hot Hideout 🍲\n\n➡️ Roll 2 dice for up to 100% cashback\n📆 Now - 16 Aug\n📍 All outlets excl. NTU & NUS\n❗️ Min. spend of $25 in a single receipt. Limited to one roll per receipt. T&Cs apply.\n👉 More info: bit.ly/4fAoTQ0\n  \n@goodlobang",
+      "telegram_url": "https://t.me/goodlobang/4604",
+      "links": [
+        {
+          "destination": "bit.ly/4fAoTQ0",
+          "labels": [
+            "bit.ly/4fAoTQ0"
+          ],
+          "clickable_url": "https://bit.ly/4fAoTQ0"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🍲 A Hot Hideout 🍲"
+        ],
+        "offers": [
+          {
+            "benefit": "Dice roll for up to 100% cashback",
+            "evidence": [
+              "Roll 2 dice for up to 100% cashback"
+            ],
+            "location_scope": "all_outlets",
+            "excluded_outlets": [
+              "NTU",
+              "NUS"
+            ],
+            "availability": {
+              "start_date": "2026-08-03",
+              "end_date": "2026-08-16",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Now - 16 Aug"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "Min. spend of $25 in a single receipt. Limited to one roll per receipt. T&Cs apply."
+            ],
+            "notes": null,
+            "merchant": "A Hot Hideout"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1216422279:4606",
+      "source_name": "GoodLobang",
+      "message_id": 4606,
+      "split": "held_out",
+      "coverage": [
+        "explicit_location",
+        "relative_start"
+      ],
+      "mandatory": false,
+      "input_hash": "af7236d93b496311d8e541328cf819264cc65bca9f30609a5f60a1c67d1a46bb",
+      "posted_at": "2026-08-04T17:00:41+08:00",
+      "edited_at": "2026-08-04T17:00:44+08:00",
+      "caption": "🐼 ChaPanda 🐼\n\n➡️ 20% OFF large drinks\n📆 Now - 6 Aug\n📍 VivoCity, B2-23D\n❗️ T&Cs apply.\n👉 More info: bit.ly/4xjfG4u\n\n@goodlobang",
+      "telegram_url": "https://t.me/goodlobang/4606",
+      "links": [
+        {
+          "destination": "bit.ly/4xjfG4u",
+          "labels": [
+            "bit.ly/4xjfG4u"
+          ],
+          "clickable_url": "https://bit.ly/4xjfG4u"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 1,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🐼 ChaPanda 🐼"
+        ],
+        "offers": [
+          {
+            "benefit": "20% off large drinks",
+            "evidence": [
+              "20% OFF large drinks"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-04",
+              "end_date": "2026-08-06",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Now - 6 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "VivoCity",
+                "unit": "B2-23D",
+                "effective_availability": {
+                  "start_date": "2026-08-04",
+                  "end_date": "2026-08-06",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Now - 6 Aug"
+                  ]
+                },
+                "evidence": [
+                  "VivoCity, B2-23D"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "T&Cs apply."
+            ],
+            "notes": null,
+            "merchant": "ChaPanda"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1216422279:4607",
+      "source_name": "GoodLobang",
+      "message_id": 4607,
+      "split": "development",
+      "coverage": [
+        "separate_dates",
+        "membership"
+      ],
+      "mandatory": true,
+      "input_hash": "2d72815bdf583e84e42197b8209885f17c45083590a1b3ca9c3f08713a5e5142",
+      "posted_at": "2026-08-05T13:01:48+08:00",
+      "edited_at": "2026-08-05T13:01:51+08:00",
+      "caption": "💙 CHAGEE 💙\n\n➡️ 20% OFF drinks \n📆 Today & 12 Aug \n📍 All outlets\n❗️ For CHAGEE Explorer, Pioneer & Master members only. Redeem via CHAGEE app. T&Cs apply. \n👉 More info: bit.ly/4pXStCw\n\n@goodlobang",
+      "telegram_url": "https://t.me/goodlobang/4607",
+      "links": [
+        {
+          "destination": "bit.ly/4pXStCw",
+          "labels": [
+            "bit.ly/4pXStCw"
+          ],
+          "clickable_url": "https://bit.ly/4pXStCw"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "💙 CHAGEE 💙"
+        ],
+        "offers": [
+          {
+            "benefit": "20% off drinks",
+            "evidence": [
+              "20% OFF drinks"
+            ],
+            "location_scope": "all_outlets",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": [
+                "2026-08-05",
+                "2026-08-12"
+              ],
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Today & 12 Aug"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "For CHAGEE Explorer, Pioneer & Master members only. Redeem via CHAGEE app. T&Cs apply."
+            ],
+            "notes": null,
+            "merchant": "CHAGEE"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1216422279:4611",
+      "source_name": "GoodLobang",
+      "message_id": 4611,
+      "split": "development",
+      "coverage": [
+        "food_classification",
+        "all_outlets"
+      ],
+      "mandatory": false,
+      "input_hash": "b62dd62e930c7beabdc7acd378aa402be30b687ad9c22877a1f90d004be04c5b",
+      "posted_at": "2026-08-06T16:30:39+08:00",
+      "edited_at": "2026-08-06T16:30:43+08:00",
+      "caption": "🍺 A&W 🍺\n\n➡️ 1-for-1 Root Beer Float\n📆 Now - 9 Aug\n📍 All outlets\n❗️ For dine-in & takeaway only. T&Cs apply.\n👉 More info: bit.ly/4yWNjLb\n\n@goodlobang",
+      "telegram_url": "https://t.me/goodlobang/4611",
+      "links": [
+        {
+          "destination": "bit.ly/4yWNjLb",
+          "labels": [
+            "bit.ly/4yWNjLb"
+          ],
+          "clickable_url": "https://bit.ly/4yWNjLb"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🍺 A&W 🍺"
+        ],
+        "offers": [
+          {
+            "benefit": "1-for-1 Root Beer Float",
+            "evidence": [
+              "1-for-1 Root Beer Float"
+            ],
+            "location_scope": "all_outlets",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-06",
+              "end_date": "2026-08-09",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Now - 9 Aug"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "For dine-in & takeaway only. T&Cs apply."
+            ],
+            "notes": null,
+            "merchant": "A&W"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1216422279:4623",
+      "source_name": "GoodLobang",
+      "message_id": 4623,
+      "split": "development",
+      "coverage": [
+        "outlet_specific_dates",
+        "units"
+      ],
+      "mandatory": true,
+      "input_hash": "b661cc39e9480c1b4570eaa0733cb5e1629b3c391b865ddd6fb2c21d7bddb362",
+      "posted_at": "2026-08-12T17:00:01+08:00",
+      "edited_at": "2026-08-12T17:00:04+08:00",
+      "caption": "🥥 moreyogurt 🥥\n\n➡️ 1-for-1 selected yogurt shakes\n➡️ Incl. Original Avocado Yogurt Shake, Mango Yogurt Shake & Almond Avocado Yogurt Shake\n\n📆 14 - 16 Aug\n📍 Jewel Changi Airport, B2-234\n\n📆 17 - 19 Aug\n📍 Waterway Point, 01-63\n\n❗️ While stocks last. T&Cs apply. \n👉 More info: bit.ly/4606JBi\n\n@goodlobang",
+      "telegram_url": "https://t.me/goodlobang/4623",
+      "links": [
+        {
+          "destination": "bit.ly/4606JBi",
+          "labels": [
+            "bit.ly/4606JBi"
+          ],
+          "clickable_url": "https://bit.ly/4606JBi"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 2,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🥥 moreyogurt 🥥"
+        ],
+        "offers": [
+          {
+            "benefit": "1-for-1 selected yogurt shakes",
+            "evidence": [
+              "1-for-1 selected yogurt shakes"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "unspecified",
+              "evidence": []
+            },
+            "locations": [
+              {
+                "label": "Jewel Changi Airport",
+                "unit": "B2-234",
+                "effective_availability": {
+                  "start_date": "2026-08-14",
+                  "end_date": "2026-08-16",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "14 - 16 Aug"
+                  ]
+                },
+                "evidence": [
+                  "14 - 16 Aug\n📍 Jewel Changi Airport, B2-234"
+                ],
+                "resolution_note": null
+              },
+              {
+                "label": "Waterway Point",
+                "unit": "01-63",
+                "effective_availability": {
+                  "start_date": "2026-08-17",
+                  "end_date": "2026-08-19",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "17 - 19 Aug"
+                  ]
+                },
+                "evidence": [
+                  "17 - 19 Aug\n📍 Waterway Point, 01-63"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "While stocks last. T&Cs apply."
+            ],
+            "notes": "Three listed flavours belong to one offer. Do not distribute either date range to both locations.",
+            "merchant": "moreyogurt"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1216422279:4629",
+      "source_name": "GoodLobang",
+      "message_id": 4629,
+      "split": "development",
+      "coverage": [
+        "weekdays",
+        "unknown_expiry"
+      ],
+      "mandatory": true,
+      "input_hash": "447a5aecaef8cee511a6cd262a131a33f90f212c968366497b6f1c32a25e0666",
+      "posted_at": "2026-08-17T17:34:59+08:00",
+      "edited_at": "2026-08-17T17:35:02+08:00",
+      "caption": "🍔 MOS Burger 🍔\n\n➡️ $6.10 Mon & Tue Special\n➡️ Incl. Chicken Burger, French Fries (S) & Iced Tea\n📆 Every Mon & Tue\n📍 All outlets\n❗️ While stocks last. T&Cs apply.\n👉 More info: bit.ly/4xP3ysq\n\n@goodlobang",
+      "telegram_url": "https://t.me/goodlobang/4629",
+      "links": [
+        {
+          "destination": "bit.ly/4xP3ysq",
+          "labels": [
+            "bit.ly/4xP3ysq"
+          ],
+          "clickable_url": "https://bit.ly/4xP3ysq"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🍔 MOS Burger 🍔"
+        ],
+        "offers": [
+          {
+            "benefit": "$6.10 Chicken Burger, small fries and iced tea set",
+            "evidence": [
+              "$6.10 Mon & Tue Special",
+              "Incl. Chicken Burger, French Fries (S) & Iced Tea"
+            ],
+            "location_scope": "all_outlets",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": [
+                1,
+                2
+              ],
+              "date_status": "parsed",
+              "evidence": [
+                "Every Mon & Tue"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "While stocks last. T&Cs apply."
+            ],
+            "notes": null,
+            "merchant": "MOS Burger"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1216422279:4633",
+      "source_name": "GoodLobang",
+      "message_id": 4633,
+      "split": "development",
+      "coverage": [
+        "mixed_promotion",
+        "unknown_expiry"
+      ],
+      "mandatory": false,
+      "input_hash": "ca10f36175a098c33620ead992c5802fc3f8b3233c5e081d5d587d2c7520015f",
+      "posted_at": "2026-08-19T18:01:32+08:00",
+      "edited_at": "2026-08-19T18:01:35+08:00",
+      "caption": "🎤  HaveFun Family Karaoke 🎤\n\n➡️ $5++ for 1hr Karaoke + FREE Soft Drink\n📆 Now\n🕑 Last entry varies by outlet\n📍 All outlets\n❗️ Min 2 pax & 2hr. T&Cs apply. \n👉 More info: bit.ly/4qtjPkb\n\n@goodlobang",
+      "telegram_url": "https://t.me/goodlobang/4633",
+      "links": [
+        {
+          "destination": "bit.ly/4qtjPkb",
+          "labels": [
+            "bit.ly/4qtjPkb"
+          ],
+          "clickable_url": "https://bit.ly/4qtjPkb"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "mixed_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🎤  HaveFun Family Karaoke 🎤"
+        ],
+        "offers": [
+          {
+            "benefit": "Free soft drink with $5++ per hour karaoke package",
+            "evidence": [
+              "$5++ for 1hr Karaoke + FREE Soft Drink"
+            ],
+            "location_scope": "all_outlets",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-19",
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Now"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "Last entry varies by outlet",
+              "Min 2 pax & 2hr. T&Cs apply."
+            ],
+            "notes": "Keep the drink tied to the paid karaoke package; not a free standalone drink.",
+            "merchant": "HaveFun Family Karaoke"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1216422279:4634",
+      "source_name": "GoodLobang",
+      "message_id": 4634,
+      "split": "held_out",
+      "coverage": [
+        "multiple_locations",
+        "weekdays"
+      ],
+      "mandatory": true,
+      "input_hash": "d22a8ccbac1256ba4cf0ea3dff1da559b1194eaa757dff962e6c7a1938bd96c1",
+      "posted_at": "2026-08-20T12:30:14+08:00",
+      "edited_at": "2026-08-20T12:30:17+08:00",
+      "caption": "🍣 Sushiro 🍣\n\n➡️ $1.90++ Salmon Belly Sushi (U.P. $2.30++)\n📆 Now - 28 Aug\n📍 New Bahru, 02-01 & Chinatown Point, 02-35\n❗️ Weekdays only. Dine-in only. T&Cs apply.\n👉 More info: bit.ly/4bUbHTS\n\n@goodlobang",
+      "telegram_url": "https://t.me/goodlobang/4634",
+      "links": [
+        {
+          "destination": "bit.ly/4bUbHTS",
+          "labels": [
+            "bit.ly/4bUbHTS"
+          ],
+          "clickable_url": "https://bit.ly/4bUbHTS"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 2,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🍣 Sushiro 🍣"
+        ],
+        "offers": [
+          {
+            "benefit": "$1.90++ Salmon Belly Sushi",
+            "evidence": [
+              "$1.90++ Salmon Belly Sushi (U.P. $2.30++)"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-20",
+              "end_date": "2026-08-28",
+              "valid_dates": null,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "date_status": "parsed",
+              "evidence": [
+                "Now - 28 Aug",
+                "Weekdays only."
+              ]
+            },
+            "locations": [
+              {
+                "label": "New Bahru",
+                "unit": "02-01",
+                "effective_availability": {
+                  "start_date": "2026-08-20",
+                  "end_date": "2026-08-28",
+                  "valid_dates": null,
+                  "weekdays": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Now - 28 Aug",
+                    "Weekdays only."
+                  ]
+                },
+                "evidence": [
+                  "New Bahru"
+                ],
+                "resolution_note": null
+              },
+              {
+                "label": "Chinatown Point",
+                "unit": "02-35",
+                "effective_availability": {
+                  "start_date": "2026-08-20",
+                  "end_date": "2026-08-28",
+                  "valid_dates": null,
+                  "weekdays": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Now - 28 Aug",
+                    "Weekdays only."
+                  ]
+                },
+                "evidence": [
+                  "Chinatown Point"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "Weekdays only. Dine-in only. T&Cs apply."
+            ],
+            "notes": null,
+            "merchant": "Sushiro"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1216422279:4644",
+      "source_name": "GoodLobang",
+      "message_id": 4644,
+      "split": "held_out",
+      "coverage": [
+        "unknown_expiry"
+      ],
+      "mandatory": true,
+      "input_hash": "474d772da773fb07c5978aa88c266a1def997be53b253810b0f31051d50c7143",
+      "posted_at": "2026-08-27T13:31:28+08:00",
+      "edited_at": "2026-08-27T13:31:32+08:00",
+      "caption": "🥖 Subway 🥖\n\n➡️ FREE Crab Half Serving (with purchase of Crab Sub)\n📆 Now - end date unspecified\n📍 All outlets\n❗️ While stocks last. T&Cs apply.\n👉 More info: bit.ly/4xphI3C\n\n@goodlobang",
+      "telegram_url": "https://t.me/goodlobang/4644",
+      "links": [
+        {
+          "destination": "bit.ly/4xphI3C",
+          "labels": [
+            "bit.ly/4xphI3C"
+          ],
+          "clickable_url": "https://bit.ly/4xphI3C"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🥖 Subway 🥖"
+        ],
+        "offers": [
+          {
+            "benefit": "Free crab half serving with Crab Sub purchase",
+            "evidence": [
+              "FREE Crab Half Serving (with purchase of Crab Sub)"
+            ],
+            "location_scope": "all_outlets",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-27",
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Now - end date unspecified"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "While stocks last. T&Cs apply."
+            ],
+            "notes": null,
+            "merchant": "Subway"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1329056215:5255",
+      "source_name": "KiasuFoodies",
+      "message_id": 5255,
+      "split": "development",
+      "coverage": [
+        "separate_dates",
+        "unnamed_event_locations"
+      ],
+      "mandatory": false,
+      "input_hash": "ec99b84a0361c69dbf35040adccfd6a6abd40d508bc0026f164746075ab61fb2",
+      "posted_at": "2026-08-01T14:00:59+08:00",
+      "edited_at": "2026-08-01T14:01:23+08:00",
+      "caption": "🥤 MILO 🥤\n\n✅ Free MILO on 1, 2, 8, 9, 10 Aug\n📍 8 locations islandwide\n🔴 Place/timing varies by day\n🔴 T&Cs apply, more info here\n\n@kiasufoodies",
+      "telegram_url": "https://t.me/kiasufoodies/5255",
+      "links": [
+        {
+          "destination": "https://bit.ly/4wSblWl",
+          "labels": [
+            "here"
+          ],
+          "clickable_url": "https://bit.ly/4wSblWl"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🥤 MILO 🥤"
+        ],
+        "offers": [
+          {
+            "benefit": "Free MILO on five listed dates",
+            "evidence": [
+              "Free MILO on 1, 2, 8, 9, 10 Aug"
+            ],
+            "location_scope": "selected_outlets",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": [
+                "2026-08-01",
+                "2026-08-02",
+                "2026-08-08",
+                "2026-08-09",
+                "2026-08-10"
+              ],
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "1, 2, 8, 9, 10 Aug"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "Place/timing varies by day",
+              "T&Cs apply, more info here"
+            ],
+            "notes": "Eight unspecified event locations. Never infer their names from the image or link.",
+            "merchant": "MILO"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1329056215:5256",
+      "source_name": "KiasuFoodies",
+      "message_id": 5256,
+      "split": "held_out",
+      "coverage": [
+        "null_start",
+        "hidden_link"
+      ],
+      "mandatory": false,
+      "input_hash": "8b9465bc39b278955028d48a30714e714206d84fa0ce3ceac411f8cdaefe2839",
+      "posted_at": "2026-08-02T12:01:03+08:00",
+      "edited_at": "2026-08-02T12:33:38+08:00",
+      "caption": "🍲 Souper Tang 🍲\n\n✅ 50% off selected dishes\n✅ Till 4 Aug\n📍 Raffles City\n🔴 T&Cs apply, more info here\n\n@kiasufoodies",
+      "telegram_url": "https://t.me/kiasufoodies/5256",
+      "links": [
+        {
+          "destination": "https://bit.ly/4518L40",
+          "labels": [
+            "here"
+          ],
+          "clickable_url": "https://bit.ly/4518L40"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 1,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🍲 Souper Tang 🍲"
+        ],
+        "offers": [
+          {
+            "benefit": "50% off selected dishes",
+            "evidence": [
+              "50% off selected dishes"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": "2026-08-04",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "Till 4 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Raffles City",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": null,
+                  "end_date": "2026-08-04",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Till 4 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Raffles City"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "T&Cs apply, more info here"
+            ],
+            "notes": null,
+            "merchant": "Souper Tang"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1329056215:5257",
+      "source_name": "KiasuFoodies",
+      "message_id": 5257,
+      "split": "development",
+      "coverage": [
+        "offer_splitting",
+        "overlapping_periods"
+      ],
+      "mandatory": true,
+      "input_hash": "921160f6d6fcd161ca2060d27d5cbca64ad0e94ce0f1b0f9a1a40e641ac0b5e7",
+      "posted_at": "2026-08-03T09:05:00+08:00",
+      "edited_at": "2026-08-03T09:12:08+08:00",
+      "caption": "🧋 Gotcha 🧋\n\n✅ Free 200 drinks on 3-4 Aug\n✅ 1-for-1 drinks on 3-9 Aug\n📍 Orchard Gateway\n🔴 T&Cs apply, more info here\n\n@kiasufoodies",
+      "telegram_url": "https://t.me/kiasufoodies/5257",
+      "links": [
+        {
+          "destination": "https://bit.ly/4fwSsSu",
+          "labels": [
+            "here"
+          ],
+          "clickable_url": "https://bit.ly/4fwSsSu"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 2,
+        "explicit_location_count": 2,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🧋 Gotcha 🧋"
+        ],
+        "offers": [
+          {
+            "benefit": "Free 200 drinks",
+            "evidence": [
+              "Free 200 drinks on 3-4 Aug"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-03",
+              "end_date": "2026-08-04",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "3-4 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Orchard Gateway",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": "2026-08-03",
+                  "end_date": "2026-08-04",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "3-4 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Orchard Gateway"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "T&Cs apply, more info here"
+            ],
+            "notes": "Do not assert 200 per day: caption does not specify whether the cap resets.",
+            "merchant": "Gotcha"
+          },
+          {
+            "benefit": "1-for-1 drinks",
+            "evidence": [
+              "1-for-1 drinks on 3-9 Aug"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-03",
+              "end_date": "2026-08-09",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "3-9 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Orchard Gateway",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": "2026-08-03",
+                  "end_date": "2026-08-09",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "3-9 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Orchard Gateway"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "T&Cs apply, more info here"
+            ],
+            "notes": null,
+            "merchant": "Gotcha"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1329056215:5262",
+      "source_name": "KiasuFoodies",
+      "message_id": 5262,
+      "split": "held_out",
+      "coverage": [
+        "exclusions",
+        "time_window"
+      ],
+      "mandatory": false,
+      "input_hash": "11816d5026bee22cdb03d723ded7730154c00e6de5e2b4b5031df662baa1348b",
+      "posted_at": "2026-08-06T17:32:29+08:00",
+      "edited_at": "2026-08-06T17:32:54+08:00",
+      "caption": "🥐 PAUL 🥐\n\n✅ $0.61 mini croissants\n✅ 8-9 Aug, opening till 3pm\n📍 All operating outlets except Airport T1\n🔴 T&Cs apply, more info here\n\n@kiasufoodies",
+      "telegram_url": "https://t.me/kiasufoodies/5262",
+      "links": [
+        {
+          "destination": "https://bit.ly/4wbm3Wu",
+          "labels": [
+            "here"
+          ],
+          "clickable_url": "https://bit.ly/4wbm3Wu"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🥐 PAUL 🥐"
+        ],
+        "offers": [
+          {
+            "benefit": "$0.61 mini croissants",
+            "evidence": [
+              "$0.61 mini croissants"
+            ],
+            "location_scope": "all_outlets",
+            "excluded_outlets": [
+              "Airport T1"
+            ],
+            "availability": {
+              "start_date": "2026-08-08",
+              "end_date": "2026-08-09",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "8-9 Aug"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "opening till 3pm",
+              "T&Cs apply, more info here"
+            ],
+            "notes": null,
+            "merchant": "PAUL"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1329056215:5264",
+      "source_name": "KiasuFoodies",
+      "message_id": 5264,
+      "split": "development",
+      "coverage": [
+        "ambiguous_location"
+      ],
+      "mandatory": false,
+      "input_hash": "79b0f8b701a34d2ecf9254c28c4734654960de85c6d81476af9b95cf7a079a2d",
+      "posted_at": "2026-08-07T16:04:19+08:00",
+      "edited_at": "2026-08-07T16:04:58+08:00",
+      "caption": "🥘 777 Coffeeshop 🥘\n\n✅ $6.10 for 90-min Buffet\n✅ 9 Aug, 9am-6pm\n📍 Lengkok Bahru\n🔴 T&Cs apply, more info here\n\n@kiasufoodies",
+      "telegram_url": "https://t.me/kiasufoodies/5264",
+      "links": [
+        {
+          "destination": "https://bit.ly/4heIaYp",
+          "labels": [
+            "here"
+          ],
+          "clickable_url": "https://bit.ly/4heIaYp"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 1,
+        "disposition": "needs_review",
+        "review_reasons": [
+          "Lengkok Bahru is insufficient to identify a precise outlet."
+        ],
+        "classification_evidence": [
+          "🥘 777 Coffeeshop 🥘"
+        ],
+        "offers": [
+          {
+            "benefit": "$6.10 for a 90-minute buffet",
+            "evidence": [
+              "$6.10 for 90-min Buffet"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-09",
+              "end_date": "2026-08-09",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "9 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Lengkok Bahru",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": "2026-08-09",
+                  "end_date": "2026-08-09",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "9 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Lengkok Bahru"
+                ],
+                "resolution_note": "Neighborhood only; no street number or building is supplied. Merchant is 777 Coffeeshop, not a resolved address."
+              }
+            ],
+            "material_restrictions": [
+              "9am-6pm",
+              "T&Cs apply, more info here"
+            ],
+            "notes": null,
+            "merchant": "777 Coffeeshop"
+          }
+        ]
+      },
+      "review_notes": "Retain the literal location for review; do not invent its address or claim a mapped coordinate."
+    },
+    {
+      "post_id": "telegram:1329056215:5269",
+      "source_name": "KiasuFoodies",
+      "message_id": 5269,
+      "split": "development",
+      "coverage": [
+        "weekdays",
+        "null_start"
+      ],
+      "mandatory": true,
+      "input_hash": "8a5bc8ff0f7ba07b2f01a07827db1554a9f4cc6d411cacb8635f37f9fe0829b3",
+      "posted_at": "2026-08-10T16:04:52+08:00",
+      "edited_at": "2026-08-10T16:09:07+08:00",
+      "caption": "🍽️ Carnaby 🍽️\n\n✅ 1-for-1 weekday specials\n✅ Tue-Thu, till 27 Aug\n📍 The Quayside\n🔴 T&Cs apply, more info here\n\n@kiasufoodies",
+      "telegram_url": "https://t.me/kiasufoodies/5269",
+      "links": [
+        {
+          "destination": "https://bit.ly/4wPy70Z",
+          "labels": [
+            "here"
+          ],
+          "clickable_url": "https://bit.ly/4wPy70Z"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 1,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🍽️ Carnaby 🍽️"
+        ],
+        "offers": [
+          {
+            "benefit": "1-for-1 weekday specials",
+            "evidence": [
+              "1-for-1 weekday specials"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": "2026-08-27",
+              "valid_dates": null,
+              "weekdays": [
+                2,
+                3,
+                4
+              ],
+              "date_status": "parsed",
+              "evidence": [
+                "Tue-Thu, till 27 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "The Quayside",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": null,
+                  "end_date": "2026-08-27",
+                  "valid_dates": null,
+                  "weekdays": [
+                    2,
+                    3,
+                    4
+                  ],
+                  "date_status": "parsed",
+                  "evidence": [
+                    "Tue-Thu, till 27 Aug"
+                  ]
+                },
+                "evidence": [
+                  "The Quayside"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "T&Cs apply, more info here"
+            ],
+            "notes": null,
+            "merchant": "Carnaby"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1329056215:5271",
+      "source_name": "KiasuFoodies",
+      "message_id": 5271,
+      "split": "held_out",
+      "coverage": [
+        "future_start",
+        "explicit_location"
+      ],
+      "mandatory": false,
+      "input_hash": "d421ce515bf8a13e694b1218e15d3dfe6f034ff5b1dfd1b883cb7d149dde6b24",
+      "posted_at": "2026-08-12T18:02:18+08:00",
+      "edited_at": "2026-08-12T18:02:24+08:00",
+      "caption": "🥘 Kei Kaisendon 🥘\n\n✅ 1-for-1 Kaisendon\n✅ 14-16 Aug\n📍 Hillion Mall\n🔴 T&Cs apply, more info here\n\n@kiasufoodies",
+      "telegram_url": "https://t.me/kiasufoodies/5271",
+      "links": [
+        {
+          "destination": "https://bit.ly/4zvEpVl",
+          "labels": [
+            "here"
+          ],
+          "clickable_url": "https://bit.ly/4zvEpVl"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 1,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🥘 Kei Kaisendon 🥘"
+        ],
+        "offers": [
+          {
+            "benefit": "1-for-1 Kaisendon",
+            "evidence": [
+              "1-for-1 Kaisendon"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-14",
+              "end_date": "2026-08-16",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "14-16 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Hillion Mall",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": "2026-08-14",
+                  "end_date": "2026-08-16",
+                  "valid_dates": null,
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "14-16 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Hillion Mall"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "T&Cs apply, more info here"
+            ],
+            "notes": null,
+            "merchant": "Kei Kaisendon"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1329056215:5272",
+      "source_name": "KiasuFoodies",
+      "message_id": 5272,
+      "split": "development",
+      "coverage": [
+        "online_only",
+        "menu_alternatives",
+        "unknown_expiry"
+      ],
+      "mandatory": false,
+      "input_hash": "24597c4b7be06610fc139bf70d6fa6d530dc396d1e1c4a07123617a949dd72eb",
+      "posted_at": "2026-08-13T12:01:02+08:00",
+      "edited_at": "2026-08-13T12:01:21+08:00",
+      "caption": "🍟 McDonald's McDelivery 🍟\n\n✅ Get a Filet-O-Fish/McSpicy/Double Cheeseburger, 1pc Chicken McCrispy, Fries & Drink from only $9.90 on McDonald's App here\n✅ Also on foodpanda & Grab\n\n@kiasufoodies",
+      "telegram_url": "https://t.me/kiasufoodies/5272",
+      "links": [
+        {
+          "destination": "https://bit.ly/4waABWo",
+          "labels": [
+            "here"
+          ],
+          "clickable_url": "https://bit.ly/4waABWo"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🍟 McDonald's McDelivery 🍟"
+        ],
+        "offers": [
+          {
+            "benefit": "Delivery meal from $9.90: one listed burger, Chicken McCrispy, fries and drink",
+            "evidence": [
+              "Get a Filet-O-Fish/McSpicy/Double Cheeseburger, 1pc Chicken McCrispy, Fries & Drink from only $9.90"
+            ],
+            "location_scope": "online_only",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "unspecified",
+              "evidence": []
+            },
+            "locations": [],
+            "material_restrictions": [
+              "on McDonald's App here",
+              "Also on foodpanda & Grab"
+            ],
+            "notes": "Burger alternatives belong to one package; delivery platforms are not physical locations.",
+            "merchant": "McDonald's"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1329056215:5274",
+      "source_name": "KiasuFoodies",
+      "message_id": 5274,
+      "split": "development",
+      "coverage": [
+        "selected_outlets",
+        "redemption_limit"
+      ],
+      "mandatory": false,
+      "input_hash": "f5ee528f3c47c7b585950475483d5cd447f8681066e37b672ccbc1d220471bd3",
+      "posted_at": "2026-08-15T12:01:02+08:00",
+      "edited_at": "2026-08-15T12:18:16+08:00",
+      "caption": "🍱 Greendot 🍱\n\n✅ $1.50 Bento Set\n✅ 16 Aug, 10am onwards\n📍 10 participating outlets\n🔴 Limited to 150 per outlet\n🔴 T&Cs apply, more info here\n\n@kiasufoodies",
+      "telegram_url": "https://t.me/kiasufoodies/5274",
+      "links": [
+        {
+          "destination": "https://bit.ly/4zhtI8q",
+          "labels": [
+            "here"
+          ],
+          "clickable_url": "https://bit.ly/4zhtI8q"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 0,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🍱 Greendot 🍱"
+        ],
+        "offers": [
+          {
+            "benefit": "$1.50 Bento Set",
+            "evidence": [
+              "$1.50 Bento Set"
+            ],
+            "location_scope": "selected_outlets",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": "2026-08-16",
+              "end_date": "2026-08-16",
+              "valid_dates": null,
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "16 Aug"
+              ]
+            },
+            "locations": [],
+            "material_restrictions": [
+              "10am onwards",
+              "Limited to 150 per outlet",
+              "T&Cs apply, more info here"
+            ],
+            "notes": "Ten participating outlets are unnamed; caption time is 10am, not a time inferred from the photo.",
+            "merchant": "Greendot"
+          }
+        ]
+      },
+      "review_notes": null
+    },
+    {
+      "post_id": "telegram:1329056215:5282",
+      "source_name": "KiasuFoodies",
+      "message_id": 5282,
+      "split": "development",
+      "coverage": [
+        "separate_dates",
+        "time_window"
+      ],
+      "mandatory": true,
+      "input_hash": "a0ceae310cb0efbc47a59b1c93f7626c166c8436d35429c3866ebb3e238fd019",
+      "posted_at": "2026-08-22T10:01:23+08:00",
+      "edited_at": "2026-08-22T10:02:05+08:00",
+      "caption": "🥤 Moon Juice Kombucha 🥤\n\n✅ $1 kombucha\n✅ 22, 23, 29, 30 Aug\n✅ 12-5pm\n📍 Great World\n🔴 T&Cs apply, more info here\n\n@kiasufoodies",
+      "telegram_url": "https://t.me/kiasufoodies/5282",
+      "links": [
+        {
+          "destination": "https://bit.ly/4zpRakd",
+          "labels": [
+            "here"
+          ],
+          "clickable_url": "https://bit.ly/4zpRakd"
+        }
+      ],
+      "expected": {
+        "relevance": "food",
+        "promotion_kind": "food_promotion",
+        "offer_count": 1,
+        "explicit_location_count": 1,
+        "disposition": "success",
+        "review_reasons": [],
+        "classification_evidence": [
+          "🥤 Moon Juice Kombucha 🥤"
+        ],
+        "offers": [
+          {
+            "benefit": "$1 kombucha",
+            "evidence": [
+              "$1 kombucha"
+            ],
+            "location_scope": "explicit",
+            "excluded_outlets": [],
+            "availability": {
+              "start_date": null,
+              "end_date": null,
+              "valid_dates": [
+                "2026-08-22",
+                "2026-08-23",
+                "2026-08-29",
+                "2026-08-30"
+              ],
+              "weekdays": null,
+              "date_status": "parsed",
+              "evidence": [
+                "22, 23, 29, 30 Aug"
+              ]
+            },
+            "locations": [
+              {
+                "label": "Great World",
+                "unit": null,
+                "effective_availability": {
+                  "start_date": null,
+                  "end_date": null,
+                  "valid_dates": [
+                    "2026-08-22",
+                    "2026-08-23",
+                    "2026-08-29",
+                    "2026-08-30"
+                  ],
+                  "weekdays": null,
+                  "date_status": "parsed",
+                  "evidence": [
+                    "22, 23, 29, 30 Aug"
+                  ]
+                },
+                "evidence": [
+                  "Great World"
+                ],
+                "resolution_note": null
+              }
+            ],
+            "material_restrictions": [
+              "12-5pm",
+              "T&Cs apply, more info here"
+            ],
+            "notes": null,
+            "merchant": "Moon Juice Kombucha"
+          }
+        ]
+      },
+      "review_notes": null
+    }
+  ]
+}

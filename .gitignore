@@ -10,3 +10,10 @@ wheels/
 .venv
 
 Telegram_AUG_2026/
+
+# Generated pipeline artifacts (reviewed overrides remain versioned)
+data/intermediate/
+data/cache/
+data/published/
+data/reports/
+.env

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {"export_root": "../Telegram_AUG_2026/GoodLobang_AUG_2026", "channel_id": 1216422279, "name": "GoodLobang", "username": "goodlobang", "export_timezone": "Asia/Singapore"},
+    {"export_root": "../Telegram_AUG_2026/KiasuFoodies_AUG_2026", "channel_id": 1329056215, "name": "KiasuFoodies", "username": "kiasufoodies", "export_timezone": "Asia/Singapore"},
+    {"export_root": "../Telegram_AUG_2026/SGFoodDeals_AUG_2026", "channel_id": 1204657101, "name": "SGFoodDeals", "username": "sgfooddeals", "export_timezone": "Asia/Singapore"}
+  ]
+}

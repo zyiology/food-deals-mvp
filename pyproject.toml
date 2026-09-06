@@ -7,7 +7,9 @@ authors = [
     { name = "zhiyi.chia", email = "zhiyi.chia@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "pydantic>=2.13.5",
+]
 
 [project.scripts]
 food-deals-mvp = "food_deals_mvp:main"
@@ -18,5 +20,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "pytest>=9.1.1",
     "ruff>=0.16.6",
+    "ty>=0.0.78",
 ]

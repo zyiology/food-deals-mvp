@@ -1,8 +1,8 @@
 # Telegram food deals map: implementation plan
 
-Status: **draft for user review; implementation has not started**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
+Status: **overview decisions confirmed; preprocessing and LLM plans revised for review; later phase plans remain unreviewed; implementation has not started**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
 
-## Goal and recommended approach
+## Goal and approach
 
 Build a local application that makes it easy to inspect food offers around an area of Singapore. Process manually exported Telegram data through an offline pipeline, publish a validated JSON snapshot, and serve it with FastAPI and a lightweight Leaflet interface. The browser and API must work from existing results without calling an LLM or geocoder.
 
@@ -10,33 +10,35 @@ The proposed stack is appropriate for this data volume. The significant work is 
 
 The initial data contains 139 records, including 136 text-bearing posts, 132 available photos, two pin-service records, one poll, and four omitted videos/animations. See [the data review](01-data-review.md) for measured findings and concrete edge cases. Extraction and mapping coverage have not yet been measured.
 
-## Decisions for review
+## Confirmed decisions
 
-The following questions were raised during planning. Until answered, the recommendations below define the provisional draft, not confirmed requirements.
+The user accepted the recommended first-version choices below on 2026-09-06. Unmapped offers remain in internal processing records and reports, but are omitted from the public MVP following the Phase 2 decision.
 
-| Decision | Recommended first version | Effect of choosing more scope |
+| Decision | Confirmed first version | Effect of choosing more scope |
 | --- | --- | --- |
-| Deals saying “all/selected/most outlets” without a branch list | Retain as unmapped; map only explicit supported locations | Branch discovery needs a separate source of outlet and participation evidence, with exclusions and freshness tracking. |
+| Deals saying “all/selected/most outlets” without a branch list | Retain internally as unmapped; map only explicit supported locations | Branch discovery needs a separate source of outlet and participation evidence, with exclusions and freshness tracking. |
 | Extraction inputs | Caption text and text/link metadata; retain images for display | Reading images adds cost, conflict resolution, and a vision evaluation step. Following links adds fetching and content-extraction work. |
 | Date handling beyond start/end | Support explicit dates, ranges, and weekdays; display time/holiday restrictions as text | Start/end only is simpler, but can show separate-date offers on invalid days. If selected, label results as within an advertised period rather than active that day. |
 
 Confirmed from the source notes: duplicate an offer into separate normalized rows for its locations; leave unspecified date boundaries null; an absent end date does not automatically expire an offer; assign marker numbers from the current viewport.
 
-Other proposed defaults are recorded as review questions in the phase plans. Most can be resolved within the corresponding phase. In particular, define relevance broadly enough to include food/drink offers and free samples, while excluding unrelated advertising; flag mixed entertainment/product promotions for review.
+Additional confirmed decisions: use the supplied channels’ public usernames; retain original captions in deal details; process only the three existing exports; start with `meta/muse-spark-1.3-contributor` through OpenRouter under a cumulative US$5 cap; let the LLM classify pure listings and mixed promotions; and omit unmapped offers from the public MVP. Evaluate the selected model on the pilot first and continue with it if satisfactory; comparing other models is unnecessary unless the pilot reveals a problem. See the revised phase plans for details.
+
+The [geocoding](04-geocoding.md), [FastAPI](05-fastapi.md), and [Leaflet](06-leaflet.md) plans remain unreviewed and are unchanged in this revision. Their proposals to publish unmapped rows, expose unmapped API filters, and add mapped/unmapped tabs are superseded by the confirmed mapped-only public scope here; align those documents when reviewing those phases.
 
 ## MVP scope
 
 Included:
 
-- Manual imports of the three existing exports and repeatable imports of later exports in the same format.
+- Batch normalization of the three existing exports, with deterministic reruns of those same inputs.
 - Lossless source traceability, semantic relevance classification, structured offer/location/date extraction, and persistent caches.
 - Conservative Singapore geocoding of explicit locations, with a small file-based manual correction process.
-- Validated mapped and unmapped results, plus a processing report that explains exclusions and failures.
+- Validated internal mapped and unmapped results, a mapped-only public snapshot, and a processing report that explains exclusions and failures.
 - A local read-only FastAPI API, safe source-image serving, and static HTML/CSS/JavaScript.
 - A Leaflet map and viewport-aware deal list with matching ephemeral numbers and synchronized selection.
 - A visible reference-date selector, optional post-age filter, and historical browsing for the August data.
 
-Deferred: automatic Telegram ingestion, scheduled jobs, accounts, database, deployment infrastructure, automated campaign deduplication, branch discovery, linked-page ingestion, vision extraction under the provisional scope, sophisticated search, and exact “redeemable right now” checks for opening hours, holidays, stock, or membership.
+Deferred: later-export ingestion and overlap/revision merging, a public unmapped-offer list, automatic Telegram ingestion, scheduled jobs, accounts, database, deployment infrastructure, automated campaign deduplication, branch discovery, linked-page ingestion, vision extraction, sophisticated search, and exact “redeemable right now” checks for opening hours, holidays, stock, or membership.
 
 ## Phase order and review gates
 
@@ -84,7 +86,7 @@ src/food_deals_mvp/
   publishing.py
   api.py
   static/                 # HTML, CSS, JS, pinned Leaflet assets
-config/sources.json       # source IDs and verified public usernames
+config/sources.json       # source IDs and user-confirmed public usernames
 data/intermediate/        # versioned local stage artifacts
 data/cache/llm/
 data/cache/geocoding/
@@ -103,11 +105,11 @@ Use `schema_version` on each artifact and a run manifest with input hashes, rele
 | Entity | Minimum fields and rules |
 | --- | --- |
 | Source post | `post_id = telegram:<channel_id>:<message_id>`, numeric IDs, source name, configured username/nullable Telegram URL, timezone-aware `posted_at` and `edited_at`, exact flattened text, original text/entities reference, extracted links, media references/status, source file, source-content hash, extraction-input hash. |
-| Post extraction | `post_id`, processing status, relevance (`food`, `non_food`, `uncertain`), reason/evidence, zero or more offers, prompt/schema/model/provider metadata. A successful empty result is distinct from a failed request. |
+| Post extraction | `post_id`, processing status, relevance (`food`, `non_food`, `uncertain`), promotion kind (`food_promotion`, `pure_listing`, `mixed_promotion`, `uncertain`), reason/evidence, zero or more offers, prompt/schema/model/provider metadata. A successful empty result is distinct from a failed request. |
 | Offer | Application-assigned `offer_id`, source reference, grounded title/description, merchant if known, terms, availability, location scope (`explicit`, `all_outlets`, `selected_outlets`, `online_only`, `unspecified`), exclusions, zero or more explicit locations, supporting caption evidence. |
 | Location candidate | Application-assigned key, original location text, venue/building/address/unit components when supported, evidence, effective location-specific availability. Do not infer a full address from model memory. |
 | Location resolution | Candidate/query key, normalized query, provider/version, status (`matched`, `ambiguous`, `not_found`, `not_attempted`, `error`), selected result and candidate evidence, latitude/longitude or null, precision (`outlet`, `building`), lookup time, optional reviewed override. |
-| Published deal row | `deal_id`, `post_id`, `offer_id`, source/title/description/terms, posting date, effective availability, original location label/scope, mapping status/reason, nullable coordinate pair, precision, safe image URL, Telegram URL and information links. One row per explicit offer/location pairing; an offer with no explicit location has one unmapped row. |
+| Published deal row | `deal_id`, `post_id`, `offer_id`, source/title/description/terms, posting date, effective availability, original location label/scope, accepted mapping status, non-null coordinate pair, precision, safe image URL, original caption, Telegram URL and information links. One row per explicit offer/location pairing with accepted coordinates. Unmapped offers and unresolved location rows remain internal and are excluded from publication. |
 
 Keep source IDs stable across edits. Assign offer and candidate keys deterministically from validated semantic content within a post; do not depend on the LLM array order or ask it to generate IDs. Unchanged cached input/output must preserve row IDs. A substantive offer/location correction can replace its derived ID; record that relationship in the run report and invalidate associated stale overrides. Cross-channel campaign identity is deferred.
 
@@ -115,11 +117,11 @@ Date fields remain dates, not UTC-midnight timestamps. `availability` contains `
 
 Published JSON uses named `latitude` and `longitude` fields in WGS84 decimal degrees; the client passes `[latitude, longitude]` to Leaflet. Do not store Web Mercator coordinates or confuse GeoJSON's reverse array order with Leaflet's order. Exact unit-level positioning is not promised when the matched place is a building.
 
-The single published `deals.json` envelope contains `schema_version`, `dataset_id`, `generated_at`, `timezone`, `source_date_range`, processing summary, and `deals`. Mapped rows require a finite valid coordinate pair and accepted precision; other rows require both coordinates null. The API exposes public fields only, never raw LLM responses, cache files, local absolute paths, or secrets.
+The single published `deals.json` envelope contains `schema_version`, `dataset_id`, `generated_at`, `timezone`, `source_date_range`, processing summary, and `deals`. Every published row requires a finite valid coordinate pair and accepted precision. Internal unmapped rows require both coordinates null and remain available in processing reports. The API exposes public fields only, never raw LLM responses, cache files, local absolute paths, or secrets.
 
 ## Availability and historical data
 
-Default the reference date to the current date in `Asia/Singapore`; always show it and allow changing it. Exclude posts published after the reference date. Known start/end dates are inclusive. An unspecified start adds no lower bound beyond the posting date, and an unspecified end adds no expiry. Explicit date lists and weekdays further constrain eligibility under the recommended scope.
+Default the reference date to the current date in `Asia/Singapore`; always show it and allow changing it. Exclude posts published after the reference date. Known start/end dates are inclusive. An unspecified start adds no lower bound beyond the posting date, and an unspecified end adds no expiry. Explicit date lists and weekdays further constrain eligibility under the confirmed scope.
 
 Call the filter “Valid on selected date”; display unknown expiry and unevaluated restrictions clearly. It does not assert stock availability or eligibility at the current time. Do not persist a time-dependent `is_active` flag in the dataset. Compute it through the same backend evaluator for every request.
 
@@ -131,7 +133,7 @@ Default the optional post-age limit to off, preserving the requested no-expiry r
 - Cache keys include the inputs and settings that affect that stage. Do not invalidate LLM results because unrelated reaction counts changed; do invalidate them when text, date context, prompt, model, or extraction schema changes.
 - Use one writer, checkpoint completed provider work, and atomically replace final JSON. Publish only a validated snapshot. Partial processing requires explicit operator selection and produces a visible incomplete-data summary; never silently drop failures and call the run complete.
 - Require IDs/counts to reconcile across stages, and review false positives as well as mapping coverage. Record manual corrections separately from raw evidence.
-- Proposed pilot target: review every mapped pilot row and resolve or remove every known incorrect pin before serving it. Record extraction correctness on the annotated slice and actual coverage/cost before deciding on a model or broader enrichment. Do not invent an accuracy percentage before obtaining labels.
+- Proposed pilot target: review every mapped pilot row and resolve or remove every known incorrect pin before serving it. Record extraction correctness on the annotated slice and actual coverage/cost before continuing with the selected model or considering broader enrichment. Do not invent an accuracy percentage before obtaining labels.
 - Final usefulness check: inspect a few Singapore areas on August 9, August 18, and the current date; confirm source links and terms are accessible, and decide whether the number of correct useful offers justifies expanding the data sources.
 
 Proposed validation during implementation: `uv run ruff check`, `uv run ty check`, and `uv run pytest`, with external services stubbed in automated tests. Frontend state logic should have focused checks plus a manual browser pass. Per [AGENTS.md](../../AGENTS.md), implementing a feature is followed by a separate proposal/approval for adding or changing tests and user documentation; this planning request authorizes these plan documents only. Do not create application code until the user reviews the plan.
@@ -140,7 +142,7 @@ Proposed validation during implementation: `uv run ruff check`, `uv run ty check
 
 **Public Nominatim is a conditional option for a small one-time job.** Its [usage policy](https://operations.osmfoundation.org/policies/nominatim/) imposes request-rate, caching, identification, and bulk-use restrictions. Review the concrete controls in [Phase 3](04-geocoding.md) before using the provider named in the original draft.
 
-Leaflet and FastAPI are the requested application stack. Model/provider selection remains configurable rather than committing to an untested “cheap” model. Technical references and provider-specific requirements are linked in the corresponding phase plans; they were checked on 2026-09-06.
+Leaflet and FastAPI are the requested application stack. The initial model is `meta/muse-spark-1.3-contributor` through OpenRouter, with a cumulative US$5 spending cap covering the pilot and remaining batch, including retries and repair attempts. Its suitability and endpoint capabilities must be checked during the pilot; model/provider settings remain configurable. No paid model run is part of this documentation revision. Technical references and provider-specific requirements are linked in the corresponding phase plans; they were checked on 2026-09-06.
 
 ## Possible later phases
 

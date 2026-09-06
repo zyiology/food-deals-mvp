@@ -1,14 +1,30 @@
 # Food deals MVP
 
 A local application for exploring Telegram food offers around Singapore.
-**Phase 1 (preprocessing) is implemented.** LLM extraction, geocoding, the API,
-and the map interface are planned in [docs/plans/README.md](docs/plans/README.md).
+**Preprocessing and the LLM extraction pipeline are implemented.** Phase 2
+still awaits annotation review and paid pilot evaluation. Geocoding, the API,
+and the map interface remain planned in [docs/plans/README.md](docs/plans/README.md).
 
-The current CLI normalizes the three supplied August 2026 exports into an
+The normalization CLI converts the three supplied August 2026 exports into an
 inspectable source dataset. It preserves captions, hidden links, timestamps,
 and raw records; inventories media; and reports structural exclusions. It makes
 no LLM, geocoding, or linked-page requests. Text candidates still include
 non-food advertising; semantic classification belongs to Phase 2.
+
+The extraction CLI adds structured offer/location/date extraction, evidence checks,
+cache recovery, reviewed corrections, and cumulative spending controls. See the
+[operation guide](docs/llm-processing.md) and
+[draft 30-post pilot annotations](docs/llm-pilot-review.md). No model quality or
+mapping coverage is claimed before evaluation.
+
+```bash
+uv run food-deals-mvp extract --dry-run
+uv run food-deals-mvp extract --post-ids config/llm-pilot-post-ids.json --limit 30 --dry-run
+```
+
+Dry-run needs no key and makes no requests or writes. Review the pilot annotations
+before running paid extraction; the operation guide explains that workflow and
+the shared US$5 ledger.
 
 ## Setup
 
@@ -107,9 +123,15 @@ uv run ty check
 uv run pytest
 ```
 
-Tests use synthetic exports and temporary output directories, with no network or
-provider credentials. They cover captions/links, exclusions, media containment,
+Tests use synthetic exports and temporary output/state directories, with network
+connections blocked and no provider credentials. They cover captions/links, exclusions, media containment,
 timestamps, fingerprints, deterministic reruns, failure recovery, and CLI behavior.
 An additional aggregate check runs against the three local exports when present;
 it is skipped when those exports are absent. Tests do not copy the photo collection
 or write to the normal `data/` output directory.
+
+Extraction checks also cover availability inheritance, evidence grounding, cache
+identity/recovery, bounded retries and repair, spending reservations, interrupted
+refreshes, and full-batch review gates. The draft pilot fixture is checked for
+balance, exact source evidence and supported schedule shapes; semantic model
+accuracy remains subject to the reviewed paid pilot.

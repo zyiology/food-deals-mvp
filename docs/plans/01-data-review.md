@@ -58,7 +58,7 @@ This small sample does not establish image-wide extraction accuracy or the propo
 
 ## Suggested evaluation slice
 
-Use approximately 20–25 posts covering the cases above, including both clearly mappable and deliberately unmappable examples. Record human expectations for relevance, offer splitting, location/date associations, source links, and location precision. Include examples not used in the prompt when checking model quality.
+The original suggestion of approximately 20–25 posts is superseded by the readiness-review decision: use 30 posts, 10 per channel, covering the cases above, including both clearly mappable and deliberately unmappable examples. Record human expectations for relevance, offer splitting, location/date associations, source links, and location precision. Include examples not used in the prompt when checking model quality. The [Phase 2 plan](03-llm-processing.md#acceptance-and-proposed-verification) defines selection, held-out examples, and proposed acceptance criteria.
 
 Report a funnel with explicit denominators: 139 raw records → 136 text candidates → classified relevant posts → extracted offers → explicit location candidates → accepted mapped rows. Also report exclusions, unresolved cases, processing failures, and duplicate campaign candidates separately. Actual values after the first two stages are unknown until implementation and evaluation.
 

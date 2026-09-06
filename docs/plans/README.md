@@ -1,6 +1,6 @@
 # Telegram food deals map: implementation plan
 
-Status: **overview decisions confirmed; preprocessing and LLM plans revised for review; later phase plans remain unreviewed; implementation has not started**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
+Status: **implementation started; Phase 1 preprocessing complete and verified; Phase 2 pipeline and offline tests implemented, draft pilot annotations awaiting review and paid evaluation; later phase plans remain unreviewed**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
 
 ## Goal and approach
 
@@ -24,6 +24,8 @@ Confirmed from the source notes: duplicate an offer into separate normalized row
 
 Additional confirmed decisions: use the supplied channels’ public usernames; retain original captions in deal details; process only the three existing exports; start with `meta/muse-spark-1.3-contributor` through OpenRouter under a cumulative US$5 cap; let the LLM classify pure listings and mixed promotions; and omit unmapped offers from the public MVP. Evaluate the selected model on the pilot first and continue with it if satisfactory; comparing other models is unnecessary unless the pilot reveals a problem. See the revised phase plans for details.
 
+The readiness review confirmed a curated 30-post pilot with 10 posts from each channel, field-level inheritance of unspecified location availability with explicit local facts taking precedence, spending reservations persisted before requests, and validation of the normalization completion report and matching artifact IDs before extraction. The [Phase 2 plan](03-llm-processing.md) defines the proposed pilot acceptance criteria and recovery behavior.
+
 The [geocoding](04-geocoding.md), [FastAPI](05-fastapi.md), and [Leaflet](06-leaflet.md) plans remain unreviewed and are unchanged in this revision. Their proposals to publish unmapped rows, expose unmapped API filters, and add mapped/unmapped tabs are superseded by the confirmed mapped-only public scope here; align those documents when reviewing those phases.
 
 ## MVP scope
@@ -45,7 +47,7 @@ Deferred: later-export ingestion and overlap/revision merging, a public unmapped
 | Phase | Plan | Deliverable | Completion gate |
 | --- | --- | --- | --- |
 | 1 | [Preprocessing and shared contracts](02-preprocessing.md) | Local importer, typed contracts, normalized source snapshot, media manifest, import report | All 139 records accounted for; 136 text candidates; hidden URLs preserved; repeat import is idempotent. |
-| 2 | [LLM extraction and availability](03-llm-processing.md) | Structured extraction cache, expanded offer/location rows, date evaluator, review output | Small annotated pilot reviewed; no invented branch expansion; location/date associations pass edge cases. |
+| 2 | [LLM extraction and availability](03-llm-processing.md) | Structured extraction cache, expanded offer/location rows, date evaluator, review output | Annotated 30-post pilot (10 per channel) meets Phase 2 criteria and is reviewed; no invented branch expansion; location/date associations pass edge cases. |
 | 3 | [Geocoding and dataset publication](04-geocoding.md) | Cached location resolutions, manual overrides, validated published snapshot | Every accepted pilot pin reviewed; unresolved locations retained; repeat run avoids cached network requests. |
 | 4 | [FastAPI](05-fastapi.md) | Read-only API and safe assets/media routes | API works without provider keys; date/filter behavior and failure responses are verified. |
 | 5 | [Leaflet and end-to-end evaluation](06-leaflet.md) | Usable map/list interface | Numbering, selection, overlapping pins, historical dates, and empty/error states work on the supplied data. |

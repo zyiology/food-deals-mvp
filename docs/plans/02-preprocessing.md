@@ -1,6 +1,8 @@
 # Phase 1: preprocessing and shared contracts
 
-Status: revised to reflect user decisions on 2026-09-06; implementation has not started. Uses the confirmed scope in [the overview](README.md). This phase makes no LLM or geocoding requests.
+Status: **implemented and verified on 2026-09-06**. Uses the confirmed scope in [the overview](README.md). This phase makes no LLM or geocoding requests. The implementation steps below record the agreed scope; current usage is documented in the [project README](../../README.md).
+
+Verification: Ruff and ty pass, and all 37 tests pass, including the supplied-export integration check. The saved normalization report is successful with matching artifact dataset IDs, 139 raw records, 136 candidates, 132 available photos, four unavailable video/animation attachments, and no errors or warnings.
 
 ## Outcome
 
@@ -27,7 +29,7 @@ Maintain two hashes: a source-content hash for traceability, and an extraction-i
 
 The importer does not create coordinates, assert a food deal, generate branch names, infer promotional dates, or merge campaigns across channels. Preserve the supplied raw records or immutable source references for inspection; later-export compatibility is deferred.
 
-Suggested command interface, not yet implemented:
+Implemented command interface:
 
 ```bash
 uv run food-deals-mvp normalize --sources config/sources.json
@@ -45,7 +47,9 @@ Fail with a useful message if a configured export root is missing. Reports may c
 - Running the importer twice yields identical normalized content/IDs, with no duplicate source posts.
 - Duplicate channel/message keys fail validation instead of silently overwriting a source post; no later-export revision workflow is required.
 
-Proposed focused tests, to request approval for during implementation: text flattening and hidden links, service/poll exclusions, omitted-media sentinel, path traversal/symlink escape, timestamp fallback/conflict, duplicate source keys, malformed export, and deterministic batch reruns. A small sample plus aggregate checks against the supplied exports is enough; do not copy all photos into test fixtures.
+Implemented focused tests cover text flattening and hidden links, service/poll exclusions, omitted-media sentinel, path traversal/symlink escape, timestamp fallback/conflict, duplicate source keys, malformed export, and deterministic batch reruns. Synthetic fixtures plus aggregate checks against the supplied exports avoid copying the photo collection into test fixtures.
+
+Downstream consumers must require a successful normalization report and matching dataset IDs across the report, posts, and media manifest. Phase 2 will share this validation with the existing report command through a reusable loader. A failed report or an interrupted write must stop extraction before any paid request, even if an older posts snapshot remains readable.
 
 ## Confirmed decisions
 

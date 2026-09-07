@@ -1,14 +1,14 @@
 # Phase 5: Leaflet interface and end-to-end evaluation
 
-Status: draft. Depends on [FastAPI's public contract](05-fastapi.md). Preserves the requested numbered viewport markers and matching deal cards.
+Status: planned; aligned with the implemented mapped-only API. Map interactions remain to be reviewed and implemented. Depends on [FastAPI's public contract](05-fastapi.md). Preserves the requested numbered viewport markers and matching deal cards.
 
 ## Outcome and layout
 
 Build a small HTML/CSS/JavaScript app served by FastAPI. Desktop layout has a scrollable deal list beside the map; narrow screens stack the map and list with usable minimum heights. Use local pinned Leaflet assets, retain their licence, and avoid adding a frontend framework or build system solely for this MVP.
 
 ```text
-Food deals     Date [2026-08-18]  [Today]  [Valid on selected date]
-Posted within [Any time]         [Mapped] [Unmapped]
+Food deals     Date [2026-08-26]  [Today]  [ ] Valid on selected date
+Posted within 60 days (server setting)
 Source posts: Aug 1–31, 2026      Updated: <dataset generation time>
 +----------------------------+------------------------------------+
 | 6 mapped deals in this view|                                    |
@@ -22,9 +22,9 @@ Numbers above are illustrative, not measured counts. Show dataset incompleteness
 
 ## State and viewport algorithm
 
-Maintain a small explicit state object: loaded rows, request/filter state, current map bounds, selected `deal_id`, active mapped/unmapped tab, and current `deal_id → display number` mapping. Stable IDs identify deals; display numbers never enter storage or API identity.
+Maintain a small explicit state object: loaded rows, request/filter state, current map bounds, selected `deal_id`, and current `deal_id → display number` mapping. Stable IDs identify deals; display numbers never enter storage or API identity.
 
-1. Fetch `/api/deals?mapping=all` on initial load and date/filter changes. The backend evaluates availability. Separate rows with accepted coordinates from unmapped rows.
+1. Fetch `/api/deals` on initial load, then use `as_of` and `validity` on date/toggle changes. Initialize controls from the response’s effective `filters`. All returned rows are mapped; the backend evaluates availability and applies the configured posting cutoff.
 2. Initialize the map over Singapore; on first successful load, optionally fit all filtered mapped points with a maximum zoom suitable for a single point. If no points exist, retain a Singapore-wide view. Do not refit on ordinary panning, selecting a card, or refreshing data for a filter change after initialization.
 3. On map `moveend` (which covers completed pan/zoom changes), derive `visibleRows` by checking each mapped row against the geographic bounds. Boundary points count as visible. Keep this a pure filter over true stored coordinates.
 4. Sort visible rows by descending posting timestamp, then stable `deal_id`, matching the API tie-break. Assign ephemeral integers `1..N` from that single array.
@@ -45,23 +45,23 @@ For the first version, retain individual numbered markers/cards and provide an o
 
 At low zoom, unrelated nearby coordinates can also visually overlap. The complete sidebar remains the fallback and zooming separates them. If this is too awkward in the pilot, prefer a small explicit spiderfy interaction as a later refinement; any display offset must leave the underlying coordinate and viewport membership unchanged.
 
-## Cards, details, and unmapped offers
+## Cards and details
 
 Each compact card shows its current number, grounded offer title, merchant/venue/unit, posting date, validity dates or “End date not stated”, relevant restrictions, and optional lazy-loaded image. Details show full terms/source caption and separate actions for the Telegram post and supporting information URL. Building matches show “Approximate building location”.
 
 Render captions/model-derived strings using `textContent` or safe DOM construction. Never insert raw captions into `innerHTML` or Leaflet HTML popup strings. Permit only validated HTTP(S) external links; use `noopener noreferrer` for links opened in a new tab. These external-link settings must not suppress the basemap's page Referer header.
 
-The **Mapped** tab shows only viewport rows and their ephemeral map numbers. The **Unmapped** tab shows relevant unmapped rows for the same date/age filters, with clear scope/reason text such as “All outlets; branches not listed” or “Location needs review”. It has no map numbers and is not viewport-filtered because those rows have no coordinates. Switching tabs preserves the map view and keeps count labels explicit: rows are offers at locations, not unique restaurants.
+Show one viewport-filtered list with ephemeral map numbers. There are no mapped/unmapped tabs: unresolved rows remain internal. Keep count labels explicit: rows are offers at locations, not unique restaurants. Display the partial-sample limitation and the effective “Posted within N days” from `filters.max_age_days`; the cutoff is a server setting, not a browser control.
 
-The date control defaults to today's Singapore date, is always visible, and has a “Today” reset. The “Valid on selected date” toggle requests the backend's `valid` or `all` mode. In `all`, cards clearly label out-of-period or unknown-validity offers. Do not duplicate date evaluation in JavaScript; use API-provided status.
+The date control initially uses the API's effective `filters.as_of` (August 26, 2026 for this pilot), is always visible, and has a “Today” action calculated in Singapore time. The “Valid on selected date” toggle starts unchecked (`all`) and requests the backend's `valid` or `all` mode. In `all`, cards clearly label out-of-period or unknown-validity offers. Do not duplicate date evaluation in JavaScript; use API-provided status.
 
 ## Implementation steps
 
 1. Add static HTML/CSS with map/list layout, visible controls, status area, and a nonzero map height. Ensure viewport resize calls the map's size update after layout changes.
 2. Add fetch/loading/error state handling. Cancel or ignore obsolete requests when filters change rapidly so an earlier response cannot overwrite a later date selection. Retain last good data only if it is labelled with its actual filters; otherwise clear it while loading.
-3. Implement pure row partitioning, stable sorting, and viewport numbering helpers, then wire them to Leaflet events and card rendering.
+3. Implement pure viewport filtering, stable sorting, and numbering helpers, then wire them to Leaflet events and card rendering.
 4. Implement selection by ID, popup/detail content, overlap chooser, and keyboard/focus behavior. Use a visible focus style and selection cue beyond color alone.
-5. Add the mapped/unmapped tabs, date/toggle/age controls, dataset date-range display, and source/image details. Apply date/age filters through new API requests; panning stays entirely local.
+5. Add date/toggle controls, the fixed cutoff label, dataset date-range display, and source/image details. Apply date/validity filters through new API requests; panning stays entirely local.
 6. Add empty/error states and a useful retry action. Distinguish “No deals in this area”, “No deals match this date/filter”, “No mapped locations yet”, unavailable dataset, and unavailable map tiles. Missing images must not break cards.
 7. Complete the manual data/browser evaluation and record observed usefulness, coverage, and remaining problems before deciding on a later enrichment phase.
 
@@ -75,11 +75,11 @@ A tile failure should leave the deal list, filters, and source links usable and 
 
 Functional checks:
 
-- Initial load shows Singapore, the effective reference date, and dataset range. A current-date view can legitimately have few offers from an August export.
+- Initial load shows Singapore, the effective historical reference date, dataset range, cutoff, and all 15 approved pilot rows before viewport filtering. A current-date view can legitimately have few or no offers from an August export.
 - Pan/zoom recomputes one matching contiguous number sequence for cards and markers. Identical viewport/data yields identical ordering.
 - Selecting a marker or card selects the same stable row; renumbering never transfers selection to a different offer. Leaving the viewport clears selection.
 - Multi-location offers appear at their individual locations with their corresponding dates; overlapping rows remain individually accessible.
-- The unmapped tab remains usable without adding pins or implying proximity. Changing date/filter updates both mapped and unmapped data consistently.
+- Changing date/validity filters updates the map and list consistently; there are no unmapped results or tabs.
 - Rapid filter changes cannot show a stale response. Broken images, empty data, API failure, and tile failure have distinct recoverable states.
 - All actions needed to inspect a deal can be performed through keyboard-operable list controls. Narrow screens retain readable cards, usable map controls, and visible attribution.
 - Raw text containing HTML-like markup renders as text; unsafe URL schemes cannot become active links.
@@ -89,13 +89,13 @@ Propose focused tests for viewport membership/order/numbering, selection transit
 End-to-end review with the supplied exports:
 
 1. Rebuild locally from saved caches and verify the source → offer → location → map counts reconcile.
-2. Inspect August 9 and August 18 for known single-day and outlet-specific cases, then reset to the current date. The reference date controls both availability and future-post exclusion.
+2. Start on the suggested August 26 date with all 15 rows; inspect August 9 and August 18 for any retained sample rows, then switch to the current Singapore date. The reference date controls both availability and future-post exclusion.
 3. Inspect Orchard, a non-central area with mapped data, and an empty area. Check at least several displayed offers against their captions and exact venue evidence.
-4. Confirm that uncertain geography and omitted branches are visible as limitations, not misleading map pins, and that all-outlet offers with unknown expiry follow the chosen rule.
+4. Confirm all pilot pins show building-level precision, the selected-sample limitation is visible, and omitted branches stay absent. Check that unknown expiry and the independent posting cutoff follow the API contract.
 5. Decide whether the number and correctness of useful offers justify branch discovery, image extraction, or more recent exports. Record measured results; do not equate “the page runs” with the MVP's usefulness criterion.
 
 ## Review questions
 
 1. Is the overlap chooser sufficient initially, or are individually separated pins essential? Recommendation: chooser first, then refine after seeing actual overlap density.
 2. Should the initial view fit all filtered mapped deals or use a fixed Singapore extent? Recommendation: fit once on first load, preserve the user's viewport thereafter.
-3. Are mapped/unmapped tabs and a visible date selector acceptable additions to the original layout? Recommendation: yes; they make the supplied historical data and incomplete location coverage understandable.
+Confirmed API/UI scope: mapped-only results, a visible historical date selector, `validity=all` initially, and a displayed server-configured posting cutoff. No unmapped tabs or age selector are planned.

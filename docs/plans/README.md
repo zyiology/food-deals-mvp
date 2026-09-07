@@ -1,10 +1,10 @@
 # Telegram food deals map: implementation plan
 
-Status: **Phase 1 preprocessing complete and verified; Phase 2 pipeline implemented and the 30-post paid pilot run completed on 2026-09-06; only five development posts compared so far; later phase plans remain unreviewed**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
+Status: **Phases 1–4 complete for the selected demo scope; 15 reviewed rows published at 10 distinct coordinates, with five selected rows omitted; Phase 5 remains planned**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
 
 The local pilot artifacts contain 34 offers and 22 explicit offer/location rows. The first five development comparisons recorded one match and four mismatches against draft annotations; the other 25 posts remain unscored. These are provisional findings, not a completed accuracy evaluation. See the [pilot review status](../llm-pilot-review.md).
 
-On 2026-09-07 the user approved a smaller route to demonstrating the website experience. The rewritten [Phase 2 plan](03-llm-processing.md) replaces exhaustive annotation approval with an offline visual review of a small demo sample. The workflow is implemented; geocoding and the website remain subsequent phases.
+On 2026-09-07 the user approved a smaller route to demonstrating the website experience. The rewritten [Phase 2 plan](03-llm-processing.md) replaces exhaustive annotation approval with an offline visual review of a small demo sample. The review workflow, geocoding/publication, read-only API, and status shell are implemented. The map interface remains subsequent work.
 
 ## Goal and approach
 
@@ -30,7 +30,7 @@ Additional confirmed decisions: use the supplied channels’ public usernames; r
 
 The completed pilot contains 10 posts per channel. Preserve its original caches and draft annotations as historical artifacts. The current workflow reuses saved outputs offline, accepts equivalent benefit/location/date grouping, and treats taxonomy and model review notes as advisory. Keep existing date handling, spending reservations, and source-artifact validation. Additional paid extraction uses an explicit demo continuation decision rather than exhaustive 30-post approval.
 
-The [geocoding](04-geocoding.md), [FastAPI](05-fastapi.md), and [Leaflet](06-leaflet.md) plans remain unreviewed and are unchanged in this revision. Their proposals to publish unmapped rows, expose unmapped API filters, and add mapped/unmapped tabs are superseded by the confirmed mapped-only public scope here; align those documents when reviewing those phases.
+The [geocoding plan](04-geocoding.md) is implemented for the 20 selected demo rows. [FastAPI](05-fastapi.md) now serves the 15 approved rows with the snapshot’s suggested historical date, `validity=all`, and a server-configurable 60-day posting cutoff. The [Leaflet plan](06-leaflet.md) is aligned with that mapped-only contract; map implementation and interaction review remain Phase 5.
 
 ## MVP scope
 
@@ -42,7 +42,7 @@ Included:
 - Validated internal mapped and unmapped results, a mapped-only public snapshot, and a processing report that explains exclusions and failures.
 - A local read-only FastAPI API, safe source-image serving, and static HTML/CSS/JavaScript.
 - A Leaflet map and viewport-aware deal list with matching ephemeral numbers and synchronized selection.
-- A visible reference-date selector, optional post-age filter, and historical browsing for the August data.
+- A visible reference-date selector, a server-configured posting cutoff displayed in the UI, and historical browsing for the August data.
 
 Deferred: later-export ingestion and overlap/revision merging, a public unmapped-offer list, automatic Telegram ingestion, scheduled jobs, accounts, database, deployment infrastructure, automated campaign deduplication, branch discovery, linked-page ingestion, vision extraction, sophisticated search, and exact “redeemable right now” checks for opening hours, holidays, stock, or membership.
 
@@ -56,7 +56,7 @@ Deferred: later-export ingestion and overlap/revision merging, a public unmapped
 | 4 | [FastAPI](05-fastapi.md) | Read-only API and safe assets/media routes | API works without provider keys; date/filter behavior and failure responses are verified. |
 | 5 | [Leaflet and end-to-end evaluation](06-leaflet.md) | Usable map/list interface | Numbering, selection, overlapping pins, historical dates, and empty/error states work on the supplied data. |
 
-Complete and review each phase before expanding scope. Phases 1–3 produce independently inspectable data artifacts. Phase 4 can begin with a small validated fixture once the shared schema is agreed; Phase 5 can then use that API while geocoding coverage is reviewed. This is sequencing guidance, not a request to implement concurrently now.
+Complete and review each phase before expanding scope. Phases 1–3 produce independently inspectable data artifacts. Phase 4 serves the approved pilot and has regression coverage using synthetic snapshots. Phase 5 can now consume that API; more extraction or geocoding is not a prerequisite for the selected demo.
 
 ## Architecture
 
@@ -90,7 +90,11 @@ src/food_deals_mvp/
   availability.py         # one deterministic date evaluator
   geocoding.py            # query building, provider adapter, matching
   publishing.py
-  api.py
+  api.py                  # routes and startup lifecycle
+  api_settings.py         # published path and fixed posting cutoff
+  api_models.py           # browser-facing response contracts
+  public_models.py        # shared published contracts, without pipeline imports
+  deal_repository.py      # snapshot validation, filters, and allowlisted media
   static/                 # HTML, CSS, JS, pinned Leaflet assets
 config/sources.json       # source IDs and user-confirmed public usernames
 data/intermediate/        # versioned local stage artifacts
@@ -127,11 +131,11 @@ The single published `deals.json` envelope contains `schema_version`, `dataset_i
 
 ## Availability and historical data
 
-Default the reference date to the current date in `Asia/Singapore`; always show it and allow changing it. Exclude posts published after the reference date. Known start/end dates are inclusive. An unspecified start adds no lower bound beyond the posting date, and an unspecified end adds no expiry. Explicit date lists and weekdays further constrain eligibility under the confirmed scope.
+Default to the snapshot’s `suggested_reference_date` (August 26, 2026 for the pilot) and `validity=all`; show the effective date and allow changing it, including a “Today” action using `Asia/Singapore`. Exclude posts published after the reference date. Known start/end dates are inclusive. An unspecified start adds no lower bound beyond the posting date, and an unspecified end adds no expiry. Explicit date lists and weekdays further constrain eligibility under the confirmed scope.
 
 Call the filter “Valid on selected date”; display unknown expiry and unevaluated restrictions clearly. It does not assert stock availability or eligibility at the current time. Do not persist a time-dependent `is_active` flag in the dataset. Compute it through the same backend evaluator for every request.
 
-Default the optional post-age limit to off, preserving the requested no-expiry rule. When enabled, explain it as “Posted within N days”, separate from advertised validity. Historical evaluation uses a saved export containing later edits; it is not a reconstruction of exactly what Telegram showed on a past date.
+Apply a fixed posting cutoff configured by `FOOD_DEALS_MAX_AGE_DAYS`, default 60 (accepted range 1–3650). This expresses the agreed two-month window as 60 days, not calendar months. Include ages `0 <= age < N` relative to the reference date and display “Posted within N days”, separate from advertised validity. No browser age control or query override is included. Historical evaluation uses a saved export containing later edits; it is not a reconstruction of exactly what Telegram showed on a past date.
 
 ## Reliability and evaluation
 
@@ -142,7 +146,7 @@ Default the optional post-age limit to off, preserving the requested no-expiry r
 - Demo target: inspect roughly 10–15 useful cards if available, resolve or omit unsupported pins, and demonstrate map/list interactions. Preserve original pilot findings without claiming extraction accuracy. Full-batch coverage and exhaustive annotation scoring are deferred.
 - Final usefulness check: inspect a few Singapore areas on August 9, August 18, and the current date; confirm source links and terms are accessible, and decide whether the number of correct useful offers justifies expanding the data sources.
 
-Proposed validation during implementation: `uv run ruff check`, `uv run ty check`, and `uv run pytest`, with external services stubbed in automated tests. Frontend state logic should have focused checks plus a manual browser pass. Per [AGENTS.md](../../AGENTS.md), implementing a feature is followed by a separate proposal/approval for adding or changing tests and user documentation; this planning request authorizes these plan documents only. Do not create application code until the user reviews the plan.
+Development validation: `uv run ruff check`, `uv run ty check`, and `uv run pytest`, with external services stubbed in automated tests. Frontend state logic should have focused checks plus a manual browser pass. Per [AGENTS.md](../../AGENTS.md), implementing a feature is followed by a separate proposal/approval for adding or changing tests and user documentation. Phase 4 implementation, regression tests, and documentation were approved; Phase 5 remains a separate implementation step.
 
 ## External services
 

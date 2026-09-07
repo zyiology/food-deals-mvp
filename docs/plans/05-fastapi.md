@@ -1,92 +1,142 @@
 # Phase 4: FastAPI and published data access
 
-Status: draft. Depends on the [published dataset contract](README.md) and [Phase 3 publication](04-geocoding.md). API development can use a small approved fixture before the full geocoding run is complete.
+Status: implemented and verified for the selected demo. The read-only API, safe
+image routes, and packaged HTML status shell are available. The Leaflet map and
+interactive deal cards remain [Phase 5](06-leaflet.md).
 
 ## Outcome
 
-Serve the local web app, filtered public deal records, and safe source images. Requests read an already prepared snapshot. Starting or viewing the application must not require OpenRouter credentials or trigger normalization, extraction, geocoding, or publication.
+Serve a validated published snapshot without provider credentials or calls to
+normalization, extraction, geocoding, or publication. Public contracts live in
+`public_models.py`; API response models omit extraction evidence and interpretation
+notes. Importing the API does not import pipeline or provider adapters.
 
-Use FastAPI, Pydantic contracts, and an ASGI server within the existing `uv` package. Serve vanilla frontend assets from the same origin; there is no need for a separate frontend server, database, authentication system, or CORS configuration in this local MVP.
+FastAPI serves the API and packaged static assets from one origin. No database,
+authentication system, separate frontend server, or CORS configuration is needed
+for this local MVP. See [the run instructions](../../README.md#run-the-local-api).
 
-## Proposed HTTP contract
+## HTTP contract
 
 | Route | Behavior |
 | --- | --- |
-| `GET /` | Return the application HTML shell. |
-| `GET /static/...` | Serve packaged CSS, JavaScript, and pinned Leaflet assets from a dedicated static directory. |
-| `GET /media/{media_id}` | Resolve an opaque allowlisted ID to a published image; unknown IDs return 404. Never accept arbitrary filesystem paths. |
-| `GET /api/deals` | Return public rows plus dataset/filter metadata using the query contract below. |
-| `GET /api/health` | Return ready state and dataset ID when a valid dataset is loaded; 503 with a concise reason when unavailable. |
+| `GET /` | Return the HTML status shell, including when the dataset is unavailable. |
+| `GET /static/...` | Serve packaged CSS and JavaScript from a dedicated directory. Leaflet assets will be added in Phase 5. |
+| `GET /media/{media_id}` | Resolve an allowlisted ID to a published image; unavailable, unknown, modified, or unsafe images return 404. |
+| `GET /api/deals` | Return mapped rows and dataset/filter metadata. |
+| `GET /api/health` | Return `ready: true` and `dataset_id`; return 503 with a concise reason when unavailable. |
 
-Use a dedicated static mount; FastAPI's [static-files documentation](https://fastapi.tiangolo.com/tutorial/static-files/) explains mounting `StaticFiles`. Do not mount the repository or the whole raw export root, and do not let a root static mount shadow API routes.
-
-`GET /api/deals` parameters:
+`GET /api/deals` accepts only these query parameters:
 
 | Parameter | Default | Meaning |
 | --- | --- | --- |
-| `as_of` | Current Singapore date | ISO `YYYY-MM-DD` reference date. Required in response metadata even if omitted by client. |
-| `validity` | `valid` | `valid` applies the shared date evaluator; `all` includes expired/upcoming/unknown-validity offers from posts available by `as_of`. |
-| `mapping` | `mapped` | `mapped`, `unmapped`, or `all`, based on accepted coordinates. |
-| `max_age_days` | Omitted | Optional positive integer restricting posting age relative to `as_of`. Proposed accepted range: 1–3650. |
+| `as_of` | Snapshot's `suggested_reference_date` (August 26, 2026 for this pilot) | Calendar date in exact `YYYY-MM-DD` format, evaluated in Singapore time. |
+| `validity` | `all` | `all` includes offers outside their advertised period or with unknown validity; `valid` includes only rows for which the shared evaluator returns true. |
 
-Never include a post dated after `as_of`, even in `validity=all`; this mode broadens promotion periods, not source history. Posting age is the difference between Singapore calendar dates; `max_age_days=N` accepts ages `0 <= age < N`, so one day means the selected day. Reject unsupported enums, malformed dates, and out-of-range ages through typed validation with a 422 response.
+All queries apply the server-configured posting-age cutoff:
+`FOOD_DEALS_MAX_AGE_DAYS`, default **60**, accepted range 1–3650. This implements the
+agreed two-month cutoff as a fixed 60-day window, not calendar-month subtraction.
+There is no `mapping` or `max_age_days` query parameter. Unknown parameters,
+unsupported validity values, malformed dates, and impossible dates return 422.
 
-Keep viewport filtering client-side at this scale. The API returns the relevant full set once per date/filter change; map pans must not generate API or geocoding calls. Server-side bounding boxes/pagination are deferred until measured dataset size warrants them.
+Posting age is the difference between Singapore calendar dates. A cutoff of N
+accepts `0 <= age < N`: age 59 is included under the default, age 60 is excluded,
+and N=1 means the selected day. Future source posts are always excluded, even in
+`validity=all`. The cutoff is independent of promotion expiry; an unspecified end
+date still adds no expiry in the shared availability evaluator.
 
 Response envelope:
 
 ```text
-schema_version
-dataset_id
-generated_at
-timezone: Asia/Singapore
-source_date_range
-dataset_complete, processing_summary
-filters: effective as_of, validity, mapping, max_age_days
-counts: matched_rows, mapped_rows, unmapped_rows, distinct_offers, distinct_posts
-deals: public rows plus validity_status for the effective reference date
+schema_version, dataset_id, generated_at, timezone: Asia/Singapore
+source_date_range, selected_source_date_range
+suggested_reference_date, suggested_validity
+dataset_complete, processing_summary, attribution
+filters: effective as_of, validity, max_age_days
+counts: matched_rows, mapped_rows, distinct_locations, distinct_offers, distinct_posts
+deals: public rows plus validity_status
 ```
 
-Counts refer to the rows returned after all filters and must reconcile. Dataset-wide processing counts are separate and labelled accordingly. To display mapped and unmapped tabs/counts together, the browser requests `mapping=all` and partitions the response locally.
+Counts describe the returned rows after filtering; `distinct_locations` counts
+exact coordinate pairs, not unique businesses. Dataset-wide processing counts are
+separate. Rows sort by descending posting timestamp, then ascending `deal_id`.
+All rows are mapped and have finite named latitude/longitude and accepted precision.
+No unmapped rows or counts are exposed.
 
-Each returned row includes source identity/links, title, description, source caption, posting date, terms, availability/restrictions, location/scope, mapping reason, precision, nullable named coordinates, and safe image URL. Derived validity status is `valid`, `outside_period`, or `unknown`; future source posts have already been excluded. A `valid` result means only that supported date constraints match, not guaranteed redemption at the present hour.
+Each row includes its identity, source name/links, title, description, original
+caption, posting date, terms, display availability, location/scope, precision,
+media IDs, and safe image URL. Display availability contains start/end dates,
+explicit dates, weekdays, restrictions, and date status. Extraction evidence and
+interpretation notes are excluded. Captions are plain data; the browser must render
+them as text, never trusted HTML.
 
-## Implementation steps
+Derived `validity_status` is `valid`, `outside_period`, or `unknown`. A valid result
+means supported calendar constraints match; it does not guarantee stock, opening
+hours, or redemption eligibility. Viewport filtering and marker numbering remain
+client-side; there is no pagination or bounding-box endpoint.
 
-1. Add application configuration for published dataset/media paths and frontend map settings. Resolve defaults from the package/project configuration deliberately, without assuming the launch working directory. Bind the documented local command to `127.0.0.1`.
-2. Load and validate one immutable dataset snapshot at startup: supported schema version, unique IDs, required public fields, finite coordinates, media references, and metadata/count consistency. Keep the parsed result in memory; do not reread the JSON for every map request.
-3. Provide a repository/read service independent of route handlers and an injected clock/date provider. Import the shared availability evaluator from Phase 2; never implement a second slightly different date rule inside routes.
-4. Implement query validation, filtering, derived validity status, and deterministic sorting by descending `posted_at`, then `deal_id`. This order supplies stable ties for ephemeral frontend numbering.
-5. Project internal records into explicit public response models. Keep local file paths, API keys, prompts, model responses, private review notes, and provider error bodies out of responses. Serialize source text as text, not trusted HTML.
-6. Serve packaged static assets and allowlisted images with appropriate MIME types and cache behavior. Validate media IDs/path containment including symlinks. Use placeholders for unavailable media and return 404 for unknown IDs. Content-addressed image names allow long-lived caching safely.
-7. Handle unavailable data clearly. The HTML shell remains accessible; `/api/health` and `/api/deals` return 503 with a helpful “Prepare a dataset first” or “Published dataset is invalid” message. An explicitly valid empty dataset returns 200 with an empty list. Unexpected errors are logged locally without leaking paths or secrets.
-8. Keep reload behavior simple: publication writes a new snapshot, then the operator restarts the app to load it. State this in future run instructions. Do not introduce file watchers, live mutation, or an unauthenticated admin reload endpoint for the MVP.
+## Loading, configuration, and failures
 
-Proposed local launch command, not yet implemented:
+`api_settings.py` reads `FOOD_DEALS_PUBLISHED_DIR` and `FOOD_DEALS_MAX_AGE_DAYS` at
+startup. The default published directory is the source checkout's
+`data/published`, independent of launch working directory. Relative configured
+paths resolve against that checkout. An installed wheel requires an explicit
+absolute published directory. Media is read from its `media/` subdirectory.
+Environment variables must be exported or passed to the command; `.env` is not
+automatically loaded.
 
-```bash
-uv run uvicorn food_deals_mvp.api:app --host 127.0.0.1 --port 8000
-```
+`DealRepository` validates the schema, content fingerprint, unique IDs, coordinates,
+row counts, date-range metadata, URLs, and media references at startup. The loaded
+snapshot stays in memory for the process lifetime. Publication and configuration
+changes take effect after restarting the application, including recovery from an
+unavailable dataset. There are no file watchers or reload endpoints.
 
-The app can serve its dataset and UI without LLM/geocoding network access. Basemap tiles still require internet access unless a separately permitted offline provider is introduced; local hosting does not make the basemap offline.
+Missing snapshots return 503 with `Prepare a dataset first`; malformed or invalid
+snapshots return 503 with `Published dataset is invalid`. Invalid environment
+settings return 503 with `Application configuration is invalid`. The HTML shell
+remains available. An empty published snapshot is invalid under the publisher's
+existing safeguard. A valid loaded snapshot whose filters match zero rows returns
+200 with an empty list and zero result counts. Unexpected failures return a generic
+500; responses and error logging avoid filesystem paths and private data.
 
-## Acceptance and proposed verification
+Only allowlisted images are served. Each read checks containment, symlinks,
+content hash, and image signature. Missing/modified images return 404 without making
+the deal dataset unavailable; Phase 5 cards must handle image failures. Image
+responses include the declared MIME type, `nosniff`, a content-hash ETag, and
+`Cache-Control: no-cache` with conditional 304 support. Although filenames are
+content-addressed, public URLs use attachment IDs that can change content after
+republication, so immutable caching is inappropriate for those URLs.
 
-- App launch and `/api/deals` succeed without provider credentials when a valid dataset exists; external-service adapters are not imported into request-side work.
-- Response fields match the public contract, use named latitude/longitude, and expose no raw cache/provider content.
-- Verify inclusive dates, unknown expiry, explicit date gaps, weekdays, `needs_review` validity, future-post exclusion, and the post-age boundary through API calls backed by a fixture.
-- Invalid parameters return 422; unavailable/invalid data returns 503; a valid empty set returns 200; missing image IDs return 404.
-- A mapped row always has valid coordinates; an unmapped row cannot appear on the map simply because a stale coordinate was retained.
-- Deterministic sorting and response counts agree. No server viewport endpoint is required for the existing volume.
-- Attempt traversal/absolute paths/escaped symlinks through media routing and confirm rejection. Confirm static routes do not shadow API routes.
-- A newly published file is loaded after restart. A corrupt replacement never appears as a silently empty successful dataset.
+The static mount exposes only packaged assets and cannot shadow API routes. No raw
+exports, source images, pipeline caches, or repository directories are mounted.
+The API and shell need no provider network access. Basemap configuration, tiles,
+and Leaflet assets remain Phase 5 work.
 
-Propose FastAPI client tests for the route contract and failure states, reusing the shared date evaluator's unit cases rather than duplicating every internal test. Request approval before adding test fixtures or user-facing run documentation during implementation.
+## Verification
 
-## Review questions
+`tests/test_api.py` uses synthetic snapshots and temporary media with the suite's
+network prohibition. Its 43 cases cover:
 
-1. Is restart-to-reload acceptable for this local MVP? Recommendation: yes.
-2. Is a configurable post-age filter with no default age limit preferable to a fixed “recent posts” cutoff? Recommendation: yes, to preserve unknown-expiry offers while allowing stale posts to be hidden explicitly.
-3. Should unmapped deals be exposed in the same response for the separate UI tab? Recommendation: yes via `mapping=all`, keeping the default API view mapped.
+- Defaults, sorting, reconciled counts, public field projection, and provider-free imports.
+- Singapore dates, future posts, advertised date constraints, unknown validity, and cutoff boundaries.
+- Invalid parameters, missing/corrupt/invalid datasets, and successful empty filter results.
+- Snapshot replacement taking effect only after restart.
+- Static route containment, allowlisted media, conditional caching, missing/changed images, and symlinks.
+- Environment configuration, working-directory independence, and installed-package path requirements.
+
+The test client uses the `httpx2` development dependency. Existing availability
+unit tests remain the detailed authority for schedule evaluation.
+
+Manual pilot smoke verification returned 15 rows at 10 coordinates by default,
+six rows in valid-only mode on August 26, and three in valid-only mode on September
+7. All nine referenced images were available. Launching Uvicorn from outside the
+checkout worked, and the built wheel included all three static shell assets.
+
+## Confirmed decisions
+
+- Mapped-only public API and UI.
+- Historical snapshot reference date and `validity=all` by default.
+- Fixed server-configurable cutoff, default 60 days; no age-control UI for now.
+- Restart to reload data or settings.
+- Missing/invalid data returns 503; zero matching rows returns 200.
 
 Next: [Leaflet and final evaluation](06-leaflet.md).

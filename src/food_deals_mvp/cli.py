@@ -142,7 +142,7 @@ def main() -> None:
                 )
                 geo_settings = (
                     GeocodingSettings.model_validate(read_json(settings_path))
-                    if settings_path.exists()
+                    if args.settings is not None or settings_path.exists()
                     else GeocodingSettings()
                 )
                 geo_report = geocode(

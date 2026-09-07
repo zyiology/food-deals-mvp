@@ -1,6 +1,6 @@
 # Phase 3: geocoding and dataset publication
 
-Status: **revised for review on 2026-09-07; implementation pending**. The user reviewed all 20 rows ready for location lookup and exported `data/demo-selection.json`. Local validation confirms 20 unique eligible row IDs across 13 posts, bound to the current `data/demo/candidates.json` dataset. This satisfies the [Phase 2](03-llm-processing.md) demo handoff; the remaining 106 posts and exhaustive pilot scoring are deferred.
+Status: **implemented and verified on 2026-09-07; pin review complete and the partial demo snapshot published**. The user selected 20 eligible rows across 13 posts in `data/demo-selection.json`, then approved 15 pins and rejected five rows. Publication contains 15 rows at 10 distinct coordinates with nine source images. The remaining 106 posts and exhaustive pilot scoring are deferred. See the [operation guide](../geocoding.md) for implemented commands and recovery.
 
 ## Outcome and scope
 
@@ -74,7 +74,7 @@ Use the accepted JSON correction workflow instead of an admin UI. Each decision 
 
 A manual coordinate approval requires a source URL/reference, supported place identity, named coordinate pair, and precision. A query alias also requires evidence and does not itself approve a pin. Reject stale or invalid decisions before publication. Review a shared building once when convenient, but explicitly confirm its association with all rows covered by that decision. Offer dates and terms remain unchanged.
 
-Selected cases worth attention include Northpoint, Bugis `#03-08`, 777 Coffeeshop at Lengkok Bahru, and The Quayside. These are review candidates, not confirmed errors. Do not guess a branch if Nominatim cannot resolve one. The former draft's Burnt Cones/Paragon and 313 Orchard Road examples are not required additions to this selection.
+Selected cases worth attention include Northpoint, Bugis `#03-08`, 777 Coffeeshop at Lengkok Bahru, and The Quayside. The user clarified that Bugis `#03-08` means **Bugis Junction**; its reviewed alias is saved separately from coordinate approval. These are review candidates, not confirmed errors. Do not guess a branch if Nominatim cannot resolve one. The former draft's Burnt Cones/Paragon and 313 Orchard Road examples are not required additions to this selection.
 
 ## Publication and API handoff
 
@@ -99,7 +99,7 @@ Preserve all effective schedules and the existing date evaluator; do not filter 
 5. Run existing checks; propose focused test additions for approval under AGENTS.md. Once approved, implement those checks using synthetic responses and a fake clock.
 6. With real provider identity configured, inspect the dry-run budget, perform the small geocoding run, and present proposed pins for review. Apply reviewed decisions locally, publish the approved subset, and verify an offline rerun.
 
-Proposed commands (not implemented yet):
+Implemented commands:
 
 ```bash
 uv run food-deals-mvp geocode --selection data/demo-selection.json --dry-run
@@ -126,6 +126,6 @@ uv run food-deals-mvp report --stage geocode
 
 Confirmed: use the reviewed 20-row selection, defer additional extraction, accept building precision with the unit and “Approximate building location” shown, use JSON decisions, and omit unresolved rows publicly.
 
-Proposed for approval: this implementation sequence, mandatory human pin approval, explicit partial publication, and the historical API/UI handoff described above. Public Nominatim is the intended provider under the stated constraints. A real project/contact identity remains to be configured before live requests; it does not block implementation. Human pin review occurs after geocoding, not before starting this phase.
+The user approved this implementation sequence, mandatory human pin approval, explicit partial publication, and the historical API/UI handoff. Public Nominatim ran with the user-approved project author email as its contact identity. The batch required 17 HTTP requests, with no provider errors. Matching and review were subsequently rebuilt offline. The saved review approved 15 rows, including a chosen Bugis Junction candidate, and rejected five. The real settings, reviewed alias, and pin decisions are stored in local data files.
 
-No application code, tests, provider requests, or publication are authorized by editing this plan alone. Next: review this plan, implement Phase 3 after approval, then review [FastAPI](05-fastapi.md).
+The geocoding and publisher code, 33 focused synthetic tests, and operation guide are implemented. Ruff, ty, and the full 191-test suite pass. `data/published/deals.json` contains the approved partial snapshot with historical schedules intact; the suggested reference date is 2026-08-26 with `validity=all`. Next: review [FastAPI](05-fastapi.md).

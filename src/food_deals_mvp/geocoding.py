@@ -147,7 +147,10 @@ def queries_for(
         value = text or ""
         if location.unit:
             value = re.sub(
-                re.escape(location.unit.lstrip("#")), "", value, flags=re.IGNORECASE
+                r"(?<!\w)" + re.escape(location.unit.lstrip("#")) + r"(?!\w)",
+                "",
+                value,
+                flags=re.IGNORECASE,
             )
         value = value.replace("#", "")
         return normalized(value)
@@ -294,7 +297,18 @@ def supported_match(place: Place, query: Query) -> bool:
         return set(re.findall(r"[^\W_]+", text.casefold())) - {"singapore", "the"}
 
     wanted = tokens(query.text)
-    return bool(wanted) and wanted <= tokens(place.name + " " + place.address)
+    named = tokens(place.name)
+    if not wanted:
+        return False
+    if wanted <= named:
+        return True
+    if not wanted <= tokens(place.name + " " + place.address):
+        return False
+    # Street-address queries may identify a building without its name. For an
+    # outlet, require its own name as well as the supplied branch/address context.
+    if place.precision == "building":
+        return any(token.isdigit() for token in wanted)
+    return bool(named) and named <= wanted
 
 
 def apply_decision(resolution: Resolution, decision: Decision | None) -> None:

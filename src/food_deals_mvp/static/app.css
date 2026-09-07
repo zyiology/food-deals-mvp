@@ -1,0 +1,7 @@
+:root { font-family: system-ui, sans-serif; color: #19342b; background: #f6f8f4; }
+body { margin: 0; }
+main { max-width: 42rem; margin: 10vh auto; padding: 2rem; }
+h1 { font-size: 2.5rem; }
+p { line-height: 1.6; }
+button { font: inherit; padding: .5rem 1rem; cursor: pointer; }
+:focus-visible { outline: 3px solid #087c58; outline-offset: 3px; }

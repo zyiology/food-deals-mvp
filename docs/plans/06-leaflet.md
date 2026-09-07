@@ -51,6 +51,8 @@ Each compact card shows its current number, grounded offer title, merchant/venue
 
 Render captions/model-derived strings using `textContent` or safe DOM construction. Never insert raw captions into `innerHTML` or Leaflet HTML popup strings. Permit only validated HTTP(S) external links; use `noopener noreferrer` for links opened in a new tab. These external-link settings must not suppress the basemap's page Referer header.
 
+Known pilot data quirk: some published `terms`/`restrictions_text` strings contain malformed emoji escapes from extraction (for example a literal escape where the caption has ⏰). Render them as-is via `textContent`; do not repair or filter them in frontend code. The fix belongs to the extraction reviewed-corrections workflow (see [review workflow](../review-workflow.md)) and is deferred until the full-dataset rebuild beyond the pilot.
+
 Show one viewport-filtered list with ephemeral map numbers. There are no mapped/unmapped tabs: unresolved rows remain internal. Keep count labels explicit: rows are offers at locations, not unique restaurants. Display the partial-sample limitation and the effective “Posted within N days” from `filters.max_age_days`; the cutoff is a server setting, not a browser control.
 
 The date control initially uses the API's effective `filters.as_of` (August 26, 2026 for this pilot), is always visible, and has a “Today” action calculated in Singapore time. The “Valid on selected date” toggle starts unchecked (`all`) and requests the backend's `valid` or `all` mode. In `all`, cards clearly label out-of-period or unknown-validity offers. Do not duplicate date evaluation in JavaScript; use API-provided status.
@@ -94,8 +96,12 @@ End-to-end review with the supplied exports:
 4. Confirm all pilot pins show building-level precision, the selected-sample limitation is visible, and omitted branches stay absent. Check that unknown expiry and the independent posting cutoff follow the API contract.
 5. Decide whether the number and correctness of useful offers justify branch discovery, image extraction, or more recent exports. Record measured results; do not equate “the page runs” with the MVP's usefulness criterion.
 
-## Review questions
+## Review questions and decisions
 
-1. Is the overlap chooser sufficient initially, or are individually separated pins essential? Recommendation: chooser first, then refine after seeing actual overlap density.
-2. Should the initial view fit all filtered mapped deals or use a fixed Singapore extent? Recommendation: fit once on first load, preserve the user's viewport thereafter.
-Confirmed API/UI scope: mapped-only results, a visible historical date selector, `validity=all` initially, and a displayed server-configured posting cutoff. No unmapped tabs or age selector are planned.
+1. Is the overlap chooser sufficient initially, or are individually separated pins essential?
+Chooser first, then refine after seeing actual overlap density.
+2. Should the initial view fit all filtered mapped deals or use a fixed Singapore extent?
+Fit once on first load, preserve the user's viewport thereafter.
+
+Confirmed API/UI scope:
+mapped-only results, a visible historical date selector, `validity=all` initially, and a displayed server-configured posting cutoff. No unmapped tabs or age selector are planned.

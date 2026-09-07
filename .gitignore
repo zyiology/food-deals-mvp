@@ -16,4 +16,5 @@ data/intermediate/
 data/cache/
 data/published/
 data/reports/
+data/demo/
 .env

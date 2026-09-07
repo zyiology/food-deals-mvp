@@ -22,6 +22,32 @@ def semantic_hash(value: object) -> str:
     return fingerprint(canonical(value))
 
 
+def normalized_evidence(text: str) -> str:
+    """Repair the observed malformed emoji encoding; ignore decoration, not facts."""
+    text = re.sub(
+        "\x01[fF][0-9a-fA-F]{3}",
+        lambda match: chr(int("1" + match[0][1:], 16)),
+        text,
+    )
+    # Food/presentation emoji are not factual evidence. Keep negation symbols,
+    # currency, keycap digits, non-Latin words, and punctuation intact.
+    text = re.sub(
+        r"[\U0001f300-\U0001faff]",
+        lambda m: m[0] if m[0] in "🚫🔞🚭🚷📵🚯🚳🚱" else "",
+        text,
+    )
+    text = re.sub("\x00(?:23[bBfF]0|[fF][eE]0[fF])", "", text)
+    # Only standalone control noise: controls fused with numbers/words may have
+    # corrupted actual facts and must still fail the evidence check.
+    text = re.sub(r"(?<!\S)[\x00-\x08\x0b\x0c\x0e-\x1f]+e?(?!\S)", "", text)
+    return " ".join(text.translate(str.maketrans("", "", "✨⏰⏱➡👉❗️︎")).split())
+
+
+def supported_excerpt(quote: str, caption: str) -> bool:
+    normalized = normalized_evidence(quote)
+    return bool(normalized) and normalized in normalized_evidence(caption)
+
+
 def check_evidence(value: object, caption: str) -> list[str]:
     issues: list[str] = []
     if isinstance(value, dict):
@@ -33,13 +59,16 @@ def check_evidence(value: object, caption: str) -> list[str]:
                 "remove_restrictions",
                 "terms",
             }:
-                if isinstance(item, list) and any(
-                    not isinstance(quote, str)
-                    or not quote.strip()
-                    or quote not in caption
-                    for quote in item
-                ):
-                    issues.append(f"{key} contains unsupported caption excerpts")
+                if isinstance(item, list):
+                    textual = [
+                        q for q in item if isinstance(q, str) and normalized_evidence(q)
+                    ]
+                    if (
+                        any(not isinstance(q, str) or not q.strip() for q in item)
+                        or (item and not textual)
+                        or any(not supported_excerpt(q, caption) for q in textual)
+                    ):
+                        issues.append(f"{key} contains unsupported caption excerpts")
             else:
                 issues.extend(check_evidence(item, caption))
     elif isinstance(value, list):
@@ -52,9 +81,12 @@ def expand(post: SourcePost, result: PostResult) -> list[Candidate]:
     extraction = result.extraction
     if extraction is None:
         return []
-    global_issues = check_evidence(extraction.model_dump(mode="json"), post.text)
-    global_issues += extraction.review_reasons
-    if extraction.relevance == "uncertain" or extraction.promotion_kind == "uncertain":
+    global_issues: list[str] = []
+    result.warnings = list(extraction.review_reasons)
+    result.warnings.extend(check_evidence({"evidence": extraction.evidence}, post.text))
+    if extraction.promotion_kind == "uncertain":
+        result.warnings.append("uncertain promotion taxonomy")
+    if extraction.relevance == "uncertain":
         global_issues.append("uncertain classification")
     if extraction.relevance == "non_food":
         if extraction.offers:
@@ -72,7 +104,12 @@ def expand(post: SourcePost, result: PostResult) -> list[Candidate]:
         if offer_id in seen_offers:
             global_issues.append("duplicate semantic offers")
         seen_offers.add(offer_id)
-        issues = [*global_issues, *offer.review_reasons]
+        issues = [
+            *global_issues,
+            *check_evidence(
+                offer.model_dump(mode="json", exclude={"locations"}), post.text
+            ),
+        ]
         if (
             any(getattr(offer.availability, field) is not None for field in DATE_FIELDS)
             and not offer.availability.evidence
@@ -114,6 +151,10 @@ def expand(post: SourcePost, result: PostResult) -> list[Candidate]:
         seen_locations: set[str] = set()
         for location in offer.locations or [None]:
             local_issues = list(issues)
+            if location:
+                local_issues.extend(
+                    check_evidence(location.model_dump(mode="json"), post.text)
+                )
             override = location.availability_override if location else None
             if (
                 override
@@ -191,6 +232,9 @@ def expand(post: SourcePost, result: PostResult) -> list[Candidate]:
                                 else [f"no explicit location: {offer.location_scope}"]
                             )
                         )
+                    ),
+                    warnings=list(
+                        dict.fromkeys([*result.warnings, *offer.review_reasons])
                     ),
                 )
             )

@@ -1,76 +1,76 @@
 # LLM extraction: operation and recovery
 
-The Phase 2 implementation extracts caption-grounded offers and explicit location
-candidates. It does not geocode, publish map rows, read images, or fetch linked pages.
-Offline tests exercise its mechanics. Model quality remains unmeasured until the
-[30-post pilot](llm-pilot-review.md) is reviewed and run.
+The Phase 2 pipeline extracts caption-grounded offers and explicit location candidates.
+The paid 30-post pilot has already run; five development posts were compared against
+draft annotations. The current goal is a small website demonstration. See the
+[Phase 2 plan](plans/03-llm-processing.md) for the approved scope.
 
-## Dry-run
+## Offline demo review
+
+```bash
+uv run food-deals-mvp review-demo
+```
+
+Open `data/demo/review.html` to compare offer cards with source captions/images.
+The default filter shows rows eligible for location lookup; switch to all rows to
+inspect skipped reasons. Select a small useful sample (roughly 10–15 cards if available)
+and download `demo-selection.json`. Nothing is preselected or approved automatically.
+This selection is for subsequent geocoding, not a set of verified pins.
+
+The command writes `data/demo/candidates.json` and a self-contained review HTML page.
+It reads only local source artifacts and the mirrored caches selected by the original
+extraction report, verifies source/cache identities, and preserves original settings.
+It never requests new model output, accesses the authoritative ledger, applies manual
+corrections, or rewrites the original extraction artifacts. Missing or changed caches
+stop the rebuild rather than silently substituting a different version.
+Use `--data-dir PATH` for saved artifacts and `--sources PATH` for optional source images.
+Images must remain within configured export roots and match their saved content hashes.
+
+Promotion taxonomy and model review notes are advisory. Evidence comparison tolerates
+decorative emoji differences and observed encoding artifacts while retaining meaningful
+text, numbers, and negations. Unsupported benefit/location/date evidence and impossible
+schedules still block affected rows. Valid sibling rows can remain usable.
+The original annotation fixture and five-post score are historical records; no complete
+annotation review or 27/30 score is required for this demo.
+
+## Dry-run and additional extraction
 
 ```bash
 uv run food-deals-mvp extract --dry-run
 uv run food-deals-mvp extract --post-ids config/llm-pilot-post-ids.json --limit 30 --dry-run
 ```
 
-These commands require successful normalization with matching report, posts and
-media dataset IDs. They report selection and cache availability without network
-access, credentials or file writes. The pilot ID file is a JSON array with exactly
-10 candidates per channel. Duplicate, unknown or unbalanced IDs fail validation;
-`--limit` cannot truncate the pilot. Without an ID file, selection is ordered by
-channel/message ID. A limit alone does not select a balanced pilot.
+Dry-run requires successful normalization with matching report/posts/media identities.
+It makes no requests or writes. The pilot ID file still selects exactly 10 posts per
+channel; duplicates, unknown IDs, imbalance, and a truncating limit are rejected.
 
-## Reviewed pilot, then full batch
+The revised prompt changes live cache identities, so a dry-run may report misses even
+though old pilot outputs are available for offline review. Do not refresh the pilot
+merely to inspect it. `review-demo` explicitly keeps original prompt provenance.
 
-The checked-in annotations are drafts awaiting user review, not approved ground
-truth. Review their labels and the acceptance criteria first. Once approved, set
-`OPENROUTER_API_KEY` in the environment using your normal secret-management method,
-then run:
+If additional live extraction is useful, set `OPENROUTER_API_KEY` using your normal
+secret management and make an explicit demo continuation decision:
 
 ```bash
-uv run food-deals-mvp extract --post-ids config/llm-pilot-post-ids.json --limit 30
+uv run food-deals-mvp extract --accept-demo --limit 10
+uv run food-deals-mvp extract --accept-demo --resume
 uv run food-deals-mvp report --stage extract
 ```
 
-The adapter checks the key and current endpoint capabilities/pricing before paid
-work. It pins `meta/muse-spark-1.3-contributor` to the configured provider, requires
-structured-output parameters, and disables provider fallbacks. Compatibility
-advertised in metadata does not prove the endpoint will accept this particular
-schema; the pilot must establish that. Authentication or configuration errors stop
-the run. No model is changed automatically.
+These commands can incur charges. `--limit` alone selects by channel/message ID, not
+a balanced sample. `--accept-demo` replaces the requirement for exhaustive pilot
+approval; the legacy `--pilot-review PATH` file remains supported for compatibility.
+Without either mechanism, non-pilot work needing requests stops. Matching successes
+are reused, failures need `--resume`, and spending remains cumulative.
 
-Inspect `data/intermediate/extractions.json` and `candidates.json` against the
-annotations. The extraction report includes all source outcomes, review reasons,
-counts, raw-cache fingerprints and spending. Pilot runs deliberately report
-`partial`, because the other 106 source posts are `not_selected`. An expected
-review outcome is different from a provider/schema failure.
+The adapter checks credentials, endpoint capability, and bounded pricing, pins the
+configured model/provider, and disables provider fallbacks. Authentication/configuration
+errors stop the run. The US$5 cap and existing request/recovery controls remain intact.
 
-After reviewing the complete pilot results and meeting the acceptance gate,
-prepare a reviewed JSON file, for example `config/llm-pilot-review.json`:
-
-```json
-{
-  "schema_version": 1,
-  "reviewed_at": "2026-09-06T12:00:00+08:00",
-  "accepted": true,
-  "settings_hash": "copy from the reviewed extraction report",
-  "cache_fingerprints": {
-    "telegram:CHANNEL:MESSAGE": "copy this post's reviewed cache fingerprint"
-  }
-}
-```
-
-The example shows one entry for readability; the real file must contain all 30
-pilot IDs, 10 per channel. Fill it only after human acceptance; generating this
-file from counts alone would not evaluate factual accuracy. It binds full-batch
-permission to the specific settings and original pilot caches. Then:
-
-```bash
-uv run food-deals-mvp extract --resume --pilot-review config/llm-pilot-review.json
-```
-
-The default 60-attempt run limit means the remaining batch may require more than
-one invocation. Matching successes are reused, and spending remains cumulative.
-Changed pilot caches or settings invalidate that approval.
+Live outputs remain `data/intermediate/extractions.json`, `candidates.json`, and
+`data/reports/extract.json`. A pilot report is intentionally `partial` because
+106 posts were not selected. Pipeline statuses and aggregate counts are not accuracy
+scores. Rows remain unmapped until the later geocoding phase.
 
 ## Settings, retries and refresh
 
@@ -80,7 +80,7 @@ Changed pilot caches or settings invalidate that approval.
 {
   "model": "meta/muse-spark-1.3-contributor",
   "provider": "meta",
-  "prompt_version": "caption-v1",
+  "prompt_version": "caption-v2",
   "schema_version": "extraction-v1",
   "timeout": 60,
   "max_tokens": 6000,
@@ -198,7 +198,7 @@ uv run pytest
 
 Tests use synthetic captions and temporary artifacts/state; network connections
 are blocked. The checked-in pilot fixture is validated for balance, evidence,
-schedule shape and prompt/schema freeze, without sending its captions to a model.
+schedule shape and original experiment identity, without sending its captions to a model.
 When local normalized exports are available, an additional check confirms the
 fixture captions, links and input hashes match them. Passing these tests does not
 establish the model's extraction accuracy.

@@ -149,7 +149,7 @@ def validate_pilot_review(
 ) -> None:
     if path is None:
         raise ValueError(
-            "full-batch paid work requires --pilot-review with reviewed pilot cache fingerprints"
+            "additional paid work requires --accept-demo or legacy --pilot-review approval"
         )
     review = PilotReview.model_validate(read_json(path))
     if review.settings_hash != fingerprint(settings.identity()):
@@ -183,6 +183,7 @@ def extract(
     refresh: bool = False,
     corrections_path: Path | None = None,
     pilot_review: Path | None = None,
+    accept_demo: bool = False,
     client: Client | None = None,
     state_dir: Path = STATE_DIR,
 ) -> ExtractionReport:
@@ -254,7 +255,7 @@ def extract(
                 pending.append(post)
             elif entry.extraction is not None:
                 reused += 1
-        if pending and post_ids is None:
+        if pending and post_ids is None and not accept_demo:
             validate_pilot_review(pilot_review, ordered, settings, cache_dir)
         # Check every correction before any paid work; malformed corrections cannot waste funds.
         for post in ordered:

@@ -100,6 +100,7 @@ class Candidate(Contract):
     availability: Availability
     status: Literal["candidate", "unmapped", "needs_review"]
     reasons: list[str]
+    warnings: list[str] = Field(default_factory=list)
 
 
 class PostResult(Contract):
@@ -110,6 +111,7 @@ class PostResult(Contract):
     extraction: Extraction | None = None
     errors: list[str] = Field(default_factory=list)
     correction_ids: list[str] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
 
 
 class ExtractionArtifact(Envelope):

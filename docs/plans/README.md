@@ -1,6 +1,10 @@
 # Telegram food deals map: implementation plan
 
-Status: **implementation started; Phase 1 preprocessing complete and verified; Phase 2 pipeline and offline tests implemented, draft pilot annotations awaiting review and paid evaluation; later phase plans remain unreviewed**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
+Status: **Phase 1 preprocessing complete and verified; Phase 2 pipeline implemented and the 30-post paid pilot run completed on 2026-09-06; only five development posts compared so far; later phase plans remain unreviewed**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
+
+The local pilot artifacts contain 34 offers and 22 explicit offer/location rows. The first five development comparisons recorded one match and four mismatches against draft annotations; the other 25 posts remain unscored. These are provisional findings, not a completed accuracy evaluation. See the [pilot review status](../llm-pilot-review.md).
+
+On 2026-09-07 the user approved a smaller route to demonstrating the website experience. The rewritten [Phase 2 plan](03-llm-processing.md) replaces exhaustive annotation approval with an offline visual review of a small demo sample. The workflow is implemented; geocoding and the website remain subsequent phases.
 
 ## Goal and approach
 
@@ -8,7 +12,7 @@ Build a local application that makes it easy to inspect food offers around an ar
 
 The proposed stack is appropriate for this data volume. The significant work is interpreting the data correctly: a post can contain multiple offers, an offer can cover multiple locations, and each location can have different dates. Keep these relationships explicit internally, then publish a separate normalized deal row for each offer/location pairing, as requested in the notes.
 
-The initial data contains 139 records, including 136 text-bearing posts, 132 available photos, two pin-service records, one poll, and four omitted videos/animations. See [the data review](01-data-review.md) for measured findings and concrete edge cases. Extraction and mapping coverage have not yet been measured.
+The initial data contains 139 records, including 136 text-bearing posts, 132 available photos, two pin-service records, one poll, and four omitted videos/animations. See [the data review](01-data-review.md) for measured findings and concrete edge cases. Pilot extraction counts are available above; full-batch extraction and mapping coverage have not yet been measured.
 
 ## Confirmed decisions
 
@@ -24,7 +28,7 @@ Confirmed from the source notes: duplicate an offer into separate normalized row
 
 Additional confirmed decisions: use the supplied channels’ public usernames; retain original captions in deal details; process only the three existing exports; start with `meta/muse-spark-1.3-contributor` through OpenRouter under a cumulative US$5 cap; let the LLM classify pure listings and mixed promotions; and omit unmapped offers from the public MVP. Evaluate the selected model on the pilot first and continue with it if satisfactory; comparing other models is unnecessary unless the pilot reveals a problem. See the revised phase plans for details.
 
-The readiness review confirmed a curated 30-post pilot with 10 posts from each channel, field-level inheritance of unspecified location availability with explicit local facts taking precedence, spending reservations persisted before requests, and validation of the normalization completion report and matching artifact IDs before extraction. The [Phase 2 plan](03-llm-processing.md) defines the proposed pilot acceptance criteria and recovery behavior.
+The completed pilot contains 10 posts per channel. Preserve its original caches and draft annotations as historical artifacts. The current workflow reuses saved outputs offline, accepts equivalent benefit/location/date grouping, and treats taxonomy and model review notes as advisory. Keep existing date handling, spending reservations, and source-artifact validation. Additional paid extraction uses an explicit demo continuation decision rather than exhaustive 30-post approval.
 
 The [geocoding](04-geocoding.md), [FastAPI](05-fastapi.md), and [Leaflet](06-leaflet.md) plans remain unreviewed and are unchanged in this revision. Their proposals to publish unmapped rows, expose unmapped API filters, and add mapped/unmapped tabs are superseded by the confirmed mapped-only public scope here; align those documents when reviewing those phases.
 
@@ -47,7 +51,7 @@ Deferred: later-export ingestion and overlap/revision merging, a public unmapped
 | Phase | Plan | Deliverable | Completion gate |
 | --- | --- | --- | --- |
 | 1 | [Preprocessing and shared contracts](02-preprocessing.md) | Local importer, typed contracts, normalized source snapshot, media manifest, import report | All 139 records accounted for; 136 text candidates; hidden URLs preserved; repeat import is idempotent. |
-| 2 | [LLM extraction and availability](03-llm-processing.md) | Structured extraction cache, expanded offer/location rows, date evaluator, review output | Annotated 30-post pilot (10 per channel) meets Phase 2 criteria and is reviewed; no invented branch expansion; location/date associations pass edge cases. |
+| 2 | [LLM extraction and demo review](03-llm-processing.md) | Original caches, offline demo candidates, visual review page and row selection | User can select a small useful sample from rendered cards; problematic rows can be omitted; no exhaustive annotation or accuracy gate. |
 | 3 | [Geocoding and dataset publication](04-geocoding.md) | Cached location resolutions, manual overrides, validated published snapshot | Every accepted pilot pin reviewed; unresolved locations retained; repeat run avoids cached network requests. |
 | 4 | [FastAPI](05-fastapi.md) | Read-only API and safe assets/media routes | API works without provider keys; date/filter behavior and failure responses are verified. |
 | 5 | [Leaflet and end-to-end evaluation](06-leaflet.md) | Usable map/list interface | Numbering, selection, overlapping pins, historical dates, and empty/error states work on the supplied data. |
@@ -135,7 +139,7 @@ Default the optional post-age limit to off, preserving the requested no-expiry r
 - Cache keys include the inputs and settings that affect that stage. Do not invalidate LLM results because unrelated reaction counts changed; do invalidate them when text, date context, prompt, model, or extraction schema changes.
 - Use one writer, checkpoint completed provider work, and atomically replace final JSON. Publish only a validated snapshot. Partial processing requires explicit operator selection and produces a visible incomplete-data summary; never silently drop failures and call the run complete.
 - Require IDs/counts to reconcile across stages, and review false positives as well as mapping coverage. Record manual corrections separately from raw evidence.
-- Proposed pilot target: review every mapped pilot row and resolve or remove every known incorrect pin before serving it. Record extraction correctness on the annotated slice and actual coverage/cost before continuing with the selected model or considering broader enrichment. Do not invent an accuracy percentage before obtaining labels.
+- Demo target: inspect roughly 10–15 useful cards if available, resolve or omit unsupported pins, and demonstrate map/list interactions. Preserve original pilot findings without claiming extraction accuracy. Full-batch coverage and exhaustive annotation scoring are deferred.
 - Final usefulness check: inspect a few Singapore areas on August 9, August 18, and the current date; confirm source links and terms are accessible, and decide whether the number of correct useful offers justifies expanding the data sources.
 
 Proposed validation during implementation: `uv run ruff check`, `uv run ty check`, and `uv run pytest`, with external services stubbed in automated tests. Frontend state logic should have focused checks plus a manual browser pass. Per [AGENTS.md](../../AGENTS.md), implementing a feature is followed by a separate proposal/approval for adding or changing tests and user documentation; this planning request authorizes these plan documents only. Do not create application code until the user reviews the plan.

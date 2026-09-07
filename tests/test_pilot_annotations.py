@@ -15,7 +15,7 @@ PROJECT = Path(__file__).resolve().parents[1]
 FIXTURE = PROJECT / "tests/fixtures/llm-pilot-annotations.json"
 
 
-def test_pilot_balance_holdout_coverage_and_prompt_freeze():
+def test_archived_pilot_balance_holdout_coverage_and_original_identity():
     fixture = json.loads(FIXTURE.read_text())
     entries = fixture["entries"]
     ids = json.loads((PROJECT / "config/llm-pilot-post-ids.json").read_text())
@@ -44,7 +44,11 @@ def test_pilot_balance_holdout_coverage_and_prompt_freeze():
         "pure_listing",
         "mixed_promotion",
     } <= coverage
-    assert fixture["frozen_prompt_hash"] == fingerprint(SYSTEM_PROMPT)
+    # Preserve the initial experiment's identity, not a freeze on future prompts.
+    assert (
+        fixture["frozen_prompt_hash"]
+        == "8b6bb22e62344016c81fe8b96419df678b1de5b5f4b66763e2f5b691599a439b"
+    )
     assert fixture["frozen_schema_hash"] == fingerprint(Extraction.model_json_schema())
     assert all(e["caption"] not in SYSTEM_PROMPT for e in entries)
     assert fixture["status"] == "awaiting_user_review"

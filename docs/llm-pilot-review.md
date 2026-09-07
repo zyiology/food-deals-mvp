@@ -1,6 +1,10 @@
 # Phase 2 pilot: annotation review
 
-Status: **draft annotations awaiting user review; no paid evaluation has run**.
+Status: **30-post paid pilot run completed on 2026-09-06; only the first five development entries have been compared; annotations remain draft**.
+
+The local [extraction report](../data/reports/extract.json) records 34 offers and 22 explicit offer/location rows, with nine posts marked `success` and 21 `needs_review`. The [partial comparison report](../data/reports/llm-pilot-review-batch-01.json) covers SGFoodDeals 4858, 4870, 4883, 4884, and 4900: one match and four mismatches against the original draft expectations. The other 25 posts, including all nine held-out posts, remain unscored. These generated files are local artifacts ignored by Git.
+
+This document preserves the original experiment and scoring protocol for reference. Its exhaustive acceptance gate is superseded by the approved [Phase 2 demo workflow](plans/03-llm-processing.md). Use `uv run food-deals-mvp review-demo` to inspect saved results as cards and select a small demo sample. The LLM response schema is retained; equivalent grouping and cosmetic evidence differences no longer fail demo review.
 
 The [machine-readable fixture](../tests/fixtures/llm-pilot-annotations.json) contains all 30 captions, source links and input hashes, expected classifications, benefits, scopes/exclusions, material restrictions, exact evidence, and effective location schedules. The [pilot ID file](../config/llm-pilot-post-ids.json) selects exactly these posts. Labels were prepared by the assistant from captions; they are not yet human-approved ground truth.
 
@@ -71,7 +75,7 @@ All dates use 2026 and inclusive boundaries. Posting-date exclusion still applie
 
 ## Holdout and scoring protocol
 
-There are 21 development posts and nine held-out posts, with three held out from each channel. No pilot captions or answers are included as prompt examples. The fixture records the initial prompt, schema and settings hashes before evaluation; subsequent cache/recovery fixes have not changed the semantic prompt or schema. Keep held-out errors out of prompt tuning until the first score is recorded. If they inform later changes, call subsequent results **re-evaluation**, preserve the original errors, and include all additional spending.
+The original experiment designated 21 development posts and nine held-out posts, with three held out from each channel. The fixture preserves the initial prompt, schema, and settings hashes. The demo workflow now uses a revised prompt and validation rules; inspecting the saved sample does not establish an independent holdout score. The following scoring rules are historical, not required demo approval steps.
 
 Expected development counts are 24 offers / 17 location rows; held-out counts are 9 offers / 6 location rows. Count differences help locate errors but cannot establish correctness. Review each post against the full annotation. Order, wording and derived IDs need not match. Equivalent redundant boundaries around an unchanged exact-date set are acceptable; broadened gaps, lost weekdays or incorrect outlet/date associations are not.
 
@@ -79,14 +83,14 @@ For each source ID, record its raw cache fingerprint and uncorrected output, exp
 
 | Acceptance check | Required result | Current result |
 | --- | --- | --- |
-| Outcomes | All 30 recorded; no unresolved provider/schema failures | Not run |
-| Critical correctness | Zero accepted invented benefits/places, excluded participants, non-food/online-only physical candidates, unsupported associations or wrong effective date constraints | Not run |
-| Complete interpretation | At least 27/30, at least 9/10 in each channel, at least 8/9 held out | Not run |
-| Mandatory edge cases | Every starred splitting, outlet-specific-date, separate-date, weekday and unknown-expiry case matches | Not run |
-| Evidence | Every accepted benefit, location and asserted date has caption evidence; every mismatch is reported | Not run |
+| Outcomes | All 30 recorded; no unresolved provider/schema failures | All 30 have parsed outputs; nine success, 21 needs_review |
+| Critical correctness | Zero accepted invented benefits/places, excluded participants, non-food/online-only physical candidates, unsupported associations or wrong effective date constraints | Partial review found unsupported location/scope interpretations; not passed |
+| Complete interpretation | At least 27/30, at least 9/10 in each channel, at least 8/9 held out | 1/5 reviewed matches; four mismatches exceed original allowance if upheld; 25 unscored |
+| Mandatory edge cases | Every starred splitting, outlet-specific-date, separate-date, weekday and unknown-expiry case matches | 4883 mismatched under original grouping/evidence rules; other mandatory cases unscored |
+| Evidence | Every accepted benefit, location and asserted date has caption evidence; every mismatch is reported | Malformed emoji evidence found in partial review; full review incomplete |
 | Offline behavior | Reservation/recovery, locking, source validation, caching, retry and date checks pass | 134 tests, Ruff and ty pass |
 | Human review | User reviews the full report, including allowed aggregate errors, before the remaining batch | Pending |
 
 An expected review outcome counts as a completed interpretation when it matches the annotation. An unexpected review flag is safe but still an extraction error. Category labels `pure_listing` and `mixed_promotion` alone do not require review.
 
-After annotation and criteria approval, follow the [operation guide](llm-processing.md) to run the pilot under the existing US$5 cap. Review the pilot results before creating the full-batch approval file or sending the remaining 106 posts.
+The initial pilot does not need to be run again merely to inspect it. The offline demo review preserves all original caches and findings. Additional live extraction can use `--accept-demo` instead of the old approval file, within the existing cumulative US$5 cap; the website demonstration can proceed using only a selected pilot subset.

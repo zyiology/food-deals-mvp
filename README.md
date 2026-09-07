@@ -2,7 +2,8 @@
 
 A local application for exploring Telegram food offers around Singapore.
 **Preprocessing and the LLM extraction pipeline are implemented.** Phase 2
-still awaits annotation review and paid pilot evaluation. Geocoding, the API,
+has a completed 30-post paid pilot and an offline visual demo review. Only five
+posts were compared against the original draft annotations. Geocoding, the API,
 and the map interface remain planned in [docs/plans/README.md](docs/plans/README.md).
 
 The normalization CLI converts the three supplied August 2026 exports into an
@@ -14,17 +15,20 @@ non-food advertising; semantic classification belongs to Phase 2.
 The extraction CLI adds structured offer/location/date extraction, evidence checks,
 cache recovery, reviewed corrections, and cumulative spending controls. See the
 [operation guide](docs/llm-processing.md) and
-[draft 30-post pilot annotations](docs/llm-pilot-review.md). No model quality or
-mapping coverage is claimed before evaluation.
+[historical pilot review](docs/llm-pilot-review.md). The current demo workflow
+uses a small visually reviewed sample; no model accuracy or mapping coverage is claimed.
 
 ```bash
 uv run food-deals-mvp extract --dry-run
-uv run food-deals-mvp extract --post-ids config/llm-pilot-post-ids.json --limit 30 --dry-run
+uv run food-deals-mvp review-demo
 ```
 
-Dry-run needs no key and makes no requests or writes. Review the pilot annotations
-before running paid extraction; the operation guide explains that workflow and
-the shared US$5 ledger.
+Dry-run needs no key and makes no requests or writes. `review-demo` rebuilds saved
+pilot caches offline into `data/demo/candidates.json` and `data/demo/review.html`,
+preserving the original results. Open the page to compare cards with captions/images
+and download a small row selection for the next geocoding phase. No exhaustive
+annotation review is required. Additional live extraction uses `--accept-demo`;
+the operation guide explains cache versions and the shared US$5 ledger.
 
 ## Setup
 
@@ -132,6 +136,6 @@ or write to the normal `data/` output directory.
 
 Extraction checks also cover availability inheritance, evidence grounding, cache
 identity/recovery, bounded retries and repair, spending reservations, interrupted
-refreshes, and full-batch review gates. The draft pilot fixture is checked for
-balance, exact source evidence and supported schedule shapes; semantic model
-accuracy remains subject to the reviewed paid pilot.
+refreshes, demo continuation, and offline review. The archived pilot fixture is
+checked for balance, source evidence, schedule shapes, and its original identity;
+it no longer freezes the current prompt. Demo review does not claim model accuracy.

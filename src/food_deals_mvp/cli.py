@@ -40,7 +40,9 @@ def main() -> None:
     reporter = subcommands.add_parser(
         "report", help="Inspect the most recent normalization report"
     )
-    reporter.add_argument("--stage", choices=["normalize", "extract"], required=True)
+    reporter.add_argument(
+        "--stage", choices=["normalize", "extract", "geocode"], required=True
+    )
     reporter.add_argument("--data-dir", type=Path, default=Path("data"))
     extractor = subcommands.add_parser(
         "extract", help="Extract caption-grounded food offers"
@@ -71,12 +73,105 @@ def main() -> None:
         "--corrections", type=Path, help="Reviewed field corrections JSON"
     )
     extractor.add_argument(
+        "--accept-demo",
+        action="store_true",
+        help="Explicitly continue demo extraction without exhaustive pilot approval",
+    )
+    reviewer = subcommands.add_parser(
+        "review-demo", help="Rebuild saved extractions offline and render review cards"
+    )
+    reviewer.add_argument("--data-dir", type=Path, default=Path("data"))
+    reviewer.add_argument(
+        "--sources",
+        type=Path,
+        default=Path("config/sources.json"),
+        help="Source configuration for optional review images",
+    )
+    extractor.add_argument(
         "--pilot-review",
         type=Path,
-        help="Reviewed pilot approval required for full-batch requests",
+        help="Legacy exhaustive pilot approval (alternative to --accept-demo)",
     )
+    geocoder = subcommands.add_parser(
+        "geocode", help="Resolve selected demo venues for pin review"
+    )
+    publisher = subcommands.add_parser(
+        "publish", help="Publish reviewed mapped demo rows offline"
+    )
+    for stage in (geocoder, publisher):
+        stage.add_argument("--data-dir", type=Path, default=Path("data"))
+        stage.add_argument("--selection", type=Path, required=True)
+        stage.add_argument("--decisions", type=Path)
+    geocoder.add_argument(
+        "--settings", type=Path, help="JSON Nominatim settings including user_agent"
+    )
+    geocoder.add_argument("--dry-run", action="store_true")
+    geo_mode = geocoder.add_mutually_exclusive_group()
+    geo_mode.add_argument("--offline", action="store_true")
+    geo_mode.add_argument("--resume", action="store_true")
+    geo_mode.add_argument(
+        "--refresh-query", help="Refresh one selected query by its cache key"
+    )
+    publisher.add_argument("--allow-partial", action="store_true")
+    publisher.add_argument("--sources", type=Path, default=Path("config/sources.json"))
     args = parser.parse_args()
     try:
+        if args.command == "publish":
+            from .publishing import publish
+
+            snapshot = publish(
+                args.data_dir,
+                args.selection,
+                allow_partial=args.allow_partial,
+                decisions_path=args.decisions,
+                sources_path=args.sources,
+            )
+            print(
+                f"publish: {len(snapshot.deals)} mapped rows (dataset {snapshot.dataset_id[:12]})"
+            )
+            return
+        if args.command == "geocode" or (
+            args.command == "report" and args.stage == "geocode"
+        ):
+            from .geocoding import geocode, load_geocoding_report
+            from .geocoding_models import GeocodingSettings
+
+            if args.command == "geocode":
+                settings_path = (
+                    args.settings or args.data_dir / "geocoding-settings.json"
+                )
+                geo_settings = (
+                    GeocodingSettings.model_validate(read_json(settings_path))
+                    if settings_path.exists()
+                    else GeocodingSettings()
+                )
+                geo_report = geocode(
+                    args.data_dir,
+                    args.selection,
+                    geo_settings,
+                    decisions_path=args.decisions,
+                    dry_run=args.dry_run,
+                    offline=args.offline,
+                    resume=args.resume,
+                    refresh_query=args.refresh_query,
+                )
+            else:
+                geo_report, _ = load_geocoding_report(args.data_dir)
+            print(
+                f"geocode: {geo_report.status} (dataset {geo_report.dataset_id[:12]})"
+            )
+            for key, value in geo_report.counts.items():
+                print(f"  {key}: {value}")
+            for error in geo_report.errors:
+                print(f"  ERROR: {error}", file=sys.stderr)
+            if geo_report.errors or geo_report.status == "failed":
+                raise SystemExit(1)
+            return
+        if args.command == "review-demo":
+            from .demo_review import build_demo_review
+
+            print(build_demo_review(args.data_dir, args.sources))
+            return
         if args.command == "extract" or (
             args.command == "report" and args.stage == "extract"
         ):
@@ -96,6 +191,7 @@ def main() -> None:
                     refresh=args.refresh,
                     corrections_path=args.corrections,
                     pilot_review=args.pilot_review,
+                    accept_demo=args.accept_demo,
                 )
             else:
                 extraction_report = load_extraction_report(args.data_dir)

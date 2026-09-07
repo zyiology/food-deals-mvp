@@ -1,0 +1,8 @@
+{
+  "endpoint": "https://nominatim.openstreetmap.org/search",
+  "user_agent": "food-deals-mvp/0.1 (contact: zhiyi.chia@gmail.com)",
+  "interval": 1.1,
+  "connect_timeout": 10.0,
+  "read_timeout": 30.0,
+  "retries": 2
+}

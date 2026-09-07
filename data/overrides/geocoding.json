@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decisions": [
+    {
+      "decision_id": "user-bugis-junction-2026-09-07",
+      "row_ids": [
+        "telegram:1204657101:4900:offer:44d9560c4bf784c5ba574b51:location:84acbfc9d4e935da040e953f:row:380fe8944cf3ca226ac6db73"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4900:offer:44d9560c4bf784c5ba574b51:location:84acbfc9d4e935da040e953f:row:380fe8944cf3ca226ac6db73": "e29eac1fe1add19491aee95af78ea98323a17dda3a528d635126a159e2980878"
+      },
+      "action": "alias",
+      "reviewed_at": "2026-09-07T03:42:01.225616Z",
+      "reviewer": "project owner",
+      "reason": "User clarified that Bugis #03-08 refers to Bugis Junction mall.",
+      "source": "User clarification in implementation conversation, 2026-09-07",
+      "alias": "Bugis Junction",
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    }
+  ]
+}

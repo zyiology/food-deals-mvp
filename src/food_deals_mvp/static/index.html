@@ -3,18 +3,37 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Food deals</title>
+    <title>Food deals · Singapore</title>
+    <link rel="stylesheet" href="/static/vendor/leaflet/leaflet.css">
     <link rel="stylesheet" href="/static/app.css">
-    <script src="/static/app.js" defer></script>
+    <script src="/static/vendor/leaflet/leaflet.js" defer></script>
+    <script type="module" src="/static/app.js"></script>
   </head>
   <body>
-    <main>
-      <h1>Food deals</h1>
-      <p>Explore food offers around Singapore.</p>
-      <p id="status" role="status">Loading offers…</p>
-      <button id="retry" type="button" hidden>Try again</button>
-      <p>Map browsing is coming next.</p>
-      <noscript>Enable JavaScript to check offer availability.</noscript>
+    <a class="skip-link" href="#deal-list">Skip to offers</a>
+    <header class="page-header">
+      <div class="heading"><div><p class="eyebrow">Singapore · Food around you</p><h1>Good food. Nearby.</h1></div><p>Explore offers shared on Telegram.</p></div>
+      <form id="filters" class="filters">
+        <label for="as-of">Reference date <input id="as-of" type="date" required disabled></label>
+        <button id="today" type="button" disabled>Today</button>
+        <label class="toggle"><input id="valid-only" type="checkbox" disabled> Valid on selected date</label>
+      </form>
+      <p id="dataset-meta" class="muted"></p>
+      <p id="sample-note" class="sample-note" hidden></p>
+    </header>
+    <main class="workspace">
+      <section class="offers" aria-label="Offers in the map area">
+        <div class="list-heading"><h2 id="count">Offers in this view</h2><p id="status" role="status">Loading offers…</p><button id="retry" type="button" hidden>Try again</button></div>
+        <div id="deal-list" tabindex="-1" aria-busy="true"></div>
+      </section>
+      <section class="map-panel" aria-label="Offer map">
+        <div class="map-toolbar"><span>Pan or zoom to explore an area</span><button id="show-all" type="button" disabled>Show all locations</button></div>
+        <div id="map" aria-label="Map of offers in Singapore"></div>
+        <div id="map-error" class="map-error" role="status" hidden><span id="map-error-text"></span> <button id="retry-map" type="button">Retry map</button></div>
+        <p class="map-note">Numbers match the list. A + badge means several offers share a location.</p>
+        <p id="location-attribution" class="map-note"></p>
+      </section>
     </main>
+    <noscript>Enable JavaScript to browse the map and offers.</noscript>
   </body>
 </html>

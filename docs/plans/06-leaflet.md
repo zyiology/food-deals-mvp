@@ -1,6 +1,6 @@
 # Phase 5: Leaflet interface and end-to-end evaluation
 
-Status: planned; aligned with the implemented mapped-only API. Map interactions remain to be reviewed and implemented. Depends on [FastAPI's public contract](05-fastapi.md). Preserves the requested numbered viewport markers and matching deal cards.
+Status: implemented and verified on 2026-09-08 against the mapped-only API. Node regression checks, Chromium desktop/narrow-screen checks, and a cache-only rebuild pass. User usefulness review and any expansion decision remain open. See the [verification record](../leaflet-review.md). Uses [FastAPI's public contract](05-fastapi.md) and preserves numbered viewport markers with matching deal cards.
 
 ## Outcome and layout
 
@@ -51,7 +51,7 @@ Each compact card shows its current number, grounded offer title, merchant/venue
 
 Render captions/model-derived strings using `textContent` or safe DOM construction. Never insert raw captions into `innerHTML` or Leaflet HTML popup strings. Permit only validated HTTP(S) external links; use `noopener noreferrer` for links opened in a new tab. These external-link settings must not suppress the basemap's page Referer header.
 
-Known pilot data quirk: some published `terms`/`restrictions_text` strings contain malformed emoji escapes from extraction (for example a literal escape where the caption has ⏰). Render them as-is via `textContent`; do not repair or filter them in frontend code. The fix belongs to the extraction reviewed-corrections workflow (see [review workflow](../review-workflow.md)) and is deferred until the full-dataset rebuild beyond the pilot.
+Known pilot data quirk: some published `terms`/`restrictions_text` strings contain malformed emoji escapes from extraction (for example a literal escape where the caption has ⏰). Render them as-is via `textContent`; do not repair or filter them in frontend code. The fix belongs to the extraction reviewed-corrections workflow (see [review workflow](../llm-processing.md#reviewed-corrections-and-date-evaluation)) and is deferred until the full-dataset rebuild beyond the pilot.
 
 Show one viewport-filtered list with ephemeral map numbers. There are no mapped/unmapped tabs: unresolved rows remain internal. Keep count labels explicit: rows are offers at locations, not unique restaurants. Display the partial-sample limitation and the effective “Posted within N days” from `filters.max_age_days`; the cutoff is a server setting, not a browser control.
 

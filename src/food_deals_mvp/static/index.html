@@ -6,13 +6,15 @@
     <title>Food deals · Singapore</title>
     <link rel="stylesheet" href="/static/vendor/leaflet/leaflet.css">
     <link rel="stylesheet" href="/static/app.css">
+    <link rel="stylesheet" href="/static/welcome.css">
     <script src="/static/vendor/leaflet/leaflet.js" defer></script>
     <script type="module" src="/static/app.js"></script>
+    <script type="module" src="/static/welcome.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#deal-list">Skip to offers</a>
     <header class="page-header">
-      <div class="heading"><div><p class="eyebrow">Singapore · Food around you</p><h1>Good food. Nearby.</h1></div><p>Explore offers shared on Telegram.</p></div>
+      <div class="heading"><div><p class="eyebrow">Singapore · Food around you</p><h1>Good food. Nearby.</h1></div><button id="open-welcome" class="welcome-open" type="button" hidden><span aria-hidden="true">✳</span> Find my next bite</button></div>
       <form id="filters" class="filters">
         <label for="as-of">Reference date <input id="as-of" type="date" required disabled></label>
         <button id="today" type="button" disabled>Today</button>
@@ -34,6 +36,55 @@
         <p id="location-attribution" class="map-note"></p>
       </section>
     </main>
+    <dialog id="welcome" class="welcome" aria-labelledby="welcome-title">
+      <div class="welcome-layout">
+        <aside class="welcome-story" aria-label="Welcome to Food deals">
+          <p class="welcome-brand"><span aria-hidden="true">✳</span> FOOD DEALS <span class="welcome-sg">SG</span></p>
+          <div class="welcome-story-copy"><p class="welcome-kicker">A little craving.<br>A good place to start.</p><p class="welcome-slogan">Good food.<br>Good mood.<br><em>Good deal.</em></p><p class="welcome-story-note">Your next happy bite<br>is somewhere nearby.</p></div>
+          <div class="welcome-art-wrap"><img class="welcome-art" src="/static/welcome-food.png" alt="" width="600" height="400"><span class="welcome-art-caption">small cravings, big possibilities</span></div>
+          <p class="welcome-story-bottom">Made for hungry people in Singapore.</p>
+        </aside>
+        <section class="welcome-main">
+          <button class="welcome-close" id="close-welcome" type="button" aria-label="Close welcome and use the map">×</button>
+          <div id="welcome-picks">
+            <header class="welcome-intro"><p class="welcome-kicker">LET YOUR APPETITE LEAD</p><h2 id="welcome-title" tabindex="-1">What are you craving?</h2><p>A sip, a snack, or a proper feast. You pick.</p></header>
+            <form id="welcome-form">
+              <fieldset class="welcome-fieldset"><legend><span class="welcome-step">01</span> First, the mood</legend>
+                <div class="welcome-meals">
+                  <label class="welcome-meal"><input type="radio" name="meal" value="drink"><span class="meal-face" aria-hidden="true">🧋</span><span class="meal-lead">I'm thirsty</span><strong>A drink</strong><span class="meal-check" aria-hidden="true">✓</span></label>
+                  <label class="welcome-meal"><input type="radio" name="meal" value="breakfast"><span class="meal-face" aria-hidden="true">🍳</span><span class="meal-lead">Rise & dine</span><strong>Breakfast</strong><span class="meal-check" aria-hidden="true">✓</span></label>
+                  <label class="welcome-meal"><input type="radio" name="meal" value="lunch" checked><span class="meal-face" aria-hidden="true">🍜</span><span class="meal-lead">I'm hungry</span><strong>Lunch</strong><span class="meal-check" aria-hidden="true">✓</span></label>
+                  <label class="welcome-meal"><input type="radio" name="meal" value="dinner"><span class="meal-face" aria-hidden="true">🍛</span><span class="meal-lead">Let's feast</span><strong>Dinner</strong><span class="meal-check" aria-hidden="true">✓</span></label>
+                  <label class="welcome-meal"><input type="radio" name="meal" value="snack"><span class="meal-face" aria-hidden="true">🍟</span><span class="meal-lead">Just a little</span><strong>A snack</strong><span class="meal-check" aria-hidden="true">✓</span></label>
+                </div>
+              </fieldset>
+              <fieldset class="welcome-fieldset"><legend><span class="welcome-step">02</span> When's the food adventure?</legend>
+                <div class="welcome-days">
+                  <label class="welcome-day"><input type="radio" name="day" value="today" checked><span aria-hidden="true">☀</span> Today</label>
+                  <label class="welcome-day"><input type="radio" name="day" value="tomorrow"><span aria-hidden="true">↗</span> Tomorrow</label>
+                  <label class="welcome-day"><input type="radio" name="day" value="custom"><span aria-hidden="true">▦</span> Pick a day</label>
+                </div>
+                <div id="welcome-custom-day" class="welcome-custom-day" hidden><label for="welcome-date">Your date</label><input id="welcome-date" type="date"></div>
+              </fieldset>
+              <fieldset class="welcome-fieldset welcome-location"><legend><span class="welcome-step">03</span> Where shall we look?</legend>
+                <label class="welcome-sr-only" for="welcome-area">Search an area in Singapore</label>
+                <div class="welcome-search"><span aria-hidden="true">⌕</span><input id="welcome-area" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="welcome-suggestions" placeholder="Try Bugis, Tampines, Tiong Bahru…" autocomplete="off" spellcheck="false"><button id="welcome-clear-area" type="button" aria-label="Clear area" hidden>×</button></div>
+                <ul id="welcome-suggestions" role="listbox" aria-label="Suggested areas" hidden></ul>
+                <p id="welcome-area-status" class="welcome-sr-only" role="status"></p>
+                <div class="welcome-popular"><span>Popular</span><button type="button" data-area="Bugis">Bugis <span aria-hidden="true">↗</span></button><button type="button" data-area="Orchard">Orchard <span aria-hidden="true">↗</span></button><button type="button" data-area="Tampines">Tampines <span aria-hidden="true">↗</span></button></div>
+              </fieldset>
+              <footer class="welcome-footer"><p id="welcome-summary" aria-live="polite">Lunch · Today · Anywhere in Singapore</p><button class="welcome-primary" type="submit">That's my kind of plan <span aria-hidden="true">→</span></button><button class="welcome-skip" id="welcome-skip" type="button">I'll explore on my own</button></footer>
+            </form>
+          </div>
+          <div id="welcome-ready" class="welcome-ready" hidden>
+            <p class="welcome-kicker">APPETITE, MEET ADVENTURE</p><div id="welcome-ready-icon" class="welcome-ready-icon" aria-hidden="true">🍜</div><h2 id="welcome-ready-title" tabindex="-1">Now that's a plan.</h2><p>A little something to look forward to.</p>
+            <dl class="welcome-receipt"><div><dt>THE CRAVING</dt><dd id="welcome-ready-meal"></dd></div><div><dt>THE DAY</dt><dd id="welcome-ready-day"></dd></div><div><dt>THE NEIGHBOURHOOD</dt><dd id="welcome-ready-area"></dd></div></dl>
+            <button id="welcome-explore" class="welcome-primary" type="button">Explore the map <span aria-hidden="true">↗</span></button><button id="welcome-back" class="welcome-skip" type="button">← Change my picks</button><p class="welcome-preview-note">Design preview. Explore opens the existing map; these picks won't filter its offers yet.</p>
+          </div>
+          <p class="welcome-preview-label">A TASTE OF WHAT'S NEXT <span>•</span> INTERACTIVE PREVIEW</p>
+        </section>
+      </div>
+    </dialog>
     <noscript>Enable JavaScript to browse the map and offers.</noscript>
   </body>
 </html>

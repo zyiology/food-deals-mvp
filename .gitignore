@@ -18,3 +18,4 @@ data/published/
 data/reports/
 data/demo/
 .env
+.DS_Store

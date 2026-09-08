@@ -142,7 +142,8 @@ named coordinates. Internal cache contents, local paths, and contact settings ar
 not public fields. Historical schedules are preserved. The snapshot suggests
 `validity=all` and the latest selected posting date so the API/UI can initially show
 the selected sample with date status. The API implements these defaults with a
-configurable 60-day posting cutoff; the map remains Phase 5.
+configurable 60-day posting cutoff; the [Leaflet interface](leaflet-review.md) now
+consumes these results.
 
 CLI success is status 0. Invalid inputs and provider/review errors return 1;
 argument errors return 2. Ambiguous/not-found locations and pending pin reviews

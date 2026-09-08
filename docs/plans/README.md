@@ -1,10 +1,10 @@
 # Telegram food deals map: implementation plan
 
-Status: **Phases 1–4 complete for the selected demo scope; 15 reviewed rows published at 10 distinct coordinates, with five selected rows omitted; Phase 5 remains planned**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
+Status: **Phases 1–4 complete for the selected demo scope; 15 reviewed rows published at 10 distinct coordinates, with five selected rows omitted; Phase 5 implementation and automated/browser verification complete; user usefulness review remains**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
 
 The local pilot artifacts contain 34 offers and 22 explicit offer/location rows. The first five development comparisons recorded one match and four mismatches against draft annotations; the other 25 posts remain unscored. These are provisional findings, not a completed accuracy evaluation. See the [pilot review status](../llm-pilot-review.md).
 
-On 2026-09-07 the user approved a smaller route to demonstrating the website experience. The rewritten [Phase 2 plan](03-llm-processing.md) replaces exhaustive annotation approval with an offline visual review of a small demo sample. The review workflow, geocoding/publication, read-only API, and status shell are implemented. The map interface remains subsequent work.
+On 2026-09-07 the user approved a smaller route to demonstrating the website experience. The rewritten [Phase 2 plan](03-llm-processing.md) replaces exhaustive annotation approval with an offline visual review of a small demo sample. The review workflow, geocoding/publication, read-only API, and status shell are implemented. The Leaflet map/list interface is implemented and verified; see the [Phase 5 review](../leaflet-review.md).
 
 ## Goal and approach
 
@@ -30,7 +30,7 @@ Additional confirmed decisions: use the supplied channels’ public usernames; r
 
 The completed pilot contains 10 posts per channel. Preserve its original caches and draft annotations as historical artifacts. The current workflow reuses saved outputs offline, accepts equivalent benefit/location/date grouping, and treats taxonomy and model review notes as advisory. Keep existing date handling, spending reservations, and source-artifact validation. Additional paid extraction uses an explicit demo continuation decision rather than exhaustive 30-post approval.
 
-The [geocoding plan](04-geocoding.md) is implemented for the 20 selected demo rows. [FastAPI](05-fastapi.md) now serves the 15 approved rows with the snapshot’s suggested historical date, `validity=all`, and a server-configurable 60-day posting cutoff. The [Leaflet plan](06-leaflet.md) is aligned with that mapped-only contract; map implementation and interaction review remain Phase 5.
+The [geocoding plan](04-geocoding.md) is implemented for the 20 selected demo rows. [FastAPI](05-fastapi.md) now serves the 15 approved rows with the snapshot’s suggested historical date, `validity=all`, and a server-configurable 60-day posting cutoff. The [Leaflet plan](06-leaflet.md) is aligned with that mapped-only contract; map implementation and browser interaction checks are complete; the user usefulness review remains.
 
 ## MVP scope
 
@@ -146,7 +146,7 @@ Apply a fixed posting cutoff configured by `FOOD_DEALS_MAX_AGE_DAYS`, default 60
 - Demo target: inspect roughly 10–15 useful cards if available, resolve or omit unsupported pins, and demonstrate map/list interactions. Preserve original pilot findings without claiming extraction accuracy. Full-batch coverage and exhaustive annotation scoring are deferred.
 - Final usefulness check: inspect a few Singapore areas on August 9, August 18, and the current date; confirm source links and terms are accessible, and decide whether the number of correct useful offers justifies expanding the data sources.
 
-Development validation: `uv run ruff check`, `uv run ty check`, and `uv run pytest`, with external services stubbed in automated tests. Frontend state logic should have focused checks plus a manual browser pass. Per [AGENTS.md](../../AGENTS.md), implementing a feature is followed by a separate proposal/approval for adding or changing tests and user documentation. Phase 4 implementation, regression tests, and documentation were approved; Phase 5 remains a separate implementation step.
+Development validation: `uv run ruff check`, `uv run ty check`, and `uv run pytest`, with external services stubbed in automated tests. Frontend state logic should have focused checks plus a manual browser pass. Per [AGENTS.md](../../AGENTS.md), implementing a feature is followed by a separate proposal/approval for adding or changing tests and user documentation. Phase 4 implementation, regression tests, and documentation were approved; Phase 5 implementation, frontend checks, browser verification, and documentation are now complete under the user’s approval. See the [review record](../leaflet-review.md); expansion remains a separate decision.
 
 ## External services
 

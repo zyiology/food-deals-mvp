@@ -20,8 +20,10 @@ This selection is for subsequent geocoding, not a set of verified pins.
 The command writes `data/demo/candidates.json` and a self-contained review HTML page.
 It reads only local source artifacts and the mirrored caches selected by the original
 extraction report, verifies source/cache identities, and preserves original settings.
-It never requests new model output, accesses the authoritative ledger, applies manual
-corrections, or rewrites the original extraction artifacts. Missing or changed caches
+It surfaces corrections already saved into the extraction artifacts by a prior
+`extract --corrections` run, but never requests new model output, accesses the
+authoritative ledger, reads a corrections file itself, or rewrites the original
+extraction artifacts. Missing or changed caches
 stop the rebuild rather than silently substituting a different version.
 Use `--data-dir PATH` for saved artifacts and `--sources PATH` for optional source images.
 Images must remain within configured export roots and match their saved content hashes.

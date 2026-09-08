@@ -4,9 +4,7 @@ import re
 from collections import Counter
 from pathlib import Path
 
-from .demo_review import DemoArtifact
-from .extraction import cached as extraction_cache
-from .extraction import load_extraction_report
+from .demo_review import DemoArtifact, load_review_artifact
 from .extraction_models import Candidate
 from .geocoding_models import (
     Coordinates,
@@ -22,7 +20,7 @@ from .geocoding_models import (
     Selection,
 )
 from .nominatim import Nominatim, query_key, state_root, utc_now, writer_lock
-from .storage import atomic_write, fingerprint, load_normalized, read_json
+from .storage import atomic_write, fingerprint, read_json
 
 
 def selection_hash(selection: Selection) -> str:
@@ -48,42 +46,13 @@ def load_inputs(
 ) -> tuple[DemoArtifact, Selection, list[Candidate]]:
     selection = Selection.model_validate(read_json(selection_path))
     demo = DemoArtifact.model_validate(read_json(data_dir / "demo/candidates.json"))
-    posts, _, _ = load_normalized(data_dir)
-    report = load_extraction_report(data_dir)
-    expected = fingerprint(
-        {
-            "version": demo.validation_version,
-            "source": posts.dataset_id,
-            "rows": [r.model_dump(mode="json") for r in demo.rows],
-            "caches": demo.cache_fingerprints,
-        }
-    )
+    current = load_review_artifact(data_dir)
     if not (
-        demo.validation_version == "demo-v1"
-        and expected == demo.dataset_id == selection.dataset_id
-        and demo.source_dataset_id == posts.dataset_id
-        and demo.extraction_dataset_id == report.dataset_id
-        and demo.cache_fingerprints == report.cache_fingerprints
+        demo.dataset_id == selection.dataset_id
+        and demo.model_dump(exclude={"generated_at"})
+        == current.model_dump(exclude={"generated_at"})
     ):
         raise ValueError("stale or inconsistent demo selection/source provenance")
-    post_lookup = {post.post_id: post for post in posts.posts}
-    if len({r.post_id for r in demo.results}) != len(demo.results) or {
-        r.post_id for r in demo.results
-    } != set(report.selected_ids):
-        raise ValueError("demo outcomes differ from the original extraction selection")
-    for result in demo.results:
-        post = post_lookup.get(result.post_id)
-        if post is None or post.extraction_input_hash != result.input_hash:
-            raise ValueError("demo extraction input changed")
-        if not re.fullmatch(r"[0-9a-f]{64}", result.cache_key):
-            raise ValueError("invalid original extraction cache key")
-        entry = extraction_cache(
-            data_dir / f"cache/llm/{result.cache_key}.json", post, result.cache_key
-        )
-        if entry is None or fingerprint(
-            entry.model_dump(mode="json")
-        ) != demo.cache_fingerprints.get(result.post_id):
-            raise ValueError("original extraction cache changed since demo review")
     rows = {r.row_id: r for r in demo.rows}
     if len(rows) != len(demo.rows):
         raise ValueError("duplicate demo row IDs")

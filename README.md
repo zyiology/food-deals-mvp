@@ -1,50 +1,20 @@
 # Food deals MVP
 
 A local application for exploring Telegram food offers around Singapore.
-**Preprocessing, LLM extraction, geocoding/publication, and the read-only FastAPI API are implemented.** Phase 2
+**Preprocessing, LLM extraction, geocoding/publication, FastAPI, and the Leaflet interface are implemented.** Phase 2
 has a completed 30-post paid pilot and an offline visual demo review. Only five
 posts were compared against the original draft annotations. The user subsequently
 approved 20 demo rows for geocoding. Pin review is complete: the published demo
 contains 15 approved rows at 10 distinct coordinates; five rows were omitted.
-The API serves this snapshot and a basic status page. The Leaflet map and deal-card
-interface remain [Phase 5](docs/plans/06-leaflet.md).
+The API serves this snapshot with a numbered map and matching deal cards.
+See the [Phase 5 verification and limitations](docs/leaflet-review.md).
 
 The normalization CLI converts the three supplied August 2026 exports into an
-inspectable source dataset. It preserves captions, hidden links, timestamps,
-and raw records; inventories media; and reports structural exclusions. It makes
-no LLM, geocoding, or linked-page requests. Text candidates still include
-non-food advertising; semantic classification belongs to Phase 2.
-
-The extraction CLI adds structured offer/location/date extraction, evidence checks,
-cache recovery, reviewed corrections, and cumulative spending controls. See the
-[operation guide](docs/llm-processing.md) and
-[historical pilot review](docs/llm-pilot-review.md). The current demo workflow
-uses a small visually reviewed sample; no model accuracy or mapping coverage is claimed.
-
-```bash
-uv run food-deals-mvp extract --dry-run
-uv run food-deals-mvp review-demo
-```
-
-Dry-run needs no key and makes no requests or writes. `review-demo` rebuilds saved
-pilot caches offline into `data/demo/candidates.json` and `data/demo/review.html`,
-preserving the original results. Open the page to compare cards with captions/images
-and download a small row selection for the next geocoding phase. No exhaustive
-annotation review is required. Additional live extraction uses `--accept-demo`;
-the operation guide explains cache versions and the shared US$5 ledger.
-
-Phase 3 consumes `data/demo-selection.json`, caches bounded Nominatim lookups,
-and renders `data/reports/geocode-review.html` for explicit pin approval. The
-publisher includes only reviewed mapped rows and runs entirely offline. See the
-[geocoding operation guide](docs/geocoding.md) for review, recovery, and publication.
-
-```bash
-uv run food-deals-mvp geocode --selection data/demo-selection.json --offline
-uv run food-deals-mvp publish --selection data/demo-selection.json --allow-partial
-```
-
-Publication requires saved pin decisions in `data/overrides/geocoding.json`; a
-reviewed location alias alone does not approve coordinates.
+inspectable source dataset. The extraction CLI adds structured offer/location/date
+extraction, and Phase 3 resolves selected locations and publishes reviewed mapped
+rows. To (re)build the dataset, follow the [processing workflow](docs/processing-workflow.md);
+stage details live in the [LLM operation guide](docs/llm-processing.md) and
+[geocoding operation guide](docs/geocoding.md).
 
 ## Setup
 
@@ -67,7 +37,8 @@ Telegram_AUG_2026/
 ```
 
 The exports and generated artifacts are ignored by Git. Normalization reads
-exports without modifying them.
+exports without modifying them. See the [processing workflow](docs/processing-workflow.md)
+for the normalize commands and expected counts.
 
 ## Run the local API
 
@@ -77,8 +48,8 @@ With the published demo already present, start the app from the repository root:
 uv run uvicorn food_deals_mvp.api:app --host 127.0.0.1 --port 8000
 ```
 
-Open <http://127.0.0.1:8000/> for the status page. The map and interactive deal
-cards are the next phase. Inspect <http://127.0.0.1:8000/api/deals> for JSON or
+Open <http://127.0.0.1:8000/> for the map and interactive deal cards.
+Inspect <http://127.0.0.1:8000/api/deals> for JSON or
 <http://127.0.0.1:8000/api/health> for dataset readiness.
 
 The default response shows all 15 approved rows at 10 coordinates, using the
@@ -114,77 +85,33 @@ The app reads and validates the snapshot once at startup. **Restart after publis
 or changing settings**, including after fixing missing/invalid data. It makes no
 LLM or geocoding calls and needs no provider keys, raw exports, or pipeline caches
 at runtime. Unknown or unavailable images return 404. Missing/invalid snapshots or
-invalid settings return 503 from the API while the status page stays accessible.
+invalid settings return 503 from the API while the page stays accessible with a retry action.
 A valid dataset with no matching rows returns 200 with an empty list. Invalid dates,
 validity values, and unsupported query parameters return 422.
 
 See the [FastAPI contract](docs/plans/05-fastapi.md) for response fields and caching.
 
-## Normalize and inspect
+## Browse the map
 
-```bash
-uv run food-deals-mvp normalize --sources config/sources.json
-uv run food-deals-mvp report --stage normalize
-```
+The map fits all results on the first load. Pan or zoom to filter the list locally;
+numbers are reassigned to the visible rows. Select a card or marker to open details.
+Selection follows the offer ID through renumbering and clears when it leaves the
+view or filter results. A **+ badge** opens a chooser for offers sharing an exact
+coordinate. **Show all locations** restores the extent of the filtered results.
 
-[config/sources.json](config/sources.json) defines each export root, numeric channel
-ID, display name, public username, and export timezone. Export roots are resolved
-relative to the configuration file, independently of the current directory.
-Telegram links use the configured usernames, not mentions in captions.
+Change the reference date or enable **Valid on selected date** to query the API.
+**Today** uses Singapore time. The posting cutoff remains a server setting.
+Cards distinguish valid, outside-period, and unknown availability; expanding details
+shows terms, the original caption, and source links. Building-level pins are labelled
+approximate. On narrow screens the map sits above the list; list controls also work
+with a keyboard.
 
-Both commands accept `--data-dir PATH` to choose the output directory (default:
-`data`, relative to the current directory). Use the same directory for normalization
-and reporting. For example:
-
-```bash
-uv run food-deals-mvp normalize --sources config/sources.json --data-dir /tmp/food-deals
-uv run food-deals-mvp report --stage normalize --data-dir /tmp/food-deals
-```
-
-A successful run on the supplied exports accounts for:
-
-| Result | Count |
-| --- | ---: |
-| Raw records | 139 |
-| Text candidates | 136 |
-| Excluded pin-service records | 2 |
-| Excluded empty-caption polls | 1 |
-| Available photos | 132 |
-| Unavailable video/animation attachments | 4 |
-
-The four omitted thumbnails are counted separately from their parent attachments.
-Unavailable media does not discard a useful caption. Paths escaping an export
-root, including symlink escapes, are marked unsafe and are not read.
-
-## Output and reruns
-
-| Artifact | Contents |
-| --- | --- |
-| `data/intermediate/posts.json` | Ordered source posts, exact captions, link destinations and labels, Singapore-aware timestamps, raw records, media IDs, and source/extraction fingerprints |
-| `data/intermediate/media.json` | Media references, availability status, safe source-relative paths, and hashes of available files |
-| `data/reports/normalize.json` | Latest run status, input/configuration hashes, counts, excluded raw records, errors, and warnings |
-
-Each artifact contains a schema version, dataset ID, generation timestamp, and
-timezone. Unchanged inputs produce identical content and IDs apart from generation
-timestamps. Reactions affect source traceability but not extraction fingerprints;
-caption, link, and relevant date-context changes affect extraction fingerprints.
-The importer rebuilds the supplied batch; it does not merge overlapping or later
-exports. Photos remain in their original export folders.
-
-Commands exit with status `0` on success and `1` on import or artifact errors.
-Invalid configuration, unreadable/malformed exports, duplicate source keys, and
-conflicting timestamps fail normalization. When source validation fails, the CLI
-writes a failure report and preserves previous posts/media snapshots. If the
-output directory itself cannot be written, a report cannot be guaranteed.
-Expected omitted media is recorded without failing the run; unexpected missing or
-unsafe media is also reported as a warning.
-
-Files are replaced atomically individually, not as a multi-file transaction. The
-report is written last as the completion marker. Run one writer at a time, require
-a successful report, and require matching dataset IDs before consuming artifacts.
-The `report` command checks these IDs; rerun normalization if an interrupted write
-leaves mismatched files. A retained snapshot after a failed run must not be treated
-as the result of that failed run.
+Leaflet 1.9.4 and its licence are bundled locally. The basemap requires network
+access; tile failures leave the pins and list usable with a map retry button.
+Configure the tile provider and attribution in
+[src/food_deals_mvp/static/map-config.js](src/food_deals_mvp/static/map-config.js).
+The default uses OpenStreetMap standard tiles with visible attribution and normal
+browser caching; do not add bulk prefetching or offline tile downloads.
 
 ## Development checks
 
@@ -210,3 +137,19 @@ it no longer freezes the current prompt. Demo review does not claim model accura
 API regression tests use synthetic snapshots and temporary images with network
 access blocked. They cover filters, public response fields, failure states, restart
 behavior, environment settings, static/media containment, and cache revalidation.
+
+Frontend checks are separate from pytest. Pure map-state checks require Node.js 22
+or later and use its built-in test runner. Browser checks use a pinned, isolated
+Playwright script; no frontend build system or Python runtime dependency is added:
+
+```bash
+node --test tests/map-state.test.mjs
+uv run --isolated --no-project --with playwright==1.62.0 python -m playwright install chromium
+uv run tests/browser_smoke.py
+```
+
+The installation downloads Chromium into the user cache. Browser checks serve local
+static assets through request interception and use synthetic API responses, stubbed
+tiles, and deliberately broken images. They need neither a running API nor provider
+keys and make no live tile requests. See [the review record](docs/leaflet-review.md)
+for the separate live-dataset checks and remaining human review.

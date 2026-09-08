@@ -6,13 +6,15 @@
     <title>Food deals · Singapore</title>
     <link rel="stylesheet" href="/static/vendor/leaflet/leaflet.css">
     <link rel="stylesheet" href="/static/app.css">
+    <link rel="stylesheet" href="/static/welcome.css">
     <script src="/static/vendor/leaflet/leaflet.js" defer></script>
     <script type="module" src="/static/app.js"></script>
+    <script type="module" src="/static/welcome.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#deal-list">Skip to offers</a>
     <header class="page-header">
-      <div class="heading"><div><p class="eyebrow">Singapore · Food around you</p><h1>Good food. Nearby.</h1></div><p>Explore offers shared on Telegram.</p></div>
+      <div class="heading"><div><p class="eyebrow">Singapore · Food around you</p><h1>Good food. Nearby.</h1></div><button id="open-welcome" class="welcome-open" type="button" hidden>Find deals</button></div>
       <form id="filters" class="filters">
         <label for="as-of">Reference date <input id="as-of" type="date" required disabled></label>
         <button id="today" type="button" disabled>Today</button>
@@ -34,6 +36,43 @@
         <p id="location-attribution" class="map-note"></p>
       </section>
     </main>
+    <dialog id="welcome" class="welcome" aria-label="Find deals">
+      <button class="welcome-close" id="close-welcome" type="button" aria-label="Close and use the map">×</button>
+      <form id="welcome-form">
+        <fieldset class="welcome-fieldset">
+          <legend class="welcome-sr-only">Meal</legend>
+          <div class="welcome-meals">
+            <label class="welcome-meal"><input type="radio" name="meal" value="drink"><span class="meal-face" aria-hidden="true">🧋</span><span>Drink</span></label>
+            <label class="welcome-meal"><input type="radio" name="meal" value="breakfast"><span class="meal-face" aria-hidden="true">🍳</span><span>Breakfast</span></label>
+            <label class="welcome-meal"><input type="radio" name="meal" value="lunch" checked><span class="meal-face" aria-hidden="true">🍜</span><span>Lunch</span></label>
+            <label class="welcome-meal"><input type="radio" name="meal" value="dinner"><span class="meal-face" aria-hidden="true">🍛</span><span>Dinner</span></label>
+            <label class="welcome-meal"><input type="radio" name="meal" value="snack"><span class="meal-face" aria-hidden="true">🍟</span><span>Snack</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="welcome-fieldset">
+          <legend class="welcome-sr-only">Day</legend>
+          <div class="welcome-days">
+            <label class="welcome-day"><input type="radio" name="day" value="today" checked>Today</label>
+            <label class="welcome-day"><input type="radio" name="day" value="tomorrow">Tomorrow</label>
+            <label class="welcome-day"><input type="radio" name="day" value="custom">Pick a day</label>
+          </div>
+          <div id="welcome-custom-day" class="welcome-custom-day" hidden><label class="welcome-sr-only" for="welcome-date">Date</label><input id="welcome-date" type="date" disabled></div>
+        </fieldset>
+        <div class="welcome-location">
+          <label class="welcome-sr-only" for="welcome-area">Postal code, building, or address</label>
+          <div class="welcome-search">
+            <button id="welcome-nearby" type="button" aria-pressed="true">Nearby</button>
+            <input id="welcome-area" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="welcome-suggestions" placeholder="Postal code, building, address" autocomplete="off" spellcheck="false" maxlength="120">
+            <button id="welcome-clear-area" type="button" aria-label="Clear area" hidden>×</button>
+          </div>
+          <ul id="welcome-suggestions" role="listbox" aria-label="Suggested areas" hidden></ul>
+          <p id="welcome-area-status" class="welcome-sr-only" role="status"></p>
+          <p id="welcome-location-success" role="status" hidden></p>
+          <p id="welcome-location-error" role="alert" hidden></p>
+        </div>
+        <button id="welcome-submit" class="welcome-primary" type="submit">Show map</button>
+      </form>
+    </dialog>
     <noscript>Enable JavaScript to browse the map and offers.</noscript>
   </body>
 </html>

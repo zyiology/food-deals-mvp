@@ -354,6 +354,14 @@ el["valid-only"].addEventListener("change", () => { if (el.filters.reportValidit
 el.today.addEventListener("click", () => { el["as-of"].value = singaporeDate(); load(); });
 el.retry.addEventListener("click", () => load(!el["as-of"].value));
 el["show-all"].addEventListener("click", fitRows);
+window.addEventListener("welcome:location", event => {
+  const { latitude, longitude } = event.detail ?? {};
+  if (!map || !Number.isFinite(latitude) || !Number.isFinite(longitude)
+      || Math.abs(latitude) > 90 || Math.abs(longitude) > 180) return;
+  // Preserve the user's location if the initial dataset request is still loading.
+  state.fitted = true;
+  map.setView([latitude, longitude], 14, { animate: false });
+});
 el["retry-map"].addEventListener("click", () => {
   if (!map) { location.reload(); return; }
   tileFailures = new Set();

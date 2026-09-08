@@ -1,0 +1,51 @@
+.welcome { --ink: #203c34; --orange: #c94b21; width: min(620px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 58px 30px 30px; border: 0; border-radius: 20px; color: var(--ink); background: #fffcf5; box-shadow: 0 24px 80px #0c21184d; overflow: auto; }
+.welcome::backdrop { background: #20362fb3; backdrop-filter: blur(5px); }
+.welcome button, .welcome input { font: inherit; }
+.welcome button { touch-action: manipulation; }
+.welcome button:focus-visible, .welcome input:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.welcome-open { background: #203c34; border-color: #203c34; color: white; border-radius: 24px; padding: .7rem 1.1rem; font-weight: 650; }
+.welcome-open:hover { background: #315b4e; }
+.welcome-close { position: absolute; top: 8px; right: 8px; display: grid; place-items: center; padding: 0; width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; font-size: 1.65rem !important; line-height: 1; }
+.welcome-close:hover { background: #f2ebde; }
+.welcome-fieldset { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
+.welcome-meals { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.welcome-meal { position: relative; cursor: pointer; display: flex; align-items: center; flex-direction: column; gap: 9px; padding: 17px 4px; border: 1px solid #dedfd2; border-radius: 12px; background: #fffefa; font-size: .875rem; font-weight: 600; }
+.welcome-meal input, .welcome-day input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.welcome-meal:has(:focus-visible), .welcome-day:has(:focus-visible) { outline: 3px solid var(--orange); outline-offset: 3px; }
+.welcome-meal:hover { border-color: var(--orange); }
+.welcome-meal:has(:checked) { background: #fff0dd; border-color: var(--orange); box-shadow: inset 0 0 0 1px var(--orange); }
+.meal-face { font-size: 2rem; line-height: 1.3; }
+.welcome-days { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.welcome-day { position: relative; text-align: center; padding: 12px 6px; border: 1px solid #dedfd2; border-radius: 24px; font-size: .875rem; cursor: pointer; }
+.welcome-day:has(:checked) { background: #203c34; color: #fffdf5; border-color: #203c34; }
+.welcome-day:hover:not(:has(:checked)) { background: #f0efdf; }
+.welcome-custom-day { margin-top: 12px; }
+.welcome-custom-day input { width: 100%; min-width: 0; padding: 10px; font-size: 1rem; }
+.welcome-location { margin-bottom: 24px; }
+.welcome-search { display: flex; align-items: center; gap: 10px; border: 1px solid #b9c2b3; border-radius: 10px; padding: 6px; background: white; }
+.welcome-search:focus-within { outline: 2px solid #47664e; outline-offset: 2px; }
+#welcome-nearby { flex: 0 0 auto; border: 1px solid transparent; padding: 10px 12px; border-radius: 6px; background: #f3f3eb; font-size: .875rem; }
+#welcome-nearby[aria-pressed=true] { background: #e7eedf; border-color: #9aaa8c; font-weight: 650; }
+.welcome-search input { border: 0; padding: 10px 0; width: 100%; min-width: 0; color: #203c34; background: transparent; font-size: 1rem; }
+.welcome-search input:focus-visible { outline: none; }
+.welcome-search input::placeholder { color: #737d6c; opacity: 1; }
+#welcome-clear-area { flex: 0 0 36px; height: 44px; border: 0; padding: 0; background: transparent; font-size: 1.25rem; }
+#welcome-suggestions { background: #fffefa; border: 1px solid #d7dccb; border-radius: 10px; padding: 5px; margin: 7px 0 0; list-style: none; max-height: 185px; overflow: auto; }
+#welcome-suggestions [role=option] { padding: 11px 12px; border-radius: 6px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; font-size: .875rem; overflow-wrap: anywhere; }
+#welcome-suggestions [aria-selected=true], #welcome-suggestions [role=option]:hover { background: #f2ecd9; }
+#welcome-suggestions small { color: #6c7766; font-size: .75rem; }
+.welcome-no-area { padding: 10px; font-size: .875rem; color: #697561; }
+#welcome-location-error { font-size: .875rem; color: #9b341b; margin: 10px 0 0; }
+#welcome-location-success { font-size: .875rem; color: #236747; margin: 10px 0 0; }
+.welcome-primary { width: 100%; padding: 14px 20px; border: 0; border-radius: 10px; background: var(--orange); color: #fff; font-weight: 700 !important; }
+.welcome-primary:hover { background: #b94019; }
+.welcome-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+body:has(#welcome[open]) { overflow: hidden; }
+@media (max-width: 480px) {
+  .welcome { padding: 54px 20px 24px; border-radius: 16px; }
+  .welcome-meals { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .welcome-meal { grid-column: span 2; padding: 12px 4px; }
+  .welcome-meal:nth-last-child(-n+2) { grid-column: span 3; }
+  .welcome-days { gap: 6px; }
+  .welcome-open { margin-top: 12px; }
+}

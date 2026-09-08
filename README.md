@@ -42,10 +42,18 @@ for the normalize commands and expected counts.
 
 ## Run the local API
 
-With the published demo already present, start the app from the repository root:
+With the published demo already present, configure Singapore address search once:
+
+1. Register for a free [OneMap API account](https://www.onemap.gov.sg/apidocs/register).
+2. Copy `.env.example` to `.env` and enter the account email and password.
+
+The credentials stay in the ignored local `.env` file. The server uses them only
+to obtain a short-lived OneMap token, keeps the token in memory, and renews it
+automatically. They are never returned to the browser. Then start the app from
+the repository root:
 
 ```bash
-uv run uvicorn food_deals_mvp.api:app --host 127.0.0.1 --port 8000
+uv run --env-file .env uvicorn food_deals_mvp.api:app --host 127.0.0.1 --port 8000
 ```
 
 Open <http://127.0.0.1:8000/> for the map and interactive deal cards.
@@ -76,8 +84,12 @@ FOOD_DEALS_MAX_AGE_DAYS=60 uv run uvicorn food_deals_mvp.api:app --host 127.0.0.
 | --- | --- | --- |
 | `FOOD_DEALS_MAX_AGE_DAYS` | `60` | Integer from 1 to 3650; applies to every query. No browser/query override. |
 | `FOOD_DEALS_PUBLISHED_DIR` | Checkout's `data/published` | Contains `deals.json` and `media/`. Relative paths resolve against the checkout, independently of working directory. An installed wheel requires an explicit absolute path. |
+| `ONEMAP_EMAIL` | None | OneMap account email used server-side to obtain and renew search tokens. |
+| `ONEMAP_PASSWORD` | None | OneMap account password used server-side to obtain and renew search tokens. |
+| `ONEMAP_TOKEN` | None | Optional three-day token for temporary use; cannot renew without the account credentials. |
 
-Export variables or pass them with the command; `.env` is not loaded automatically.
+Export variables, pass them with the command, or use `uv run --env-file .env` as
+shown above. Uvicorn does not load `.env` automatically.
 From another directory, use `uv run --project /absolute/path/to/food-deals-mvp`
 before the same Uvicorn arguments.
 

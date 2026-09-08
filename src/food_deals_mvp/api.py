@@ -14,6 +14,14 @@ from pydantic import Field
 from .api_models import DealsResponse, HealthResponse, Validity
 from .api_settings import ApiSettings
 from .deal_repository import DealRepository
+from .location_search import (
+    DeviceLocation,
+    LocationResult,
+    LocationResults,
+    LocationSearchError,
+    reverse_location,
+    search_locations,
+)
 from .models import Contract
 
 logger = logging.getLogger(__name__)
@@ -79,6 +87,31 @@ def create_app(settings: ApiSettings | None = None) -> FastAPI:
     def health(response: Response) -> HealthResponse:
         response.headers["Cache-Control"] = "no-store"
         return HealthResponse(dataset_id=require_repository().dataset_id)
+
+    @app.post("/api/locations/reverse", response_model=LocationResult | None)
+    def reverse_address(
+        location: DeviceLocation, response: Response
+    ) -> LocationResult | None:
+        response.headers["Cache-Control"] = "no-store"
+        try:
+            return reverse_location(location)
+        except LocationSearchError as exc:
+            raise HTTPException(status_code=exc.status_code, detail=str(exc)) from None
+
+    @app.get("/api/locations", response_model=LocationResults)
+    def locations(
+        q: Annotated[str, Query(min_length=2, max_length=120)], response: Response
+    ) -> LocationResults:
+        response.headers["Cache-Control"] = "no-store"
+        query = q.strip()
+        if len(query) < 2:
+            raise HTTPException(
+                status_code=422, detail="Enter at least two characters."
+            )
+        try:
+            return search_locations(query)
+        except LocationSearchError as exc:
+            raise HTTPException(status_code=exc.status_code, detail=str(exc)) from None
 
     @app.get("/api/deals", response_model=DealsResponse)
     def deals(

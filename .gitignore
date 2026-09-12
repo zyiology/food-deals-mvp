@@ -19,3 +19,4 @@ data/reports/
 data/demo/
 .env
 .DS_Store
+data/backups/

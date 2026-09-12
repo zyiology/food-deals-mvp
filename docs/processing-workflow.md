@@ -10,6 +10,39 @@ with their media folders. Exports and generated artifacts are ignored by Git;
 normalization never modifies exports. All stages accept `--data-dir PATH`
 (default `data`, relative to cwd); use the same directory across stages.
 
+## Latest recorded run
+
+**Full-batch processing with partial published coverage, published 2026-09-12.**
+The local reports and snapshot were inspected on that date:
+
+| Stage | Recorded outcome |
+| --- | --- |
+| Normalize | 139 raw records → 136 text candidates |
+| Extract (2026-09-11) | All 136 posts selected; 131 `success`, three `needs_review`, two `failed`; zero unprocessed |
+| Extraction output | 142 offers, 86 explicit location rows; report status `partial` |
+| Selection | 76 eligible rows across 59 posts |
+| Final pin review | 52 approved, 24 rejected, zero pending; final offline geocode report `success`, zero HTTP attempts |
+| Publish | 52 rows from 41 posts and 49 offers, at 30 distinct coordinate pairs; 41 images |
+| Precision | 46 building-level rows, six outlet-level rows |
+| Default view | Reference date `2026-08-31`, `validity=all` |
+
+The snapshot's `dataset_complete` is `false`. All selected pins have a final
+review decision, but two extraction failures and omitted locations prevent a
+claim of complete dataset coverage. The failed posts are SGFoodDeals 4864 and
+GoodLobang 4636; both extraction outcomes report truncated/non-normal responses.
+Three additional posts retain extraction review flags. Processing counts and
+pin approval do not establish extraction accuracy or current redeemability.
+
+Evidence is in local `data/reports/extract.json`, `data/reports/geocode.json`,
+and `data/published/deals.json` (generated artifacts are ignored by Git).
+The published dataset ID is
+`4921378df010bbde4677c969dcee680ba4b7ca08d5ab6074cfbfcd8661b8b6a9`;
+its source/demo IDs, selection fingerprint, and resolution dataset ID match
+the corresponding local artifacts. The published JSON passes its schema and
+count-consistency validation. API restart and browser verification of this
+snapshot are not recorded here; the [earlier browser review](leaflet-review.md)
+applies to the 15-row pilot.
+
 ## 1. Normalize and inspect
 
 ```bash
@@ -113,7 +146,10 @@ Open `data/reports/geocode-review.html`, inspect each place against its offer
 evidence, then approve the correct candidate, reject unsupported locations, or
 supply an evidence-backed alias/manual correction. Save the download as
 `data/overrides/geocoding.json` (preserving existing alias decisions), then
-apply it offline:
+apply it offline. This download contains `decisions` and belongs at
+`data/overrides/geocoding.json`; keep `data/demo-selection.json` as the separate
+selection containing `dataset_id` and `row_ids`. Preserve existing manual
+approvals as well as aliases unless deliberately replacing those decisions:
 
 ```bash
 uv run food-deals-mvp geocode --selection data/demo-selection.json --offline
@@ -147,10 +183,10 @@ uv run uvicorn food_deals_mvp.api:app --host 127.0.0.1 --port 8000
 ## Full-batch redo notes
 
 - Omitting `--limit`/`--post-ids` selects all 136 posts. Pilot caches were
-  stored under an earlier prompt version, so a dry-run reports 136 misses:
-  that is the expected consistent full pass under the current prompt, not a
-  reason to refresh the pilot for inspection alone.
-- Expect 3+ invocations at 60 attempts each for 136 misses, plus retries.
+  stored under an earlier prompt version, so the first full-batch dry-run
+  reported 136 misses. Later dry-runs reuse matching full-batch caches; misses
+  depend on the current prompt/settings. Do not refresh the pilot for inspection alone.
+- For a fresh batch of 136 misses, expect 3+ invocations at 60 attempts each, plus retries.
 - Process every post does not mean every offer gets a pin: offers without
   supported explicit locations stay internal, and unresolved/rejected rows
   stay out of the snapshot.

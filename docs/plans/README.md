@@ -1,8 +1,8 @@
 # Telegram food deals map: implementation plan
 
-Status: **Phases 1–4 complete for the selected demo scope; 15 reviewed rows published at 10 distinct coordinates, with five selected rows omitted; Phase 5 implementation and automated/browser verification complete; user usefulness review remains**. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
+Status: **Phases 1–5 implemented; full-batch processing produced a partial snapshot on 2026-09-12 with 52 approved rows at 30 coordinates and 24 selected rows rejected. Two extraction failures remain.** See the [current run record](../processing-workflow.md#latest-recorded-run). Phase 5 automated/browser verification below concerns the earlier pilot; usefulness review and browser verification of the new snapshot are not recorded here. Prepared 2026-09-06 from [mvp_draft.md](../../mvp_draft.md), [thoughts.md](../../thoughts.md), and the local August exports.
 
-The local pilot artifacts contain 34 offers and 22 explicit offer/location rows. The first five development comparisons recorded one match and four mismatches against draft annotations; the other 25 posts remain unscored. These are provisional findings, not a completed accuracy evaluation. See the [pilot review status](../llm-pilot-review.md).
+The original pilot produced 34 offers and 22 explicit offer/location rows. The first five development comparisons recorded one match and four mismatches against draft annotations; the other 25 posts remain unscored. These are provisional findings, not a completed accuracy evaluation. See the [pilot review status](../llm-pilot-review.md).
 
 On 2026-09-07 the user approved a smaller route to demonstrating the website experience. The rewritten [Phase 2 plan](03-llm-processing.md) replaces exhaustive annotation approval with an offline visual review of a small demo sample. The review workflow, geocoding/publication, read-only API, and status shell are implemented. The Leaflet map/list interface is implemented and verified; see the [Phase 5 review](../leaflet-review.md).
 
@@ -12,7 +12,7 @@ Build a local application that makes it easy to inspect food offers around an ar
 
 The proposed stack is appropriate for this data volume. The significant work is interpreting the data correctly: a post can contain multiple offers, an offer can cover multiple locations, and each location can have different dates. Keep these relationships explicit internally, then publish a separate normalized deal row for each offer/location pairing, as requested in the notes.
 
-The initial data contains 139 records, including 136 text-bearing posts, 132 available photos, two pin-service records, one poll, and four omitted videos/animations. See [the data review](01-data-review.md) for measured findings and concrete edge cases. Pilot extraction counts are available above; full-batch extraction and mapping coverage have not yet been measured.
+The initial data contains 139 records, including 136 text-bearing posts, 132 available photos, two pin-service records, one poll, and four omitted videos/animations. See [the data review](01-data-review.md) for measured findings and concrete edge cases. Full-batch extraction and publication counts are recorded in the [processing workflow](../processing-workflow.md#latest-recorded-run).
 
 ## Confirmed decisions
 
@@ -30,7 +30,7 @@ Additional confirmed decisions: use the supplied channels’ public usernames; r
 
 The completed pilot contains 10 posts per channel. Preserve its original caches and draft annotations as historical artifacts. The current workflow reuses saved outputs offline, accepts equivalent benefit/location/date grouping, and treats taxonomy and model review notes as advisory. Keep existing date handling, spending reservations, and source-artifact validation. Additional paid extraction uses an explicit demo continuation decision rather than exhaustive 30-post approval.
 
-The [geocoding plan](04-geocoding.md) is implemented for the 20 selected demo rows. [FastAPI](05-fastapi.md) now serves the 15 approved rows with the snapshot’s suggested historical date, `validity=all`, and a server-configurable 60-day posting cutoff. The [Leaflet plan](06-leaflet.md) is aligned with that mapped-only contract; map implementation and browser interaction checks are complete; the user usefulness review remains.
+The [geocoding plan](04-geocoding.md) is implemented, and the current selection has 76 reviewed rows. [FastAPI](05-fastapi.md) loads the 52 published rows on restart with the snapshot’s suggested historical date, `validity=all`, and a server-configurable 60-day posting cutoff. The [Leaflet plan](06-leaflet.md) is aligned with that mapped-only contract; map implementation and browser interaction checks are complete; the user usefulness review remains.
 
 ## MVP scope
 
@@ -56,7 +56,7 @@ Deferred: later-export ingestion and overlap/revision merging, a public unmapped
 | 4 | [FastAPI](05-fastapi.md) | Read-only API and safe assets/media routes | API works without provider keys; date/filter behavior and failure responses are verified. |
 | 5 | [Leaflet and end-to-end evaluation](06-leaflet.md) | Usable map/list interface | Numbering, selection, overlapping pins, historical dates, and empty/error states work on the supplied data. |
 
-Complete and review each phase before expanding scope. Phases 1–3 produce independently inspectable data artifacts. Phase 4 serves the approved pilot and has regression coverage using synthetic snapshots. Phase 5 can now consume that API; more extraction or geocoding is not a prerequisite for the selected demo.
+Complete and review each phase before expanding scope. Phases 1–3 produce independently inspectable data artifacts. Phase 4 serves the approved snapshot and has regression coverage using synthetic snapshots. Phase 5 can now consume that API; more extraction or geocoding is not a prerequisite for the selected demo.
 
 ## Architecture
 
@@ -143,7 +143,7 @@ Apply a fixed posting cutoff configured by `FOOD_DEALS_MAX_AGE_DAYS`, default 60
 - Cache keys include the inputs and settings that affect that stage. Do not invalidate LLM results because unrelated reaction counts changed; do invalidate them when text, date context, prompt, model, or extraction schema changes.
 - Use one writer, checkpoint completed provider work, and atomically replace final JSON. Publish only a validated snapshot. Partial processing requires explicit operator selection and produces a visible incomplete-data summary; never silently drop failures and call the run complete.
 - Require IDs/counts to reconcile across stages, and review false positives as well as mapping coverage. Record manual corrections separately from raw evidence.
-- Demo target: inspect roughly 10–15 useful cards if available, resolve or omit unsupported pins, and demonstrate map/list interactions. Preserve original pilot findings without claiming extraction accuracy. Full-batch coverage and exhaustive annotation scoring are deferred.
+- Demo target: inspect roughly 10–15 useful cards if available, resolve or omit unsupported pins, and demonstrate map/list interactions. Preserve original pilot findings without claiming extraction accuracy. Full-batch processing is recorded above; exhaustive annotation scoring remains deferred.
 - Final usefulness check: inspect a few Singapore areas on August 9, August 18, and the current date; confirm source links and terms are accessible, and decide whether the number of correct useful offers justifies expanding the data sources.
 
 Development validation: `uv run ruff check`, `uv run ty check`, and `uv run pytest`, with external services stubbed in automated tests. Frontend state logic should have focused checks plus a manual browser pass. Per [AGENTS.md](../../AGENTS.md), implementing a feature is followed by a separate proposal/approval for adding or changing tests and user documentation. Phase 4 implementation, regression tests, and documentation were approved; Phase 5 implementation, frontend checks, browser verification, and documentation are now complete under the user’s approval. See the [review record](../leaflet-review.md); expansion remains a separate decision.

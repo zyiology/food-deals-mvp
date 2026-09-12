@@ -1,13 +1,17 @@
 # Food deals MVP
 
 A local application for exploring Telegram food offers around Singapore.
-**Preprocessing, LLM extraction, geocoding/publication, FastAPI, and the Leaflet interface are implemented.** Phase 2
-has a completed 30-post paid pilot and an offline visual demo review. Only five
-posts were compared against the original draft annotations. The user subsequently
-approved 20 demo rows for geocoding. Pin review is complete: the published demo
-contains 15 approved rows at 10 distinct coordinates; five rows were omitted.
-The API serves this snapshot with a numbered map and matching deal cards.
-See the [Phase 5 verification and limitations](docs/leaflet-review.md).
+**Preprocessing, LLM extraction, geocoding/publication, FastAPI, and the Leaflet interface are implemented.**
+Full-batch processing of all 136 posts produced a partial published snapshot on
+**2026-09-12**: 52 approved rows at 30 distinct coordinates, with 24 selected rows
+rejected. Extraction has 131 successful posts, three needing review, and two
+failures; none remain unprocessed. See the
+[current run record](docs/processing-workflow.md#latest-recorded-run).
+
+The original 30-post pilot and five-post annotation comparison remain historical
+findings, not a full accuracy evaluation. The
+[Phase 5 verification and limitations](docs/leaflet-review.md) describe the earlier
+pilot snapshot; browser verification of the new snapshot is not recorded there.
 
 The normalization CLI converts the three supplied August 2026 exports into an
 inspectable source dataset. The extraction CLI adds structured offer/location/date
@@ -60,15 +64,15 @@ Open <http://127.0.0.1:8000/> for the map and interactive deal cards.
 Inspect <http://127.0.0.1:8000/api/deals> for JSON or
 <http://127.0.0.1:8000/api/health> for dataset readiness.
 
-The default response shows all 15 approved rows at 10 coordinates, using the
-snapshot's suggested **August 26, 2026** reference date and `validity=all`.
+The default response shows all 52 approved rows at 30 coordinates, using the
+snapshot's suggested **August 31, 2026** reference date and `validity=all`.
 Each row includes `validity_status`; showing a row does not mean it is redeemable
-on that date. All pilot coordinates have building-level precision.
+on that date. The snapshot has 46 rows with building-level precision and six with outlet-level precision.
 
 The API accepts `as_of=YYYY-MM-DD` and `validity=all|valid`, for example:
 
 ```text
-http://127.0.0.1:8000/api/deals?as_of=2026-08-26&validity=valid
+http://127.0.0.1:8000/api/deals?as_of=2026-08-31&validity=valid
 ```
 
 The agreed two-month posting cutoff is implemented as **60 days**, measured

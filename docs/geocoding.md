@@ -2,14 +2,18 @@
 
 Phase 3 consumes the visually reviewed demo selection and resolves only those
 location rows. It does not run the LLM or change original extraction artifacts.
-The 2026-09-07 selection contains 20 rows across 13 posts. The user clarified that
-`Bugis #03-08` refers to Bugis Junction; this is recorded as a reviewed query alias,
-not as approval of coordinates.
+The current selection contains 76 rows across 59 posts. Final pin review approved
+52 rows and rejected 24, with none pending. The partial snapshot published on
+2026-09-12 contains 52 rows at 30 distinct coordinates and 41 source images;
+46 rows have building-level precision and six have outlet-level precision.
+The final offline application of decisions made zero HTTP requests. See the
+[current run record](processing-workflow.md#latest-recorded-run) for extraction
+limitations, provenance, and publication counts.
 
-The first batch used 17 HTTP requests. Subsequent pin decisions approved 15 rows
-(including Bugis Junction) and rejected five. The published partial snapshot has
-10 distinct coordinate pairs and nine source images. Offline reruns use saved
-responses and decisions; no further lookup is needed to serve this demo.
+The original 2026-09-07 pilot selected 20 rows across 13 posts, used 17 HTTP
+requests in its first batch, and published 15 approved rows at 10 coordinates
+with nine images. Those counts describe the historical pilot. The reviewed
+`Bugis #03-08` alias means Bugis Junction; an alias alone does not approve coordinates.
 
 ## Inspect and resolve
 
@@ -60,7 +64,9 @@ is approximate; the original unit remains in the published card.
 
 Enter a reviewer name and download `geocoding.json`. Save it as
 `data/overrides/geocoding.json`, preserving the existing alias decisions included
-in the download. Then apply the review offline:
+in the download and any existing manual approvals unless deliberately replaced.
+Keep this decisions file separate from `data/demo-selection.json`, which contains
+`dataset_id` and `row_ids`. Then apply the review offline:
 
 ```bash
 uv run food-deals-mvp geocode --selection data/demo-selection.json --offline

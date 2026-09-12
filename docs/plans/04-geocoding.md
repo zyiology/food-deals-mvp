@@ -1,5 +1,7 @@
 # Phase 3: geocoding and dataset publication
 
+Current run update (2026-09-12): all 76 selected rows have final pin decisions; 52 approved rows are published at 30 coordinates and 24 were rejected. See the [current run record](../processing-workflow.md#latest-recorded-run). The 20-row scope and 15-row verification below describe the original pilot.
+
 Status: **implemented and verified on 2026-09-07; pin review complete and the partial demo snapshot published**. The user selected 20 eligible rows across 13 posts in `data/demo-selection.json`, then approved 15 pins and rejected five rows. Publication contains 15 rows at 10 distinct coordinates with nine source images. The remaining 106 posts and exhaustive pilot scoring are deferred. See the [operation guide](../geocoding.md) for implemented commands and recovery.
 
 ## Outcome and scope

@@ -1,0 +1,443 @@
+{
+  "schema_version": 1,
+  "decisions": [
+    {
+      "decision_id": "user-bugis-junction-2026-09-11",
+      "row_ids": [
+        "telegram:1204657101:4900:offer:afe158ed56d6613263f6d838:location:84acbfc9d4e935da040e953f:row:c25dfabc48133b82d42e748a"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4900:offer:afe158ed56d6613263f6d838:location:84acbfc9d4e935da040e953f:row:c25dfabc48133b82d42e748a": "13477039b91be573e9a5d04285532cd46bee2ed8614212d4f74c9076c5ef2ff2"
+      },
+      "action": "alias",
+      "reviewed_at": "2026-09-11T04:35:00Z",
+      "reviewer": "project owner",
+      "reason": "User clarified that Bugis #03-08 refers to Bugis Junction mall. Caption evidence: 'Bugis #03-08 & Northpoint #01-06 outlets'.",
+      "source": "User clarification in implementation conversation, 2026-09-07 and 2026-09-11",
+      "alias": "Bugis Junction",
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-alias-20260911T165719Z-3",
+      "row_ids": [
+        "telegram:1204657101:4905:offer:cd8a1a83e704342d19fe74ef:location:ae31943a2d0c12a2e3570299:row:d170f084376168207d9add1c"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4905:offer:cd8a1a83e704342d19fe74ef:location:ae31943a2d0c12a2e3570299:row:d170f084376168207d9add1c": "685f642a21bbe59e534d1b4bb80953e88085a3091ee3d0658a14f5c2814bb400"
+      },
+      "action": "alias",
+      "reviewed_at": "2026-09-11T16:57:19.921464Z",
+      "reviewer": "Codex (user-requested location investigation)",
+      "reason": "Official site confirms 167-169 Telok Ayer Street. Search the distinctive merchant name; verify returned address before pin approval. Caption evidence: Meatsmith; 167 - 169 Telok Ayer Street Name-only query returned no results; search the first caption-supported street number for a building pin.",
+      "source": "https://meatsmith.com.sg/",
+      "alias": "167 Telok Ayer Street",
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-alias-20260911T165719Z-5",
+      "row_ids": [
+        "telegram:1216422279:4634:offer:da39ce0e2949097aac3a846d:location:e6c00e88d690de6b00065bea:row:15ec1179acea289dc12e197d"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4634:offer:da39ce0e2949097aac3a846d:location:e6c00e88d690de6b00065bea:row:15ec1179acea289dc12e197d": "1afd64da68a786c8be72ed60fc3996012ab7953bf98f1afd2cd3594f864ab648"
+      },
+      "action": "alias",
+      "reviewed_at": "2026-09-11T16:57:19.921484Z",
+      "reviewer": "Codex (user-requested location investigation)",
+      "reason": "Official directory places Sushiro in Factory Block #02-01 at New Bahru; investigate the Factory Block address, not a whole-campus pin. Caption evidence: New Bahru, 02-01 Sushiro official location directory explicitly confirms 58 Kim Yam Road #02-01.",
+      "source": "https://www.newbahru.com/discover-sushiro ; https://www.sushiro.com.sg/contact-location/",
+      "alias": "58 Kim Yam Road",
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-alias-20260911T165719Z-6",
+      "row_ids": [
+        "telegram:1329056215:5256:offer:3b397f1b2c9ea4afa8566fe0:location:d780c3e7bb83214e29dc6bb0:row:c9d148337c666bd760e8e439"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5256:offer:3b397f1b2c9ea4afa8566fe0:location:d780c3e7bb83214e29dc6bb0:row:c9d148337c666bd760e8e439": "f0faf6958acaecfda7f47df76fda7099c8bc1c08a0eeeaaeccaaa1789f36b07b"
+      },
+      "action": "alias",
+      "reviewed_at": "2026-09-11T16:57:19.921495Z",
+      "reviewer": "Codex (user-requested location investigation)",
+      "reason": "Official mall directory confirms Souper Tang at Raffles City Shopping Centre B1-37; original query returned indoor corridors. Caption evidence: 📍 Raffles City",
+      "source": "https://www.capitaland.com/sg/malls/rafflescity/en/stores/souper-tang.html",
+      "alias": "Raffles City Shopping Centre",
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-alias-20260911T165719Z-8",
+      "row_ids": [
+        "telegram:1329056215:5282:offer:60725a6e01646e32bd2f6f59:location:b91b2f06c56384cf7724a8d8:row:edf8432bcb781580a5bc425b"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5282:offer:60725a6e01646e32bd2f6f59:location:b91b2f06c56384cf7724a8d8:row:edf8432bcb781580a5bc425b": "02891279ff593c866caec159a8feefac4334e53492338f0c2aac660b5055e758"
+      },
+      "action": "alias",
+      "reviewed_at": "2026-09-11T16:57:19.921513Z",
+      "reviewer": "Codex (user-requested location investigation)",
+      "reason": "Use mall name variant to distinguish the mall at 1 Kim Seng Promenade from the MRT station; verify returned building address. Caption evidence: Great World",
+      "source": "https://shop.greatworld.com.sg/explore-great-world/getting-here/",
+      "alias": "Great World City",
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-alias-20260911T165719Z-9",
+      "row_ids": [
+        "telegram:1329056215:5283:offer:bc5df38622e98e10fda4a900:location:fe7179bf834fb9e76453ac41:row:d9124afa9621dbfec14c119d"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5283:offer:bc5df38622e98e10fda4a900:location:fe7179bf834fb9e76453ac41:row:d9124afa9621dbfec14c119d": "0d5aa5aba1d41db5e7e0e42fc9395fcf9e6ee4390b0b7e6cd6b8a66a02268674"
+      },
+      "action": "alias",
+      "reviewed_at": "2026-09-11T16:57:19.921518Z",
+      "reviewer": "Codex (user-requested location investigation)",
+      "reason": "Official merchant reservation directory identifies its Suntec City outlet at 3 Temasek Boulevard; original generic query returned neighborhood and walkways. Caption evidence: Suntec City",
+      "source": "https://morganfields.com.sg/reservation/",
+      "alias": "Morganfield's Suntec City",
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-pin-20260912-6",
+      "row_ids": [
+        "telegram:1204657101:4862:offer:ee6e64b759cb710e9f464ff3:location:1c85fc69a3e2bb4e64fcbe07:row:af367ed9fac3d58bcde19602"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4862:offer:ee6e64b759cb710e9f464ff3:location:1c85fc69a3e2bb4e64fcbe07:row:af367ed9fac3d58bcde19602": "3604aa83063abb25ebfcd44eeae3d93bac8018486c58d2856cc50ee5682796d9"
+      },
+      "action": "manual",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "Cached OSM response names Jurong Point at 1 Jurong West Central 2, matching the caption and official mall address. The candidate filter excludes amenity=commercial, despite the explicit mall identity. Use the saved mall coordinate with building precision; no outlet/unit precision claimed. Caption evidence: Parkway Parade & Jurong Point outlets",
+      "source": "https://sg.linkreit.com/malls/jurong-point/mall-info/about-mall/ ; https://sg.linkreit.com/-/media/files/jurong-point/jpcorpdeals.pdf ; cached query {\"d46f40388411c5b501f80dfacbd86f9722333211151be3060b8b923ca378a1c4\": \"b175a400b08290448f752514047539a285d9a07da3ef512aa7e790caf55ac34b\"}",
+      "alias": null,
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": {
+        "latitude": 1.3394964,
+        "longitude": 103.705254
+      },
+      "precision": "building",
+      "resolved_label": "Jurong Point"
+    },
+    {
+      "decision_id": "codex-pin-20260912-7",
+      "row_ids": [
+        "telegram:1204657101:4868:offer:02f43bd03fc6ea33c282e9a0:location:1291235760d25d5a52d392bd:row:0fd5b13b5a03756d74e1b7a3"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4868:offer:02f43bd03fc6ea33c282e9a0:location:1291235760d25d5a52d392bd:row:0fd5b13b5a03756d74e1b7a3": "785ee3952546ebf3c53182f0dff48ffd58fe38b7ba0cb621ee8dab3f40ba108b"
+      },
+      "action": "approve",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "The official Tanjong Pagar branch is Ramen Keisuke Tonkotsu King, 1 Tras Link #01-19 Orchid Hotel. Cached restaurant name and address agree. Both offers retain their own row IDs. Caption evidence: Tonkotsu King Tanjong Pagar",
+      "source": "https://www.keisuke.sg/tonkotsu-king-tanjong-pagar",
+      "alias": null,
+      "candidate_id": "dbc7b3d1fa5bed970160a4ec067a2aec90117e8c3a45c829f1ca5c98b69d9da8",
+      "response_fingerprint": "44036d58a7bd26d9adca91088be666f3a317721b4e53108ac8d77249489f2577",
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-pin-20260912-8",
+      "row_ids": [
+        "telegram:1204657101:4868:offer:7b109a89d51326fce4704167:location:1291235760d25d5a52d392bd:row:3d362f47d1351ebe3e87697e"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4868:offer:7b109a89d51326fce4704167:location:1291235760d25d5a52d392bd:row:3d362f47d1351ebe3e87697e": "b6f9a01dc45b7ce672c88636e528923df3070486ca8f8575736d539e2b404af0"
+      },
+      "action": "approve",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "The official Tanjong Pagar branch is Ramen Keisuke Tonkotsu King, 1 Tras Link #01-19 Orchid Hotel. Cached restaurant name and address agree. Both offers retain their own row IDs. Caption evidence: Tonkotsu King Tanjong Pagar",
+      "source": "https://www.keisuke.sg/tonkotsu-king-tanjong-pagar",
+      "alias": null,
+      "candidate_id": "dbc7b3d1fa5bed970160a4ec067a2aec90117e8c3a45c829f1ca5c98b69d9da8",
+      "response_fingerprint": "44036d58a7bd26d9adca91088be666f3a317721b4e53108ac8d77249489f2577",
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-pin-20260912-9",
+      "row_ids": [
+        "telegram:1204657101:4900:offer:afe158ed56d6613263f6d838:location:84acbfc9d4e935da040e953f:row:c25dfabc48133b82d42e748a"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4900:offer:afe158ed56d6613263f6d838:location:84acbfc9d4e935da040e953f:row:c25dfabc48133b82d42e748a": "13477039b91be573e9a5d04285532cd46bee2ed8614212d4f74c9076c5ef2ff2"
+      },
+      "action": "approve",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "Official mall directory confirms cai-ca at Bugis Junction #03-08. Choose the same northern mall building pin previously reviewed by Zhi Yi on 2026-09-07; verified current candidate ID and response fingerprint equal the prior approval, with a new decision bound to the current row evidence. Building approximation, not an exact unit pin. Caption evidence: Bugis #03-08",
+      "source": "https://www.capitaland.com/sg/en/shop/malls/discover/curated-for-you/participating-stores.html",
+      "alias": null,
+      "candidate_id": "3e488aec0f40405143d5cfaef5bea7e23bc4f31132d9895733612026cd159a0d",
+      "response_fingerprint": "6245fd487a0478662d50dd226d41998a834c5645aeb292437855181c65030c7e",
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-pin-20260912-10",
+      "row_ids": [
+        "telegram:1204657101:4903:offer:b4fa9e4adb6c1c9b4fe3e078:location:0090fd9197aba648ee8a968d:row:f64d96f52cb60bb39edb5c01"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4903:offer:b4fa9e4adb6c1c9b4fe3e078:location:0090fd9197aba648ee8a968d:row:f64d96f52cb60bb39edb5c01": "73664e3dd4fa36affb45d835b2efdf3dbaa036fe3c42c8831b3448f286ad7712"
+      },
+      "action": "approve",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "Caption explicitly gives 5 Dunlop Street without a merchant. Choose the building polygon at that exact address, rather than claiming the Salai restaurant is the promotion merchant. The duplicate house node is about six metres away. Caption evidence: 5 Dunlop Street",
+      "source": "data/intermediate/posts.json; https://www.openstreetmap.org/way/176326903",
+      "alias": null,
+      "candidate_id": "dfe9c25484a00546935e71a94153a9c629010b7f2dc7fb24518dccb36332dd8d",
+      "response_fingerprint": "0ff02c74675ebcf2e7ea8e3b14eb5ddc56b5e89a8c71fcb303352f019ace956d",
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-pin-20260912-11",
+      "row_ids": [
+        "telegram:1204657101:4905:offer:cd8a1a83e704342d19fe74ef:location:ae31943a2d0c12a2e3570299:row:d170f084376168207d9add1c"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4905:offer:cd8a1a83e704342d19fe74ef:location:ae31943a2d0c12a2e3570299:row:d170f084376168207d9add1c": "685f642a21bbe59e534d1b4bb80953e88085a3091ee3d0658a14f5c2814bb400"
+      },
+      "action": "approve",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "Official Meatsmith address is 167-169 Telok Ayer Street. The 167 query returns Meat Smith restaurant at the matching street number and postal code; spelling spacing differs, but merchant and address agree. Caption evidence: Meatsmith; 167 - 169 Telok Ayer Street",
+      "source": "https://meatsmith.com.sg/",
+      "alias": null,
+      "candidate_id": "a65654a4bf61d30d6e7faf5e2f068628be2f4160a57ec1dbcfe7500be4ebae83",
+      "response_fingerprint": "a0aebdcc6083ee078fd1e3fb5025db2ace583fa8b922fd6d825f2779b756f801",
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-pin-20260912-12",
+      "row_ids": [
+        "telegram:1216422279:4634:offer:da39ce0e2949097aac3a846d:location:e6c00e88d690de6b00065bea:row:15ec1179acea289dc12e197d"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4634:offer:da39ce0e2949097aac3a846d:location:e6c00e88d690de6b00065bea:row:15ec1179acea289dc12e197d": "1afd64da68a786c8be72ed60fc3996012ab7953bf98f1afd2cd3594f864ab648"
+      },
+      "action": "approve",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "Both official directories identify Sushiro at New Bahru #02-01; Sushiro explicitly gives 58 Kim Yam Road. Choose the Sushiro restaurant candidate at that address, rather than the automatic building candidate or the campus centroid. Caption evidence: New Bahru, 02-01",
+      "source": "https://www.sushiro.com.sg/contact-location/ ; https://www.newbahru.com/discover-sushiro",
+      "alias": null,
+      "candidate_id": "de777e6eaf21d95f415653033c3bfd5fff3b8341e5fc4e4a585a0dde7999e493",
+      "response_fingerprint": "de2cfc992f23a5667050b8e724f0366a60320339fb5225a3e24b382fd5ae9e32",
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-pin-20260912-13",
+      "row_ids": [
+        "telegram:1216422279:4647:offer:806d620282f816e8b2e4e10e:location:028af86074d117e9d3653170:row:42a5fbc4ddbc97f27fffd83c"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4647:offer:806d620282f816e8b2e4e10e:location:028af86074d117e9d3653170:row:42a5fbc4ddbc97f27fffd83c": "cd3132bc30a9383b4f788f77bf7092b315613986a218a9a03a3a3aa97b77a27e"
+      },
+      "action": "manual",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "Caption explicitly specifies Lau Pa Sat Stall 71; official venue address is 18 Raffles Quay. Two OSM representations are about three metres apart. Use the food-court polygon coordinate with building precision, not the candidate outlet precision: this is not a surveyed stall-71 pin. Caption evidence: Lau Pa Sat, Stall 71",
+      "source": "https://www.laupasat.sg/heritagetrail/ ; https://www.openstreetmap.org/way/45098520",
+      "alias": null,
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": {
+        "latitude": 1.2806167,
+        "longitude": 103.8504802
+      },
+      "precision": "building",
+      "resolved_label": "Lau Pa Sat"
+    },
+    {
+      "decision_id": "codex-pin-20260912-14",
+      "row_ids": [
+        "telegram:1329056215:5256:offer:3b397f1b2c9ea4afa8566fe0:location:d780c3e7bb83214e29dc6bb0:row:c9d148337c666bd760e8e439"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5256:offer:3b397f1b2c9ea4afa8566fe0:location:d780c3e7bb83214e29dc6bb0:row:c9d148337c666bd760e8e439": "f0faf6958acaecfda7f47df76fda7099c8bc1c08a0eeeaaeccaaa1789f36b07b"
+      },
+      "action": "approve",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "Official mall directory places Souper Tang at Raffles City Shopping Centre B1-37. Choose the named mall polygon at 252 North Bridge Road over its duplicate house node and an unrelated restaurant. Building approximation. Caption evidence: 📍 Raffles City",
+      "source": "https://www.capitaland.com/sg/malls/rafflescity/en/stores/souper-tang.html",
+      "alias": null,
+      "candidate_id": "4d7bba75db74033658d278136579b128c0d3c67a066ee9b9d73778cdc2673d44",
+      "response_fingerprint": "de97853776c64a8761193accadd84ae8887c19ee6768ee91e39c8e59b8ad2ddd",
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-pin-20260912-15",
+      "row_ids": [
+        "telegram:1329056215:5267:offer:5c8145e7571deeae2649d4b1:location:9a78406abce56bd5df196d21:row:94435cb4e6ab55150b226d5a"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5267:offer:5c8145e7571deeae2649d4b1:location:9a78406abce56bd5df196d21:row:94435cb4e6ab55150b226d5a": "83f96c2d66b717652c7d6bf45a8554133ad62f4fa1fbe8e46343d9012319623a"
+      },
+      "action": "manual",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "Official Korea Culture page confirms Terminal 3 public area #03-33/34 and links to a Google Maps place for 65 Airport Boulevard T3. The linked place coordinates (!3d1.3562865!4d103.9870353), not the map viewport center, provide this approximate terminal-building pin. This is not an exact restaurant-unit pin. Caption evidence: Changi Airport T3",
+      "source": "https://koreaculture.com.sg/pages/terminal-3 ; https://maps.app.goo.gl/cAR6q27LcEtdXGAZ9",
+      "alias": null,
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": {
+        "latitude": 1.3562865,
+        "longitude": 103.9870353
+      },
+      "precision": "building",
+      "resolved_label": "Changi Airport Terminal 3"
+    },
+    {
+      "decision_id": "codex-pin-20260912-16",
+      "row_ids": [
+        "telegram:1329056215:5282:offer:60725a6e01646e32bd2f6f59:location:b91b2f06c56384cf7724a8d8:row:edf8432bcb781580a5bc425b"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5282:offer:60725a6e01646e32bd2f6f59:location:b91b2f06c56384cf7724a8d8:row:edf8432bcb781580a5bc425b": "02891279ff593c866caec159a8feefac4334e53492338f0c2aac660b5055e758"
+      },
+      "action": "approve",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "Caption specifies Great World. Official property pages establish the Great World City mall name and address at 1 Kim Seng Promenade. Cached mall matches; the original result was the MRT station. Building approximation; no inferred unit. Caption evidence: Great World",
+      "source": "https://shop.greatworld.com.sg/explore-great-world/getting-here/ ; https://greatworld.com.sg/",
+      "alias": null,
+      "candidate_id": "432452adcf7ecf5bfd570746b25cd0229d57e2fd04b8d72a61382114395bd19e",
+      "response_fingerprint": "98149302f2075f6b947a2c8882ed68ffe260e9e87cfcc835575f7deafae03b0d",
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "codex-pin-20260912-17",
+      "row_ids": [
+        "telegram:1329056215:5283:offer:bc5df38622e98e10fda4a900:location:fe7179bf834fb9e76453ac41:row:d9124afa9621dbfec14c119d"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5283:offer:bc5df38622e98e10fda4a900:location:fe7179bf834fb9e76453ac41:row:d9124afa9621dbfec14c119d": "0d5aa5aba1d41db5e7e0e42fc9395fcf9e6ee4390b0b7e6cd6b8a66a02268674"
+      },
+      "action": "approve",
+      "reviewed_at": "2026-09-11T17:00:43.298505Z",
+      "reviewer": "Codex (user-requested location review)",
+      "reason": "Caption specifies Morganfield's Suntec City. Official merchant material confirms 3 Temasek Boulevard #01-645/646; cached Morganfield's venue matches the address. It is tagged bar, but its venue identity agrees. Caption evidence: Suntec City",
+      "source": "https://morganfields.com.sg/reservation/ ; https://morganfields.com.sg/wp-content/uploads/2023/09/Grillin-Good-Times-at-Morganfields.pdf",
+      "alias": null,
+      "candidate_id": "aa4b4ba3ba6542f7ccf62ec41b9cb521989e713c059ce392e9801e9453ed64e7",
+      "response_fingerprint": "6e244b5af84be2ddc799bead8c4973e0e896309a71ee728ff50dd6547e7236cc",
+      "coordinates": null,
+      "precision": null,
+      "resolved_label": null
+    },
+    {
+      "decision_id": "user-requested-approximate-238252-20260911T170652Z",
+      "row_ids": [
+        "telegram:1204657101:4875:offer:2cb017494f9fc1f43e107ba1:location:1394eef029b9eed6c329e9d2:row:5ba53ea613452e6014c3a763"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4875:offer:2cb017494f9fc1f43e107ba1:location:1394eef029b9eed6c329e9d2:row:5ba53ea613452e6014c3a763": "2a8894bc9e2d25539966fea1b9df2ff22599ea1c7576d588ed1839917c8305b7"
+      },
+      "action": "manual",
+      "reviewed_at": "2026-09-11T17:06:52.588328Z",
+      "reviewer": "Codex (user-authorized approximate address pins)",
+      "reason": "Use the address-level Quayside coordinate as explicitly authorized by the user; the exact Carnaby #01-01 position is not asserted. Original caption evidence: 60 Robertson Quay, #01-01; Carnaby",
+      "source": "https://www.carnaby.sg/contact ; https://datumsg.com/postal_codes/238252 ; local source record: data/cache/location-review/238252.json",
+      "alias": null,
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": {
+        "latitude": 1.29008339576408,
+        "longitude": 103.839199219609
+      },
+      "precision": "building",
+      "resolved_label": "60 Robertson Quay (The Quayside)"
+    },
+    {
+      "decision_id": "user-requested-approximate-048777-20260911T170652Z",
+      "row_ids": [
+        "telegram:1204657101:4897:offer:7a0e072843ee1539d3d5464e:location:c667f1130432ec3f975e35a1:row:f6bcb4b28d72f290e739c0ba"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4897:offer:7a0e072843ee1539d3d5464e:location:c667f1130432ec3f975e35a1:row:f6bcb4b28d72f290e739c0ba": "8d0d6df082d8f96492575d0e6bdff3a756775572ce4093351c312b93f1f53359"
+      },
+      "action": "manual",
+      "reviewed_at": "2026-09-11T17:06:52.588328Z",
+      "reviewer": "Codex (user-authorized approximate address pins)",
+      "reason": "User explicitly chose 47 Pekin Street as sufficient for the 47-49 Pekin Street premises. Address directory supplies a pin for 47 Pekin Street (Amoy Hotel); URA associates historic 47 Pekin Street with 76 Telok Ayer Street. Use address/building approximation, not the whole-street result or an exact restaurant unit. Original caption evidence: Gwanghwamun Mijin: $1 Buckwheat Noodles; 47 - 49 Pekin Street, #01-01",
+      "source": "https://www.mijin.sg/ ; https://www.ura.gov.sg/conservation/find-a-building/conservation-portal/chsq-00136/ ; https://datumsg.com/postal_codes/048777 ; local source record: data/cache/location-review/048777.json",
+      "alias": null,
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": {
+        "latitude": 1.28317011450092,
+        "longitude": 103.848753557142
+      },
+      "precision": "building",
+      "resolved_label": "47 Pekin Street"
+    },
+    {
+      "decision_id": "user-requested-approximate-048421-20260911T170652Z",
+      "row_ids": [
+        "telegram:1204657101:4906:offer:c7a4bba58295d2e0c5681d27:location:0408ffde9d388ac115e6829d:row:99839d6573e0b90c233fbf22"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4906:offer:c7a4bba58295d2e0c5681d27:location:0408ffde9d388ac115e6829d:row:99839d6573e0b90c233fbf22": "8917eb25f4999ea4a754d57886950be67ae46a0ef7723546397a0afba678edc6"
+      },
+      "action": "manual",
+      "reviewed_at": "2026-09-11T17:06:52.588328Z",
+      "reviewer": "Codex (user-authorized approximate address pins)",
+      "reason": "Use the address-level coordinate for 22 Cross Street as explicitly authorized by the user. Retain #01-63 from the caption; this is not a pin for another restaurant or an exact surveyed unit. Original caption evidence: Hello Arigato: $2.99 Drinks; 22 Cross St, #01-63",
+      "source": "https://www.helloarigato.com/crossstreet ; https://datumsg.com/postal_codes/048421 ; local source record: data/cache/location-review/048421.json",
+      "alias": null,
+      "candidate_id": null,
+      "response_fingerprint": null,
+      "coordinates": {
+        "latitude": 1.28423869111672,
+        "longitude": 103.846705363258
+      },
+      "precision": "building",
+      "resolved_label": "22 Cross Street (Cross Street Exchange)"
+    }
+  ]
+}

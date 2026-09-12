@@ -2,35 +2,15 @@
   "schema_version": 1,
   "decisions": [
     {
-      "decision_id": "user-bugis-junction-2026-09-07",
+      "decision_id": "pin-825f4aa0-4493-4daf-99fb-e53a38fc80a5",
       "row_ids": [
-        "telegram:1204657101:4900:offer:44d9560c4bf784c5ba574b51:location:84acbfc9d4e935da040e953f:row:380fe8944cf3ca226ac6db73"
+        "telegram:1204657101:4858:offer:6251ce7fbe02ae92ddcd17c7:location:64b8b7f317b0638d22537e39:row:cf7bf96c91c35dabcab1cc00"
       ],
       "location_fingerprints": {
-        "telegram:1204657101:4900:offer:44d9560c4bf784c5ba574b51:location:84acbfc9d4e935da040e953f:row:380fe8944cf3ca226ac6db73": "e29eac1fe1add19491aee95af78ea98323a17dda3a528d635126a159e2980878"
+        "telegram:1204657101:4858:offer:6251ce7fbe02ae92ddcd17c7:location:64b8b7f317b0638d22537e39:row:cf7bf96c91c35dabcab1cc00": "4a7a4932cfb91cd10ddbd52e49c43a6a14ab87136c0807a5045619473b843dc4"
       },
-      "action": "alias",
-      "reviewed_at": "2026-09-07T03:42:01.225616Z",
-      "reviewer": "project owner",
-      "reason": "User clarified that Bugis #03-08 refers to Bugis Junction mall.",
-      "source": "User clarification in implementation conversation, 2026-09-07",
-      "alias": "Bugis Junction",
-      "candidate_id": null,
-      "response_fingerprint": null,
-      "coordinates": null,
-      "precision": null,
-      "resolved_label": null
-    },
-    {
-      "decision_id": "pin-0b22d026-5706-4875-8086-8af4665533c2",
-      "row_ids": [
-        "telegram:1204657101:4858:offer:3119d6611336012bd70dacfe:location:64b8b7f317b0638d22537e39:row:4f8b33823bc3579cec90132b"
-      ],
-      "location_fingerprints": {
-        "telegram:1204657101:4858:offer:3119d6611336012bd70dacfe:location:64b8b7f317b0638d22537e39:row:4f8b33823bc3579cec90132b": "3b08308d70426e987afa80aabd466d0285583ee6c4d411e818432eb7e84bc3e1"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
+      "reviewed_at": "2026-09-12T15:56:20.464Z",
+      "reviewer": "zhiyi",
       "reason": "Visually reviewed venue and offer association",
       "source": "https://www.openstreetmap.org/?mlat=1.3113537&mlon=103.8565712",
       "action": "approve",
@@ -38,15 +18,15 @@
       "response_fingerprint": "82ec69a49430c4a94b2658e4055ac26016d20d36d406178424935b417ca3332e"
     },
     {
-      "decision_id": "pin-c36dd9a9-a5a3-45c5-8e4a-ea0fea593635",
+      "decision_id": "pin-80d6b054-66a4-4a7a-8a60-bc172652f7b9",
       "row_ids": [
-        "telegram:1204657101:4858:offer:4f9e0f353bde382543ff5d80:location:e69a46f6aefb4232b547a6c3:row:1fa51fcc4aea1e62a7fef8c3"
+        "telegram:1204657101:4858:offer:ab710b1a0b375085298b5c11:location:8402a9590d2cdb7e22349b54:row:cf7bf96c91c35dabcab1cc00"
       ],
       "location_fingerprints": {
-        "telegram:1204657101:4858:offer:4f9e0f353bde382543ff5d80:location:e69a46f6aefb4232b547a6c3:row:1fa51fcc4aea1e62a7fef8c3": "fdeb47ea76fa1c5508d3af0bf1beadb65bc82f427eb34ecd9669512e2519879b"
+        "telegram:1204657101:4858:offer:ab710b1a0b375085298b5c11:location:8402a9590d2cdb7e22349b54:row:cf7bf96c91c35dabcab1cc00": "467f87495b71c759ed56c609d7873e7ce49bde7a135ad7fb69dc24ca3bd2b822"
       },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
+      "reviewed_at": "2026-09-12T15:56:20.464Z",
+      "reviewer": "zhiyi",
       "reason": "Visually reviewed venue and offer association",
       "source": "https://www.openstreetmap.org/?mlat=1.3113537&mlon=103.8565712",
       "action": "approve",
@@ -54,219 +34,45 @@
       "response_fingerprint": "82ec69a49430c4a94b2658e4055ac26016d20d36d406178424935b417ca3332e"
     },
     {
-      "decision_id": "pin-b8a081d8-7875-4f06-8500-78bb1cc2f7b2",
+      "decision_id": "pin-a144a952-de71-453c-99de-badbb451a7b8",
       "row_ids": [
-        "telegram:1204657101:4881:offer:2f3f255ce5632b60f4a0f5af:location:a3d85c37994d5f9a78b87aa5:row:be53df709694154ca1951c1e"
+        "telegram:1204657101:4862:offer:ee6e64b759cb710e9f464ff3:location:1c85fc69a3e2bb4e64fcbe07:row:af367ed9fac3d58bcde19602"
       ],
       "location_fingerprints": {
-        "telegram:1204657101:4881:offer:2f3f255ce5632b60f4a0f5af:location:a3d85c37994d5f9a78b87aa5:row:be53df709694154ca1951c1e": "f115814618412c954db74ea8428c4442c7b3fef5170b0cd6778d3ce4fc00167f"
+        "telegram:1204657101:4862:offer:ee6e64b759cb710e9f464ff3:location:1c85fc69a3e2bb4e64fcbe07:row:af367ed9fac3d58bcde19602": "3604aa83063abb25ebfcd44eeae3d93bac8018486c58d2856cc50ee5682796d9"
       },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.3004414&mlon=103.8449028",
-      "action": "approve",
-      "candidate_id": "0a03abe4842b7e05c9811babe35e24a96fd9fe0ff858712040cf65f31ee7fce6",
-      "response_fingerprint": "178e8af894c91755f7aa52de67c59d529b342aff86348c42bfcd6ff8c79399e1"
-    },
-    {
-      "decision_id": "pin-8d5da478-e109-4943-85af-ea316496aebd",
-      "row_ids": [
-        "telegram:1204657101:4883:offer:cb79e7b86835f4b191bfcb55:location:de5136d96f5a19749edd73d6:row:6001847e8be763d441f5e4e5"
-      ],
-      "location_fingerprints": {
-        "telegram:1204657101:4883:offer:cb79e7b86835f4b191bfcb55:location:de5136d96f5a19749edd73d6:row:6001847e8be763d441f5e4e5": "445a684006c072f36ad56932cad0103cbdd98f6e822dda54e5590185079223a6"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.3602243&mlon=103.9896749",
-      "action": "approve",
-      "candidate_id": "e252266f23e220fe3031ed12764235a253921a69db367c74403e40485820edab",
-      "response_fingerprint": "d3231f3dff0c0de19df55ee12b34538c1bc9b26768cfead0cb18851ff08bb3f6"
-    },
-    {
-      "decision_id": "pin-5e2e00e7-872e-47be-a2b1-143272a7b659",
-      "row_ids": [
-        "telegram:1204657101:4883:offer:e5fd221e541d26a40544cbfc:location:fcc210a906abc72223bd4d6f:row:e5a331397ddd0eec2d91b147"
-      ],
-      "location_fingerprints": {
-        "telegram:1204657101:4883:offer:e5fd221e541d26a40544cbfc:location:fcc210a906abc72223bd4d6f:row:e5a331397ddd0eec2d91b147": "7b3c5830b6dc69dd6f88979f9c5e2932471f844164b409f3406c6f3c169ae6ea"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.4064266&mlon=103.9020102",
-      "action": "approve",
-      "candidate_id": "d41d1fdbea6ff4123b0a30e43beaa61ad7ae0a2c239e008093b1f6a84af0a392",
-      "response_fingerprint": "1c5c783c6f8c3069dd1c64dc460057a7d39fa65eb322d30f771da2cb1a879f25"
-    },
-    {
-      "decision_id": "pin-41a99a43-1f18-4d94-821e-55c76bf4ac26",
-      "row_ids": [
-        "telegram:1204657101:4900:offer:44d9560c4bf784c5ba574b51:location:847eac0ad8384683f104d69f:row:380fe8944cf3ca226ac6db73"
-      ],
-      "location_fingerprints": {
-        "telegram:1204657101:4900:offer:44d9560c4bf784c5ba574b51:location:847eac0ad8384683f104d69f:row:380fe8944cf3ca226ac6db73": "3bc736ef06e7fc9f1e9fc467abb053ab749e6b735a9d4965412dcd5836534d78"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.4281326&mlon=103.8362451",
-      "action": "approve",
-      "candidate_id": "3c42689dd34895ace0cf2e27094b70084c083a7254afa03edf43f8e74ca030b5",
-      "response_fingerprint": "a2b67960777e5b51bd2dd8faba2d6baaf40b4212e1156297ea8d889448eb5e82"
-    },
-    {
-      "decision_id": "pin-9265ebf3-23ed-496f-9c44-18dc3638cd88",
-      "row_ids": [
-        "telegram:1204657101:4900:offer:44d9560c4bf784c5ba574b51:location:84acbfc9d4e935da040e953f:row:380fe8944cf3ca226ac6db73"
-      ],
-      "location_fingerprints": {
-        "telegram:1204657101:4900:offer:44d9560c4bf784c5ba574b51:location:84acbfc9d4e935da040e953f:row:380fe8944cf3ca226ac6db73": "e29eac1fe1add19491aee95af78ea98323a17dda3a528d635126a159e2980878"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.2998153&mlon=103.855923",
-      "action": "approve",
-      "candidate_id": "3e488aec0f40405143d5cfaef5bea7e23bc4f31132d9895733612026cd159a0d",
-      "response_fingerprint": "6245fd487a0478662d50dd226d41998a834c5645aeb292437855181c65030c7e"
-    },
-    {
-      "decision_id": "pin-4b87a2d1-f8de-41ea-a4ed-7e8121f1269e",
-      "row_ids": [
-        "telegram:1204657101:4904:offer:8806a1c1aeb84ba8f26be2a3:location:013638eadcf7e662afa0f37e:row:15f732bdb040de33bae0c545"
-      ],
-      "location_fingerprints": {
-        "telegram:1204657101:4904:offer:8806a1c1aeb84ba8f26be2a3:location:013638eadcf7e662afa0f37e:row:15f732bdb040de33bae0c545": "cb594be134cbd619c42d8c2a3854912a62a460ce69a32688608b9380fdc4b540"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.334194&mlon=103.7428671",
-      "action": "approve",
-      "candidate_id": "0e29dc0cfe019e1cb3a6b88fe07a928748e17e4763a08a9bb305c19fcd8384ea",
-      "response_fingerprint": "64a34e7eb19c2d9f195a8c368a7f743d27c98486cd3b5ea95beb3a1e24576565"
-    },
-    {
-      "decision_id": "pin-c54440b8-3105-42f5-891a-f1043a119487",
-      "row_ids": [
-        "telegram:1204657101:4904:offer:9201951b9e953e0e3171b9c5:location:013638eadcf7e662afa0f37e:row:e321d89b64a1a36cbf3c49c1"
-      ],
-      "location_fingerprints": {
-        "telegram:1204657101:4904:offer:9201951b9e953e0e3171b9c5:location:013638eadcf7e662afa0f37e:row:e321d89b64a1a36cbf3c49c1": "c0e1439c5efb2282eb9cfba3b34a68c77fdacdd39f440148d7caf42e2a560138"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.334194&mlon=103.7428671",
-      "action": "approve",
-      "candidate_id": "0e29dc0cfe019e1cb3a6b88fe07a928748e17e4763a08a9bb305c19fcd8384ea",
-      "response_fingerprint": "64a34e7eb19c2d9f195a8c368a7f743d27c98486cd3b5ea95beb3a1e24576565"
-    },
-    {
-      "decision_id": "pin-843d2474-3922-44a8-909c-df03417658f1",
-      "row_ids": [
-        "telegram:1204657101:4904:offer:e8c294e6c91fc1847605f000:location:013638eadcf7e662afa0f37e:row:1e84a01dfa9a5dd3f52e264c"
-      ],
-      "location_fingerprints": {
-        "telegram:1204657101:4904:offer:e8c294e6c91fc1847605f000:location:013638eadcf7e662afa0f37e:row:1e84a01dfa9a5dd3f52e264c": "3ba14ec3234cdb3b1ce835005cefe854762b02ea7cb2a6d9d47037f501166cd7"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.334194&mlon=103.7428671",
-      "action": "approve",
-      "candidate_id": "0e29dc0cfe019e1cb3a6b88fe07a928748e17e4763a08a9bb305c19fcd8384ea",
-      "response_fingerprint": "64a34e7eb19c2d9f195a8c368a7f743d27c98486cd3b5ea95beb3a1e24576565"
-    },
-    {
-      "decision_id": "pin-95c3ed03-a772-4700-8237-f61650180238",
-      "row_ids": [
-        "telegram:1216422279:4623:offer:2c242f969f5682581a943076:location:98fd4cebccd5bf70f5952a22:row:8754b8babf7129740512d758"
-      ],
-      "location_fingerprints": {
-        "telegram:1216422279:4623:offer:2c242f969f5682581a943076:location:98fd4cebccd5bf70f5952a22:row:8754b8babf7129740512d758": "b242087f9fc85075314db098bcf8f3cd9e7defddaff98eb6a847d492eb83be99"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.3602243&mlon=103.9896749",
-      "action": "approve",
-      "candidate_id": "e252266f23e220fe3031ed12764235a253921a69db367c74403e40485820edab",
-      "response_fingerprint": "d3231f3dff0c0de19df55ee12b34538c1bc9b26768cfead0cb18851ff08bb3f6"
-    },
-    {
-      "decision_id": "pin-a64ca671-0944-4364-89be-02f08c97a225",
-      "row_ids": [
-        "telegram:1216422279:4623:offer:ce0c706b9de5789753a02295:location:9f631c57da688f69c468db97:row:446447a8ecb3f2ce72ce84f9"
-      ],
-      "location_fingerprints": {
-        "telegram:1216422279:4623:offer:ce0c706b9de5789753a02295:location:9f631c57da688f69c468db97:row:446447a8ecb3f2ce72ce84f9": "49710be1d11742e07d48ac59dc09c7959a29a5bbbe05c5f9fa0a5372c9e6190c"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.4064266&mlon=103.9020102",
-      "action": "approve",
-      "candidate_id": "d41d1fdbea6ff4123b0a30e43beaa61ad7ae0a2c239e008093b1f6a84af0a392",
-      "response_fingerprint": "1c5c783c6f8c3069dd1c64dc460057a7d39fa65eb322d30f771da2cb1a879f25"
-    },
-    {
-      "decision_id": "pin-27692932-42df-4215-868e-bfb5eab3b9dc",
-      "row_ids": [
-        "telegram:1216422279:4634:offer:cd7cfead0df3da0708268a14:location:a9256f2ec38414fd484fbec8:row:79a315d5c3fd65518959198f"
-      ],
-      "location_fingerprints": {
-        "telegram:1216422279:4634:offer:cd7cfead0df3da0708268a14:location:a9256f2ec38414fd484fbec8:row:79a315d5c3fd65518959198f": "973e7977e8f327ebcb9c580d6c49e2802be50ffa52e0d754cd46f85dadc3a0cb"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
-      "reason": "Visually reviewed venue and offer association",
-      "source": "https://www.openstreetmap.org/?mlat=1.2851975&mlon=103.8449052",
-      "action": "approve",
-      "candidate_id": "898c24c7ee4783281342dd551ea9df6e637460c92d0cc120a87007d9a7bd40af",
-      "response_fingerprint": "565ec0b06dd7d08c18948e1e3840bc4166d9d22a105aeb23d5feef99443d50bf"
-    },
-    {
-      "decision_id": "pin-7748c78c-625a-4acd-a448-1465eeb5dff3",
-      "row_ids": [
-        "telegram:1216422279:4634:offer:cd7cfead0df3da0708268a14:location:e6c00e88d690de6b00065bea:row:79a315d5c3fd65518959198f"
-      ],
-      "location_fingerprints": {
-        "telegram:1216422279:4634:offer:cd7cfead0df3da0708268a14:location:e6c00e88d690de6b00065bea:row:79a315d5c3fd65518959198f": "b4be6068d2bf632f0cd74be9515dbe11d09bc2b0c6396f5cc9c96ced0ebcdd01"
-      },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
       "reason": "Visually reviewed venue and offer association",
       "source": "Local pin review with cached Nominatim evidence",
       "action": "reject"
     },
     {
-      "decision_id": "pin-f91c9802-6383-4171-a7d6-00fdc5a8c19c",
+      "decision_id": "pin-f30ba812-b01e-449e-8d46-fa6da5efb7f9",
       "row_ids": [
-        "telegram:1329056215:5256:offer:1f0e5ed771cb86253b2783c4:location:d780c3e7bb83214e29dc6bb0:row:978086fb89cad283a1f09166"
+        "telegram:1204657101:4862:offer:ee6e64b759cb710e9f464ff3:location:571b167bee7359c6f5c6b179:row:af367ed9fac3d58bcde19602"
       ],
       "location_fingerprints": {
-        "telegram:1329056215:5256:offer:1f0e5ed771cb86253b2783c4:location:d780c3e7bb83214e29dc6bb0:row:978086fb89cad283a1f09166": "16a6e4521995833dad2eff8076b6dab65c3f0fb81b3e3af92517d29807077d8e"
+        "telegram:1204657101:4862:offer:ee6e64b759cb710e9f464ff3:location:571b167bee7359c6f5c6b179:row:af367ed9fac3d58bcde19602": "b64b5a95f87c3e0713c6cbd2f2a1a707127d5988c98092862992accefdd362bb"
       },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
       "reason": "Visually reviewed venue and offer association",
-      "source": "Local pin review with cached Nominatim evidence",
-      "action": "reject"
+      "source": "https://www.openstreetmap.org/?mlat=1.3013734&mlon=103.9051778",
+      "action": "approve",
+      "candidate_id": "ae1135725d30c4280bef4c569e383d8a4db29665fbc5aa843ebc661df791d592",
+      "response_fingerprint": "9cf8c1c3c19666b761ed74b67f9f43f9c5913f1d56b2f2d5096d6651f5f26adc"
     },
     {
-      "decision_id": "pin-250dbec5-b048-4ac1-a355-f09fcd682c96",
+      "decision_id": "pin-cb646889-7c71-44f6-8383-780f95002c52",
       "row_ids": [
-        "telegram:1329056215:5257:offer:92c9e2f21e4c31195fa301bb:location:2a568993ec27c770bfc0ee85:row:c582a26c6fb86467193cbaf1"
+        "telegram:1204657101:4863:offer:c31030a9bcd5867f8f0a5638:location:8e19c3458849b55b246fb976:row:7cb3a4fb51bea50a55eacd40"
       ],
       "location_fingerprints": {
-        "telegram:1329056215:5257:offer:92c9e2f21e4c31195fa301bb:location:2a568993ec27c770bfc0ee85:row:c582a26c6fb86467193cbaf1": "4766dbcb82ec760f54361c0bb206e538c934c0d538b1be7b8286b5f6d5cd99b6"
+        "telegram:1204657101:4863:offer:c31030a9bcd5867f8f0a5638:location:8e19c3458849b55b246fb976:row:7cb3a4fb51bea50a55eacd40": "aa77913a23ae9560e25d7dfebca7b67c461118055a62d1004ebef7ce3d7cfb08"
       },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
       "reason": "Visually reviewed venue and offer association",
       "source": "https://www.openstreetmap.org/?mlat=1.3006333&mlon=103.8389821",
       "action": "approve",
@@ -274,43 +80,907 @@
       "response_fingerprint": "12f0e8ec43576b63dd6c890770bd587af42ff423efb519415a76076baef8f63a"
     },
     {
-      "decision_id": "pin-278bf2ea-9f42-40ef-92ab-3c05a364219f",
+      "decision_id": "pin-b69dcd16-d33e-4fad-b37d-abfccf8f03b1",
       "row_ids": [
-        "telegram:1329056215:5264:offer:5fb9d62f15957303b057cc43:location:ae6b27681617ad5285b89ac4:row:e8fd6a132fd4d5e89c73bd33"
+        "telegram:1204657101:4865:offer:82aa180fd5108b9331db60ff:location:78d8e5bb1328200f062e6101:row:b68bec9733e99722f1036cdc"
       ],
       "location_fingerprints": {
-        "telegram:1329056215:5264:offer:5fb9d62f15957303b057cc43:location:ae6b27681617ad5285b89ac4:row:e8fd6a132fd4d5e89c73bd33": "363ded80c1f51db61c168fc52f42a065f8f0c3977217b88ba9b7f862841df5d8"
+        "telegram:1204657101:4865:offer:82aa180fd5108b9331db60ff:location:78d8e5bb1328200f062e6101:row:b68bec9733e99722f1036cdc": "ad3ff1a7ac1d0f93aab2a02816018690ce72264949569e695d8a9065c8296402"
       },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3010188&mlon=103.8385057",
+      "action": "approve",
+      "candidate_id": "8890434d5abd44324fd787e6ba9da29feb66620eb432f972d34d904b4ce5ec25",
+      "response_fingerprint": "2bcc314e183567d5db41a03a8f0290ad6f7a3c736591275cc266722ea75d3f39"
+    },
+    {
+      "decision_id": "pin-889b8458-1eea-4353-a04f-5bf22ec47560",
+      "row_ids": [
+        "telegram:1204657101:4867:offer:478607d4d0b1420b64508485:location:5027e603f10dda87e2685372:row:4800f68c2069698914c87ca6"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4867:offer:478607d4d0b1420b64508485:location:5027e603f10dda87e2685372:row:4800f68c2069698914c87ca6": "cefcd474f3c362c74831b20505c44a7e02563881380486456fe6a33571f47f49"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3010188&mlon=103.8385057",
+      "action": "approve",
+      "candidate_id": "8890434d5abd44324fd787e6ba9da29feb66620eb432f972d34d904b4ce5ec25",
+      "response_fingerprint": "2bcc314e183567d5db41a03a8f0290ad6f7a3c736591275cc266722ea75d3f39"
+    },
+    {
+      "decision_id": "pin-cc385299-00d7-42d2-9b31-09fdf341bd1d",
+      "row_ids": [
+        "telegram:1204657101:4867:offer:af7e11acb50bcffa45024d75:location:5027e603f10dda87e2685372:row:ab150f0cc9ef9d08c779c5d8"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4867:offer:af7e11acb50bcffa45024d75:location:5027e603f10dda87e2685372:row:ab150f0cc9ef9d08c779c5d8": "cd408d4e35c8858b62ee3519a7f5bf9adcc8277bd66f1b677ac6aa5155b9d6ad"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3010188&mlon=103.8385057",
+      "action": "approve",
+      "candidate_id": "8890434d5abd44324fd787e6ba9da29feb66620eb432f972d34d904b4ce5ec25",
+      "response_fingerprint": "2bcc314e183567d5db41a03a8f0290ad6f7a3c736591275cc266722ea75d3f39"
+    },
+    {
+      "decision_id": "pin-56bb9f21-e715-4ed0-a48e-cebf40b0226a",
+      "row_ids": [
+        "telegram:1204657101:4868:offer:02f43bd03fc6ea33c282e9a0:location:1291235760d25d5a52d392bd:row:0fd5b13b5a03756d74e1b7a3"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4868:offer:02f43bd03fc6ea33c282e9a0:location:1291235760d25d5a52d392bd:row:0fd5b13b5a03756d74e1b7a3": "785ee3952546ebf3c53182f0dff48ffd58fe38b7ba0cb621ee8dab3f40ba108b"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.2767774&mlon=103.8440193",
+      "action": "approve",
+      "candidate_id": "dbc7b3d1fa5bed970160a4ec067a2aec90117e8c3a45c829f1ca5c98b69d9da8",
+      "response_fingerprint": "44036d58a7bd26d9adca91088be666f3a317721b4e53108ac8d77249489f2577"
+    },
+    {
+      "decision_id": "pin-7e1863e3-d86c-4ae9-81ff-7a69d3545ccb",
+      "row_ids": [
+        "telegram:1204657101:4868:offer:7b109a89d51326fce4704167:location:1291235760d25d5a52d392bd:row:3d362f47d1351ebe3e87697e"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4868:offer:7b109a89d51326fce4704167:location:1291235760d25d5a52d392bd:row:3d362f47d1351ebe3e87697e": "b6f9a01dc45b7ce672c88636e528923df3070486ca8f8575736d539e2b404af0"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.2767774&mlon=103.8440193",
+      "action": "approve",
+      "candidate_id": "dbc7b3d1fa5bed970160a4ec067a2aec90117e8c3a45c829f1ca5c98b69d9da8",
+      "response_fingerprint": "44036d58a7bd26d9adca91088be666f3a317721b4e53108ac8d77249489f2577"
+    },
+    {
+      "decision_id": "pin-79ba6936-f19f-4fac-9d0a-7ce659faaf29",
+      "row_ids": [
+        "telegram:1204657101:4875:offer:2cb017494f9fc1f43e107ba1:location:1394eef029b9eed6c329e9d2:row:5ba53ea613452e6014c3a763"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4875:offer:2cb017494f9fc1f43e107ba1:location:1394eef029b9eed6c329e9d2:row:5ba53ea613452e6014c3a763": "2a8894bc9e2d25539966fea1b9df2ff22599ea1c7576d588ed1839917c8305b7"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
       "reason": "Visually reviewed venue and offer association",
       "source": "Local pin review with cached Nominatim evidence",
       "action": "reject"
     },
     {
-      "decision_id": "pin-582d26b1-8d67-4cde-b79e-8462f7ae9dbe",
+      "decision_id": "pin-4dc427dc-fe8c-42d6-9761-b5c4fb2dc2e3",
       "row_ids": [
-        "telegram:1329056215:5269:offer:633eefd9cb3384429813f87e:location:cb04d13dedfc7d6709f4bd04:row:7083da38e163088d067b1668"
+        "telegram:1204657101:4877:offer:0caeacc31bfa6fed04911abb:location:d97f2501573fcb1d33e7ca72:row:6087bdf57877438f2c087d1f"
       ],
       "location_fingerprints": {
-        "telegram:1329056215:5269:offer:633eefd9cb3384429813f87e:location:cb04d13dedfc7d6709f4bd04:row:7083da38e163088d067b1668": "19b3a4d0bccc4171492db1ef8d752e4d1a97febe12bc77ccc6963246f6c8d7e9"
+        "telegram:1204657101:4877:offer:0caeacc31bfa6fed04911abb:location:d97f2501573fcb1d33e7ca72:row:6087bdf57877438f2c087d1f": "fea4364e57b1d447e425ab0b41147a3028947e09e637dd5f32d6364300c5172b"
       },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
       "reason": "Visually reviewed venue and offer association",
       "source": "Local pin review with cached Nominatim evidence",
       "action": "reject"
     },
     {
-      "decision_id": "pin-264704ac-1b16-4984-9050-cea4815303cb",
+      "decision_id": "pin-9a95fbf2-9ec9-4949-a9d7-a3c2b1bf58f7",
       "row_ids": [
-        "telegram:1329056215:5271:offer:ad121add478c8d7a91ad1b31:location:fefc972a008cdd6b42afcae0:row:99fba4a4dc6ef25d96f08e9d"
+        "telegram:1204657101:4881:offer:fde8f098e353da6cbb02302e:location:a3d85c37994d5f9a78b87aa5:row:5b7e6702603fce2c78ead26d"
       ],
       "location_fingerprints": {
-        "telegram:1329056215:5271:offer:ad121add478c8d7a91ad1b31:location:fefc972a008cdd6b42afcae0:row:99fba4a4dc6ef25d96f08e9d": "e37bf73e55125ef4a6853558924d7a7bdd4b67c86be04f89d59996fd800dae08"
+        "telegram:1204657101:4881:offer:fde8f098e353da6cbb02302e:location:a3d85c37994d5f9a78b87aa5:row:5b7e6702603fce2c78ead26d": "c4889d321659f095a1c9ee8f0e90eb225b90b071294a8f1b2b890b098b9e69f9"
       },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3004414&mlon=103.8449028",
+      "action": "approve",
+      "candidate_id": "0a03abe4842b7e05c9811babe35e24a96fd9fe0ff858712040cf65f31ee7fce6",
+      "response_fingerprint": "178e8af894c91755f7aa52de67c59d529b342aff86348c42bfcd6ff8c79399e1"
+    },
+    {
+      "decision_id": "pin-d5cffbfe-8725-477c-9645-21754587fca4",
+      "row_ids": [
+        "telegram:1204657101:4883:offer:d9cc6317e321d653ee7ef164:location:de5136d96f5a19749edd73d6:row:9198dd6f76085f9bcd7de170"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4883:offer:d9cc6317e321d653ee7ef164:location:de5136d96f5a19749edd73d6:row:9198dd6f76085f9bcd7de170": "92f5aa74c261186699b867fc87daa897a563436b1d5a072bae7b98b578411322"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.465Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3602243&mlon=103.9896749",
+      "action": "approve",
+      "candidate_id": "e252266f23e220fe3031ed12764235a253921a69db367c74403e40485820edab",
+      "response_fingerprint": "d3231f3dff0c0de19df55ee12b34538c1bc9b26768cfead0cb18851ff08bb3f6"
+    },
+    {
+      "decision_id": "pin-70627e39-19ad-4a7a-95b4-51ca0d466fb6",
+      "row_ids": [
+        "telegram:1204657101:4883:offer:d9cc6317e321d653ee7ef164:location:fcc210a906abc72223bd4d6f:row:6389fcc300384131d36e1501"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4883:offer:d9cc6317e321d653ee7ef164:location:fcc210a906abc72223bd4d6f:row:6389fcc300384131d36e1501": "5f1c18683b0b829d0d0b22b322b296617ea7830eaf36f6851db4a8f722b2b9ac"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.4064266&mlon=103.9020102",
+      "action": "approve",
+      "candidate_id": "d41d1fdbea6ff4123b0a30e43beaa61ad7ae0a2c239e008093b1f6a84af0a392",
+      "response_fingerprint": "1c5c783c6f8c3069dd1c64dc460057a7d39fa65eb322d30f771da2cb1a879f25"
+    },
+    {
+      "decision_id": "pin-1a368b66-06a4-44fb-a64f-3603a9bd15d1",
+      "row_ids": [
+        "telegram:1204657101:4885:offer:91cd98fcaf071c192057f9d2:location:3a5601681d5ae61f80b62bb7:row:028520d2bd99ea68d12cc4c3"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4885:offer:91cd98fcaf071c192057f9d2:location:3a5601681d5ae61f80b62bb7:row:028520d2bd99ea68d12cc4c3": "4be5d9dd03a9a54dd6f6a039032b02d2e05bb08b3b7807a581e14216e22e04d0"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3980838&mlon=103.8733558",
+      "action": "approve",
+      "candidate_id": "5617a9509b748479a6b1c8f3f7e078a921fa96bd94fa9c095d838a5ed32f2768",
+      "response_fingerprint": "89001f3540dd2d23bb4f53be35545f5ce2c941cab4b8d313f2d8bc335f193b76"
+    },
+    {
+      "decision_id": "pin-cdd19bfd-bb58-4723-a5e4-700f40a15831",
+      "row_ids": [
+        "telegram:1204657101:4891:offer:ec7bc1b91e71dcf749d8b128:location:b1ebdfbd6b26417d9836e21b:row:7807c7e058eaca0488ddc830"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4891:offer:ec7bc1b91e71dcf749d8b128:location:b1ebdfbd6b26417d9836e21b:row:7807c7e058eaca0488ddc830": "fba938396592c831ed1a54a8be8e525b22876eb3864cc02d88718f6cae51c06c"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3004414&mlon=103.8449028",
+      "action": "approve",
+      "candidate_id": "0a03abe4842b7e05c9811babe35e24a96fd9fe0ff858712040cf65f31ee7fce6",
+      "response_fingerprint": "178e8af894c91755f7aa52de67c59d529b342aff86348c42bfcd6ff8c79399e1"
+    },
+    {
+      "decision_id": "pin-1879b982-fff7-453f-bde4-b60b8bac960c",
+      "row_ids": [
+        "telegram:1204657101:4895:offer:9d3d69d5f584a3ec41e51879:location:8f64feca48859c14cd20948d:row:713f1c94c72d6113de6680fb"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4895:offer:9d3d69d5f584a3ec41e51879:location:8f64feca48859c14cd20948d:row:713f1c94c72d6113de6680fb": "886e9e6fc37f1fcf212be3556f6ca8944549bf6cce7aa473d3b3d61c84380db7"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-2764bfcf-b180-4394-9acb-e24b9e863ea6",
+      "row_ids": [
+        "telegram:1204657101:4896:offer:37d8c80424aee5b9c35d37ff:location:83302c3586f78010b44f71bf:row:7477359004150aebe9273f4b"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4896:offer:37d8c80424aee5b9c35d37ff:location:83302c3586f78010b44f71bf:row:7477359004150aebe9273f4b": "bc5b846172311e0c3f52d10b9f29a01a2c27e0915af46ac050be5be214e6cbff"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.2950285&mlon=103.8526175",
+      "action": "approve",
+      "candidate_id": "772e31fc1a89d317ee4eebde032530101d9431a90b86906bb16a615a4480ed9b",
+      "response_fingerprint": "b86ffb2f5657917d255cc44539ff735426160c877fa8d2ee99837310e70d2926"
+    },
+    {
+      "decision_id": "pin-728e665c-7bf9-4dbd-a6e2-a5f7afa4ca45",
+      "row_ids": [
+        "telegram:1204657101:4897:offer:7a0e072843ee1539d3d5464e:location:c667f1130432ec3f975e35a1:row:f6bcb4b28d72f290e739c0ba"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4897:offer:7a0e072843ee1539d3d5464e:location:c667f1130432ec3f975e35a1:row:f6bcb4b28d72f290e739c0ba": "8d0d6df082d8f96492575d0e6bdff3a756775572ce4093351c312b93f1f53359"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-e3356dfd-056e-4e31-8081-6f896bd83bfc",
+      "row_ids": [
+        "telegram:1204657101:4899:offer:ce1b9d924c125a03a4ec28b3:location:8a34b4a868bf9f185abed73a:row:88b601cc7d96767941573239"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4899:offer:ce1b9d924c125a03a4ec28b3:location:8a34b4a868bf9f185abed73a:row:88b601cc7d96767941573239": "bf0cefab903053451e58d590719baa5f723e8df9979b76fc7a5380c86a00e2e3"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3006333&mlon=103.8389821",
+      "action": "approve",
+      "candidate_id": "d32c53454ed53b7e79948da81c8aa3f8866098b4f93b7b5699e151a05db7ba1b",
+      "response_fingerprint": "12f0e8ec43576b63dd6c890770bd587af42ff423efb519415a76076baef8f63a"
+    },
+    {
+      "decision_id": "pin-c7617e42-cc26-4143-a37a-e56e90e15d1e",
+      "row_ids": [
+        "telegram:1204657101:4900:offer:afe158ed56d6613263f6d838:location:847eac0ad8384683f104d69f:row:c25dfabc48133b82d42e748a"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4900:offer:afe158ed56d6613263f6d838:location:847eac0ad8384683f104d69f:row:c25dfabc48133b82d42e748a": "615c809dc09f492fa3b0eef0aec74ef7b097267aedac05c1d834293c9a70cb1b"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.4281326&mlon=103.8362451",
+      "action": "approve",
+      "candidate_id": "3c42689dd34895ace0cf2e27094b70084c083a7254afa03edf43f8e74ca030b5",
+      "response_fingerprint": "a2b67960777e5b51bd2dd8faba2d6baaf40b4212e1156297ea8d889448eb5e82"
+    },
+    {
+      "decision_id": "pin-a4673953-5c0e-494e-8582-e35b7134a530",
+      "row_ids": [
+        "telegram:1204657101:4900:offer:afe158ed56d6613263f6d838:location:84acbfc9d4e935da040e953f:row:c25dfabc48133b82d42e748a"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4900:offer:afe158ed56d6613263f6d838:location:84acbfc9d4e935da040e953f:row:c25dfabc48133b82d42e748a": "13477039b91be573e9a5d04285532cd46bee2ed8614212d4f74c9076c5ef2ff2"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-4b9026ab-6d8d-4a8f-b6e0-1f251959d432",
+      "row_ids": [
+        "telegram:1204657101:4902:offer:9f57ed91a7d7bc52d0124b1d:location:b87f0ca570d5da4c3f809c83:row:501242ece958349c12d74a5e"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4902:offer:9f57ed91a7d7bc52d0124b1d:location:b87f0ca570d5da4c3f809c83:row:501242ece958349c12d74a5e": "4bf0fe197b0df40e64244957cd230fadf83709a38c1dc8c6bed2b14562322ecf"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-72783038-7532-48ee-9202-2cf6ae8875df",
+      "row_ids": [
+        "telegram:1204657101:4903:offer:b4fa9e4adb6c1c9b4fe3e078:location:0090fd9197aba648ee8a968d:row:f64d96f52cb60bb39edb5c01"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4903:offer:b4fa9e4adb6c1c9b4fe3e078:location:0090fd9197aba648ee8a968d:row:f64d96f52cb60bb39edb5c01": "73664e3dd4fa36affb45d835b2efdf3dbaa036fe3c42c8831b3448f286ad7712"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3043008&mlon=103.8541535",
+      "action": "approve",
+      "candidate_id": "dfe9c25484a00546935e71a94153a9c629010b7f2dc7fb24518dccb36332dd8d",
+      "response_fingerprint": "0ff02c74675ebcf2e7ea8e3b14eb5ddc56b5e89a8c71fcb303352f019ace956d"
+    },
+    {
+      "decision_id": "pin-5ca4e636-8d92-4e16-9add-1d472b4a7201",
+      "row_ids": [
+        "telegram:1204657101:4904:offer:ba1db292fab6fe63e8b82950:location:013638eadcf7e662afa0f37e:row:d9ebaccdc696372c7987f466"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4904:offer:ba1db292fab6fe63e8b82950:location:013638eadcf7e662afa0f37e:row:d9ebaccdc696372c7987f466": "a6595a8f01e861b3927a0acb297fb222e67b8fcb83c8bbc53b70f0ffd0349db7"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.466Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.334194&mlon=103.7428671",
+      "action": "approve",
+      "candidate_id": "0e29dc0cfe019e1cb3a6b88fe07a928748e17e4763a08a9bb305c19fcd8384ea",
+      "response_fingerprint": "64a34e7eb19c2d9f195a8c368a7f743d27c98486cd3b5ea95beb3a1e24576565"
+    },
+    {
+      "decision_id": "pin-740dfd1b-b074-4c5e-aaba-fd3f9850d6cd",
+      "row_ids": [
+        "telegram:1204657101:4904:offer:c9e032b9677b899913fe18b5:location:013638eadcf7e662afa0f37e:row:233e801adbb4e747d0cb21d7"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4904:offer:c9e032b9677b899913fe18b5:location:013638eadcf7e662afa0f37e:row:233e801adbb4e747d0cb21d7": "5a10fc9f5e242cdebe40e03924f1ada6523a0c59fed2bef97f16d5115ae8efe8"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.334194&mlon=103.7428671",
+      "action": "approve",
+      "candidate_id": "0e29dc0cfe019e1cb3a6b88fe07a928748e17e4763a08a9bb305c19fcd8384ea",
+      "response_fingerprint": "64a34e7eb19c2d9f195a8c368a7f743d27c98486cd3b5ea95beb3a1e24576565"
+    },
+    {
+      "decision_id": "pin-ecf19cc0-447d-4b13-97e1-9e028dddb3c4",
+      "row_ids": [
+        "telegram:1204657101:4904:offer:eb3470a64a6931d793eeabaa:location:013638eadcf7e662afa0f37e:row:dd0aa45e8933dad86fbf9db7"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4904:offer:eb3470a64a6931d793eeabaa:location:013638eadcf7e662afa0f37e:row:dd0aa45e8933dad86fbf9db7": "9c22292dfa2480a2751293f00f60e7b061e3fd54f442a61826ffde7c7354467f"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.334194&mlon=103.7428671",
+      "action": "approve",
+      "candidate_id": "0e29dc0cfe019e1cb3a6b88fe07a928748e17e4763a08a9bb305c19fcd8384ea",
+      "response_fingerprint": "64a34e7eb19c2d9f195a8c368a7f743d27c98486cd3b5ea95beb3a1e24576565"
+    },
+    {
+      "decision_id": "pin-8eef0f1e-7230-47c0-8313-0a48e0e81379",
+      "row_ids": [
+        "telegram:1204657101:4905:offer:cd8a1a83e704342d19fe74ef:location:ae31943a2d0c12a2e3570299:row:d170f084376168207d9add1c"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4905:offer:cd8a1a83e704342d19fe74ef:location:ae31943a2d0c12a2e3570299:row:d170f084376168207d9add1c": "685f642a21bbe59e534d1b4bb80953e88085a3091ee3d0658a14f5c2814bb400"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-457e3e07-a9bc-4079-91e1-28fab21299ad",
+      "row_ids": [
+        "telegram:1204657101:4906:offer:c7a4bba58295d2e0c5681d27:location:0408ffde9d388ac115e6829d:row:99839d6573e0b90c233fbf22"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4906:offer:c7a4bba58295d2e0c5681d27:location:0408ffde9d388ac115e6829d:row:99839d6573e0b90c233fbf22": "8917eb25f4999ea4a754d57886950be67ae46a0ef7723546397a0afba678edc6"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-6b7a69dd-90b8-44ba-9d41-d32a24fe047d",
+      "row_ids": [
+        "telegram:1204657101:4907:offer:1668e694770551a255cc9588:location:ee2ad6511a0cb4714bf7a911:row:af367ed9fac3d58bcde19602"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4907:offer:1668e694770551a255cc9588:location:ee2ad6511a0cb4714bf7a911:row:af367ed9fac3d58bcde19602": "53ff85236648e4718f2750860b6201918faac3f2f3bacb56fc59a49052c9bd9b"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-6b50719e-4b88-4a59-babe-11f081bdaf43",
+      "row_ids": [
+        "telegram:1204657101:4910:offer:2c4b4a888a4bc4751cbdffba:location:6783945d504f4f4bccdc3ad5:row:ab30cc0453365e9e112d47c5"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4910:offer:2c4b4a888a4bc4751cbdffba:location:6783945d504f4f4bccdc3ad5:row:ab30cc0453365e9e112d47c5": "19b1862547042c71b929ee4a9dd200dcea2f38f9ae41725bb9841310fe8c58b2"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-0a2643e2-d54a-4813-bfb8-20eaea53d7a8",
+      "row_ids": [
+        "telegram:1204657101:4910:offer:3f59ed4ab74d768c8ff512e6:location:30ee63157a130301cecf97f0:row:ab30cc0453365e9e112d47c5"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4910:offer:3f59ed4ab74d768c8ff512e6:location:30ee63157a130301cecf97f0:row:ab30cc0453365e9e112d47c5": "45e41876bc0cea34471db26759085634c76d54651055b55767fa1182a4cf3c4a"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.2802227&mlon=103.8466791",
+      "action": "approve",
+      "candidate_id": "625b059ef6e7d6adfacd6de3c9ec1a2d7f6e865b81e58f715cca7bf2d59c278b",
+      "response_fingerprint": "dbc852a98818f6f1bde61ac04f2f9cc4c1c4bd97b426d6e7a5263d46fa9d51c8"
+    },
+    {
+      "decision_id": "pin-6cf70158-f8c2-47bc-b6d3-243b5254c367",
+      "row_ids": [
+        "telegram:1204657101:4910:offer:c66a2051450423c03b5be695:location:79f156bb1eaf5464fc605136:row:ab30cc0453365e9e112d47c5"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4910:offer:c66a2051450423c03b5be695:location:79f156bb1eaf5464fc605136:row:ab30cc0453365e9e112d47c5": "9b8915ba03adf5adb73c191e98f810d21da4901add1cae11ec1d646b0e80a854"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-167e3662-1845-46f6-bc44-84f3368a3b3f",
+      "row_ids": [
+        "telegram:1204657101:4910:offer:cdee91746cbdb994247edbe1:location:60f4b462140406b1add5a8bf:row:ab30cc0453365e9e112d47c5"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4910:offer:cdee91746cbdb994247edbe1:location:60f4b462140406b1add5a8bf:row:ab30cc0453365e9e112d47c5": "6a06044bc98575b36ac99ccd51e731eda66a221bd950c461bee8d9266fbd4819"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.2928967&mlon=103.8387974",
+      "action": "approve",
+      "candidate_id": "040b66e615e6c49f5039cd71cc2ef83ff2f85811c956c39b3a8cc5409bf455f6",
+      "response_fingerprint": "2f06041d275da463cc638f084f685f5c92ad2e17aca73f2a3fcf275406025650"
+    },
+    {
+      "decision_id": "pin-d5c00ad8-eb52-4e6e-a67c-3ceda27b9e6f",
+      "row_ids": [
+        "telegram:1204657101:4910:offer:e8b4b656c5863abacaa4ce2f:location:61f1b952e386124412d172be:row:ab30cc0453365e9e112d47c5"
+      ],
+      "location_fingerprints": {
+        "telegram:1204657101:4910:offer:e8b4b656c5863abacaa4ce2f:location:61f1b952e386124412d172be:row:ab30cc0453365e9e112d47c5": "78ca65906e9287f4d730b9165e5a2a59c5ac6fbf55f88d4ebfe21a1e02d03088"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.2801657&mlon=103.8474622",
+      "action": "approve",
+      "candidate_id": "5e6cb553edee51cf95236e1684aa7b24b39f1086ad3d2375cc2ddf2f5762df3d",
+      "response_fingerprint": "9a75b13d3595742d43739db7af2672afece1fdfbf14835c48af2406ba3656e1b"
+    },
+    {
+      "decision_id": "pin-f2331d3e-07c4-4b71-b658-e8e0d9c6ef1c",
+      "row_ids": [
+        "telegram:1216422279:4603:offer:801c53374b7ca755cca0087e:location:f2b5cfa7d4b5875ad133d095:row:43e6a09b171a5317bd2178b1"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4603:offer:801c53374b7ca755cca0087e:location:f2b5cfa7d4b5875ad133d095:row:43e6a09b171a5317bd2178b1": "c64341b4660f6e921b75b0418f48db2312d2e5d9ff5c7d66921242ae7d4f0e32"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3725735&mlon=103.8937879",
+      "action": "approve",
+      "candidate_id": "2d3c671b5b9847e61c9f898685ff479fb9efba9931baa93efb116d26ff4040b6",
+      "response_fingerprint": "e40b632eecff41e9c9521a403d868bf667a86dd7d13161268bc32680c8cba412"
+    },
+    {
+      "decision_id": "pin-106187dd-b151-4b3a-8751-13575d9dcf4c",
+      "row_ids": [
+        "telegram:1216422279:4606:offer:d353763705ae7a558537cb9e:location:8bed592ebd33931a64b57c27:row:3c3f7334518324df0400cf7b"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4606:offer:d353763705ae7a558537cb9e:location:8bed592ebd33931a64b57c27:row:3c3f7334518324df0400cf7b": "75df8b818638dc1daa11c8adcf81170280469498bd5abd92350c4f22f63e37d8"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.2643707&mlon=103.8229537",
+      "action": "approve",
+      "candidate_id": "2ffe694f5c9d3d97703bccdeedf671b8196ed6c571c4c87135071730e00f0b5d",
+      "response_fingerprint": "390c78ffd42908f88607fdda45c9507cebebd0c98d1d27598cd0925012a04e3c"
+    },
+    {
+      "decision_id": "pin-24d4436f-5915-4338-9d36-ad185bb2382c",
+      "row_ids": [
+        "telegram:1216422279:4608:offer:4729733b48baa66745570d64:location:74af87914b6c915746666510:row:8505c272182bafabb0bd8721"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4608:offer:4729733b48baa66745570d64:location:74af87914b6c915746666510:row:8505c272182bafabb0bd8721": "cca049f73cfc5450d248d8a6bd7650f31705f6c2a3873eb2747705335c178e99"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3036967&mlon=103.8332876",
+      "action": "approve",
+      "candidate_id": "bfbb66d9d78e1efe65b5ab7cc4a5cda84b6d4d2e932d5c69351a23524cf4b071",
+      "response_fingerprint": "bded944d484cf5859355ecf489a9d83e3295c5681bcbc2dc8618bfb20e8dea99"
+    },
+    {
+      "decision_id": "pin-b720a433-dbe9-4906-9497-1bcbd611df95",
+      "row_ids": [
+        "telegram:1216422279:4610:offer:8c391a6786338497e9505048:location:df322c5dbf76c3cd539786ff:row:6ebeb6d2a79f263c7b633e73"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4610:offer:8c391a6786338497e9505048:location:df322c5dbf76c3cd539786ff:row:6ebeb6d2a79f263c7b633e73": "2eecb67b69cca21115d0f962019399801b3530aec92fe02b7f6b762fb0539e6e"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3335675&mlon=103.7358877",
+      "action": "approve",
+      "candidate_id": "0b13aa451e4a8f649a763d6ff850ca07cddd0f2f48033c4203efb4b365696d36",
+      "response_fingerprint": "0de819ba5e9f8b08f201f0b18a173ee66a89d587ffdb6979b5c30d69aa9f0855"
+    },
+    {
+      "decision_id": "pin-c6a6500b-95a8-4b70-a995-245c8463b6ad",
+      "row_ids": [
+        "telegram:1216422279:4620:offer:d8aedd8b796fa503e9d7f062:location:d97f2501573fcb1d33e7ca72:row:cd874b1d714ee759940a70f0"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4620:offer:d8aedd8b796fa503e9d7f062:location:d97f2501573fcb1d33e7ca72:row:cd874b1d714ee759940a70f0": "c9b19113522516fad0ab0ef1b6548fb0a920a1b6a112139554ffb4aa188b1559"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-49770561-90d8-4ed7-81a1-f011d4e203ba",
+      "row_ids": [
+        "telegram:1216422279:4623:offer:e4575c19aeb66415ab103c1c:location:98fd4cebccd5bf70f5952a22:row:54c78680883cca4d0cdf4538"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4623:offer:e4575c19aeb66415ab103c1c:location:98fd4cebccd5bf70f5952a22:row:54c78680883cca4d0cdf4538": "80daf576246b27e335774e8ff4c01ff90989c5b9fe8592757ea957b69d86c59e"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3602243&mlon=103.9896749",
+      "action": "approve",
+      "candidate_id": "e252266f23e220fe3031ed12764235a253921a69db367c74403e40485820edab",
+      "response_fingerprint": "d3231f3dff0c0de19df55ee12b34538c1bc9b26768cfead0cb18851ff08bb3f6"
+    },
+    {
+      "decision_id": "pin-c3dfda6e-2518-4edd-aeb4-a45ade5340cd",
+      "row_ids": [
+        "telegram:1216422279:4623:offer:e4575c19aeb66415ab103c1c:location:9f631c57da688f69c468db97:row:273010a245a2e4b927a38872"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4623:offer:e4575c19aeb66415ab103c1c:location:9f631c57da688f69c468db97:row:273010a245a2e4b927a38872": "a2beb951f98fc94624fdcb086ca4908dfc1e1cd5ed661e30a3fa485ce1a0a32a"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.4064266&mlon=103.9020102",
+      "action": "approve",
+      "candidate_id": "d41d1fdbea6ff4123b0a30e43beaa61ad7ae0a2c239e008093b1f6a84af0a392",
+      "response_fingerprint": "1c5c783c6f8c3069dd1c64dc460057a7d39fa65eb322d30f771da2cb1a879f25"
+    },
+    {
+      "decision_id": "pin-f3de16cc-68ff-4d9a-8745-e8c3caaf4958",
+      "row_ids": [
+        "telegram:1216422279:4625:offer:b4ab37f72ac47954e018a77a:location:b1c462ac4da8c907383b6279:row:91f6c6aff472da51437e6d30"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4625:offer:b4ab37f72ac47954e018a77a:location:b1c462ac4da8c907383b6279:row:91f6c6aff472da51437e6d30": "917dce4f2e6f4777f7e1e74c326dde2cb03df6bbe6697092dc8cc8c414bef909"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3725735&mlon=103.8937879",
+      "action": "approve",
+      "candidate_id": "2d3c671b5b9847e61c9f898685ff479fb9efba9931baa93efb116d26ff4040b6",
+      "response_fingerprint": "e40b632eecff41e9c9521a403d868bf667a86dd7d13161268bc32680c8cba412"
+    },
+    {
+      "decision_id": "pin-1e0adbd6-7568-4bd8-8315-cedcbdaec6cd",
+      "row_ids": [
+        "telegram:1216422279:4627:offer:8279e5f47eb6ad24137d321e:location:af8ca3e37ab3397d0d2b89b2:row:d8d5600286e32e0a68f670c5"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4627:offer:8279e5f47eb6ad24137d321e:location:af8ca3e37ab3397d0d2b89b2:row:d8d5600286e32e0a68f670c5": "aa78206d04c9d571d85e84a0f0b471bfbc4c8f303b0b5c61e27ea85ec1322bdc"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3004414&mlon=103.8449028",
+      "action": "approve",
+      "candidate_id": "0a03abe4842b7e05c9811babe35e24a96fd9fe0ff858712040cf65f31ee7fce6",
+      "response_fingerprint": "178e8af894c91755f7aa52de67c59d529b342aff86348c42bfcd6ff8c79399e1"
+    },
+    {
+      "decision_id": "pin-a4ee7a0e-7d95-4c62-ad7a-32a49086d6ec",
+      "row_ids": [
+        "telegram:1216422279:4634:offer:da39ce0e2949097aac3a846d:location:a9256f2ec38414fd484fbec8:row:15ec1179acea289dc12e197d"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4634:offer:da39ce0e2949097aac3a846d:location:a9256f2ec38414fd484fbec8:row:15ec1179acea289dc12e197d": "370abe1c9b6667e19c9b02057f1549bb12a54eb90bc49f4d3d0c3196b2d10866"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.2851975&mlon=103.8449052",
+      "action": "approve",
+      "candidate_id": "898c24c7ee4783281342dd551ea9df6e637460c92d0cc120a87007d9a7bd40af",
+      "response_fingerprint": "565ec0b06dd7d08c18948e1e3840bc4166d9d22a105aeb23d5feef99443d50bf"
+    },
+    {
+      "decision_id": "pin-22be8a0e-d431-408f-a913-d3a175821a29",
+      "row_ids": [
+        "telegram:1216422279:4634:offer:da39ce0e2949097aac3a846d:location:e6c00e88d690de6b00065bea:row:15ec1179acea289dc12e197d"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4634:offer:da39ce0e2949097aac3a846d:location:e6c00e88d690de6b00065bea:row:15ec1179acea289dc12e197d": "1afd64da68a786c8be72ed60fc3996012ab7953bf98f1afd2cd3594f864ab648"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-4c9d261e-3587-4b41-9eca-2f3ec5c104fc",
+      "row_ids": [
+        "telegram:1216422279:4635:offer:5fa47ff6e9b166307c3604b8:location:45eedcf4bbb1aa3e457f0ac1:row:90a44c18757b412b187970dd"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4635:offer:5fa47ff6e9b166307c3604b8:location:45eedcf4bbb1aa3e457f0ac1:row:90a44c18757b412b187970dd": "2839c09bcb87836cb4c5922ff32e5939267ca2d0ebc0e52822e3c5c836a0ba07"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.430895&mlon=103.8290183",
+      "action": "approve",
+      "candidate_id": "180690f6f516443b0bacc206a4d33842c479d88d3a33530f6f3e561eb43885ed",
+      "response_fingerprint": "139d69c953a21a25c50f74daddbfadab7f28ac59ce30b5ff4df3dcedbc641166"
+    },
+    {
+      "decision_id": "pin-8ce095c3-cc1a-48f8-9934-7d17c195ac2b",
+      "row_ids": [
+        "telegram:1216422279:4637:offer:2678b5239bc73846ab03afa9:location:c15c99bc8e66adbda6988a2b:row:d430d58a4487a6d5f573ed35"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4637:offer:2678b5239bc73846ab03afa9:location:c15c99bc8e66adbda6988a2b:row:d430d58a4487a6d5f573ed35": "6f7f519a2db59c0b5db84627a7297a94c1c487cc6d812440f189436fb4b286aa"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.467Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.383333&mlon=103.8922416",
+      "action": "approve",
+      "candidate_id": "052300456068f22f5947d6f86165f5511a09916729c0cb5095bdccf3efc7108d",
+      "response_fingerprint": "82f26dbc979ed53b6d7d4c900ea91fcf0d50887434f62b094f2c3d53f4eef65b"
+    },
+    {
+      "decision_id": "pin-333ec78a-9428-44ea-93a9-103f530326f1",
+      "row_ids": [
+        "telegram:1216422279:4639:offer:1d4f59d6b1018067e8869714:location:5c6d6070bd7391dfe4178edc:row:cd0047778d55e090f9d9e5d3"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4639:offer:1d4f59d6b1018067e8869714:location:5c6d6070bd7391dfe4178edc:row:cd0047778d55e090f9d9e5d3": "5d09b43b0b0c51a78f77bd6c397a2784bafda3ddb6a0e708ed422a9dd1014e2f"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.35422&mlon=103.9451247",
+      "action": "approve",
+      "candidate_id": "dc74820e3c62f2b91e74059dfb6ec15c29e80d04107b0c642f1e6829d587b701",
+      "response_fingerprint": "e837e9d1c9a5a1c8468aa074b74156af21cfa8b6a45bfcfb521f67f1b54a1608"
+    },
+    {
+      "decision_id": "pin-5523bb5e-2c4a-4317-8dec-e6f2ba9acf89",
+      "row_ids": [
+        "telegram:1216422279:4639:offer:1d4f59d6b1018067e8869714:location:b57c651cde19df2ee72c13f5:row:cd0047778d55e090f9d9e5d3"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4639:offer:1d4f59d6b1018067e8869714:location:b57c651cde19df2ee72c13f5:row:cd0047778d55e090f9d9e5d3": "2ca7a467ed39af957ae8fe29b734a097feb627f17c79f36df6e2d7264df15582"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3010188&mlon=103.8385057",
+      "action": "approve",
+      "candidate_id": "9fefe45ff6a10e42173fc3dbdb0606897d0e01fcba07dc5d52280a043ab4b0fd",
+      "response_fingerprint": "5d1d57ce402dc20b3df6da39cd53f8ed81689c51b79cabe5ed2e5a4cc75a94da"
+    },
+    {
+      "decision_id": "pin-b4f179fc-0670-4575-8b42-939c86261369",
+      "row_ids": [
+        "telegram:1216422279:4640:offer:e1e16f0dbf52ff47c409db21:location:4da2d88076c73ff1e95116d1:row:31ed622c02ef8da2233dcec7"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4640:offer:e1e16f0dbf52ff47c409db21:location:4da2d88076c73ff1e95116d1:row:31ed622c02ef8da2233dcec7": "29d0f4682281217af109e6b8afcdb71efa0325d3570672cac4ef6d43f752ef8e"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.334194&mlon=103.7428671",
+      "action": "approve",
+      "candidate_id": "0e29dc0cfe019e1cb3a6b88fe07a928748e17e4763a08a9bb305c19fcd8384ea",
+      "response_fingerprint": "64a34e7eb19c2d9f195a8c368a7f743d27c98486cd3b5ea95beb3a1e24576565"
+    },
+    {
+      "decision_id": "pin-a81a1eb0-0885-440b-844e-1ac9730a4e58",
+      "row_ids": [
+        "telegram:1216422279:4647:offer:806d620282f816e8b2e4e10e:location:028af86074d117e9d3653170:row:42a5fbc4ddbc97f27fffd83c"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4647:offer:806d620282f816e8b2e4e10e:location:028af86074d117e9d3653170:row:42a5fbc4ddbc97f27fffd83c": "cd3132bc30a9383b4f788f77bf7092b315613986a218a9a03a3a3aa97b77a27e"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-2b1e45b3-107a-4d76-a4f0-390deae035d9",
+      "row_ids": [
+        "telegram:1216422279:4648:offer:7e032bac781b971c158d3da3:location:a069099398aee54daf64421b:row:1d28274ba89332c02763f053"
+      ],
+      "location_fingerprints": {
+        "telegram:1216422279:4648:offer:7e032bac781b971c158d3da3:location:a069099398aee54daf64421b:row:1d28274ba89332c02763f053": "6399b2c98a8b574f15e22b5e99e9d55f7973b0935c45deac1472fa23e612e57f"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3039479&mlon=103.8319051",
+      "action": "approve",
+      "candidate_id": "9187bfa355ada340e4598615b00b7936914f507b0bd1073b46726ec7efd6cf10",
+      "response_fingerprint": "41acba9570c60094fefbfe5a0e49dcc43994b74b38765a64c872a2053f914992"
+    },
+    {
+      "decision_id": "pin-e7a40e8e-1121-4f36-a4d9-58e685f5cc2f",
+      "row_ids": [
+        "telegram:1329056215:5256:offer:3b397f1b2c9ea4afa8566fe0:location:d780c3e7bb83214e29dc6bb0:row:c9d148337c666bd760e8e439"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5256:offer:3b397f1b2c9ea4afa8566fe0:location:d780c3e7bb83214e29dc6bb0:row:c9d148337c666bd760e8e439": "f0faf6958acaecfda7f47df76fda7099c8bc1c08a0eeeaaeccaaa1789f36b07b"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-4f35d7f4-e923-4755-aef0-fe382efaf9e3",
+      "row_ids": [
+        "telegram:1329056215:5257:offer:471d93fcfb978f509b216a53:location:e947464a710dd658269959a5:row:38f995ba1ac45cc57d291336"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5257:offer:471d93fcfb978f509b216a53:location:e947464a710dd658269959a5:row:38f995ba1ac45cc57d291336": "06d79d1fefe777104a36af5c81406dde36ccb6cf6104c2bd2be3c7c95057c9d7"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3006333&mlon=103.8389821",
+      "action": "approve",
+      "candidate_id": "d32c53454ed53b7e79948da81c8aa3f8866098b4f93b7b5699e151a05db7ba1b",
+      "response_fingerprint": "12f0e8ec43576b63dd6c890770bd587af42ff423efb519415a76076baef8f63a"
+    },
+    {
+      "decision_id": "pin-6f474db5-3b04-4318-a8cc-278b10d04135",
+      "row_ids": [
+        "telegram:1329056215:5257:offer:e61cb7b3b1e1087c2a3cdd6c:location:e947464a710dd658269959a5:row:798b040428cb2a74bd21b1ad"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5257:offer:e61cb7b3b1e1087c2a3cdd6c:location:e947464a710dd658269959a5:row:798b040428cb2a74bd21b1ad": "f92a131450ed6c00f6b0fdaa50b1b3963419e96aa4aac8baab241dc2e4bbc31a"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3006333&mlon=103.8389821",
+      "action": "approve",
+      "candidate_id": "d32c53454ed53b7e79948da81c8aa3f8866098b4f93b7b5699e151a05db7ba1b",
+      "response_fingerprint": "12f0e8ec43576b63dd6c890770bd587af42ff423efb519415a76076baef8f63a"
+    },
+    {
+      "decision_id": "pin-a0da37ad-1934-44df-af45-d2087af1dca8",
+      "row_ids": [
+        "telegram:1329056215:5260:offer:8241321bb9c579d6fe66ced2:location:7002d1c6ceaa94ed3191bf60:row:5c3754e77e164b89f4b02c22"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5260:offer:8241321bb9c579d6fe66ced2:location:7002d1c6ceaa94ed3191bf60:row:5c3754e77e164b89f4b02c22": "24b9e5d44831f0561d466d94ce10e957c593e7205ffa279e442b3e5bb5b2a000"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3977813&mlon=103.9163417",
+      "action": "approve",
+      "candidate_id": "eaca017688ba80c37fc6fdf0a9990408e2b9655c7e0b48d22bbbcb51b1d33594",
+      "response_fingerprint": "a259bee765280c8011bcb216eef2bbd8158f7f3108f39b77389d999bb072fb29"
+    },
+    {
+      "decision_id": "pin-698a3ce4-878c-41a8-a209-db7b091057af",
+      "row_ids": [
+        "telegram:1329056215:5263:offer:4a535c5e60179a1745246c09:location:e95f8f52b074414f14cba51d:row:f9002fc0c505d6edb4a326ba"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5263:offer:4a535c5e60179a1745246c09:location:e95f8f52b074414f14cba51d:row:f9002fc0c505d6edb4a326ba": "79fcf8d3fbc5c0615d2cc3f96637342eff9c38c09bba0628691fce35b0f547ef"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3010188&mlon=103.8385057",
+      "action": "approve",
+      "candidate_id": "9fefe45ff6a10e42173fc3dbdb0606897d0e01fcba07dc5d52280a043ab4b0fd",
+      "response_fingerprint": "5d1d57ce402dc20b3df6da39cd53f8ed81689c51b79cabe5ed2e5a4cc75a94da"
+    },
+    {
+      "decision_id": "pin-d0082407-132b-47ba-a541-91fb9d69fa75",
+      "row_ids": [
+        "telegram:1329056215:5264:offer:22a0a7b8706b0e72def49836:location:ae6b27681617ad5285b89ac4:row:4ffdf0e0eec8e127d40775ed"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5264:offer:22a0a7b8706b0e72def49836:location:ae6b27681617ad5285b89ac4:row:4ffdf0e0eec8e127d40775ed": "31eeefcd483ec6f015592ad6d84e20b906319a072e2e9a4d876ecc2f1e71dda1"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-707a6526-4c4f-4a86-abf2-232064efb90b",
+      "row_ids": [
+        "telegram:1329056215:5267:offer:5c8145e7571deeae2649d4b1:location:9a78406abce56bd5df196d21:row:94435cb4e6ab55150b226d5a"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5267:offer:5c8145e7571deeae2649d4b1:location:9a78406abce56bd5df196d21:row:94435cb4e6ab55150b226d5a": "83f96c2d66b717652c7d6bf45a8554133ad62f4fa1fbe8e46343d9012319623a"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-29bfb452-af8f-48db-af9f-b59e61e5fac0",
+      "row_ids": [
+        "telegram:1329056215:5269:offer:07f6f972d3baaa58b4c5191b:location:cb04d13dedfc7d6709f4bd04:row:3fcec3c8f15563bb9d105139"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5269:offer:07f6f972d3baaa58b4c5191b:location:cb04d13dedfc7d6709f4bd04:row:3fcec3c8f15563bb9d105139": "8479fa7cc59928740ff0cf22910c823c7dc7282e733fb3baee3307542a47b75d"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-7f3a0743-fc30-4bdb-873b-40f26b95eea5",
+      "row_ids": [
+        "telegram:1329056215:5270:offer:855d1603075a259e640be517:location:c91d168ddfdbf165bae64a7a:row:5ab4b8ccac4ef1158da9fe4f"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5270:offer:855d1603075a259e640be517:location:c91d168ddfdbf165bae64a7a:row:5ab4b8ccac4ef1158da9fe4f": "1ac25807fd03b43226b4ca68b928f13b3f9f4b9c6e99476f93280a6f5149f640"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3037371&mlon=103.8355203",
+      "action": "approve",
+      "candidate_id": "5ea6a7fdab1408b6f037858015a5de8411546ce57d70c2b879b0f20f264c5853",
+      "response_fingerprint": "3e782319b7474d916f5909c402c48c0fcffdebe9ec262407e244913f1d1c3feb"
+    },
+    {
+      "decision_id": "pin-a6fd5b82-e6e5-4f8c-b121-3e82ab60d1b6",
+      "row_ids": [
+        "telegram:1329056215:5271:offer:4cfc4e833c3307a9092ff0e8:location:6e32258d3d5a503568d2ad61:row:aed4c7982b656cd850cf7713"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5271:offer:4cfc4e833c3307a9092ff0e8:location:6e32258d3d5a503568d2ad61:row:aed4c7982b656cd850cf7713": "8034005c78a08212faba2825a8d6123a3105d5edf13b2a2a7f69d31fedfdca76"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
       "reason": "Visually reviewed venue and offer association",
       "source": "https://www.openstreetmap.org/?mlat=1.3784471&mlon=103.7633144",
       "action": "approve",
@@ -318,18 +988,186 @@
       "response_fingerprint": "851c9757a81f71099c745a4ef1d28a072468c59f3709931a13a4eee6ed69d937"
     },
     {
-      "decision_id": "pin-6c8ecdb5-42bd-427e-ba02-ba7e3e916d48",
+      "decision_id": "pin-1646f6e4-bcf0-4d8e-9799-255565f9df12",
       "row_ids": [
-        "telegram:1329056215:5282:offer:95f3fdcbff892b575f4eb2f5:location:5431d3dd1def53c8b66a0a60:row:30538eccf861d36602bb10ba"
+        "telegram:1329056215:5273:offer:dfb7e1cb15ff15c9a411fa30:location:f75ae08ecef424e23c26f0e7:row:dee61eff4d82b981993cf30c"
       ],
       "location_fingerprints": {
-        "telegram:1329056215:5282:offer:95f3fdcbff892b575f4eb2f5:location:5431d3dd1def53c8b66a0a60:row:30538eccf861d36602bb10ba": "4320faaa97d366bf1a8d9088eb350c6d914f989d0a20375c30b64c5bbb30c1b7"
+        "telegram:1329056215:5273:offer:dfb7e1cb15ff15c9a411fa30:location:f75ae08ecef424e23c26f0e7:row:dee61eff4d82b981993cf30c": "3dff4214e04fa9e45376e0010c7b7dc0833810c56939880ae4c67c4d6e85a14d"
       },
-      "reviewed_at": "2026-09-07T03:52:16.165Z",
-      "reviewer": "Zhi Yi",
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3504943&mlon=103.8722727",
+      "action": "approve",
+      "candidate_id": "0fd047755df3705d51a9037ed4d7dc378efa0725c5869cb5c2eebd4d48b70f7d",
+      "response_fingerprint": "39f147f177d8aca43780f37497cfbd5bb9d35840a89050c9dd41a0137e93f9c2"
+    },
+    {
+      "decision_id": "pin-c260f8b5-d86d-4244-9071-6da8d64c4d1f",
+      "row_ids": [
+        "telegram:1329056215:5275:offer:3bc91f762612b3c405f423bf:location:fcc210a906abc72223bd4d6f:row:d640b21e06370ef30f36f2c3"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5275:offer:3bc91f762612b3c405f423bf:location:fcc210a906abc72223bd4d6f:row:d640b21e06370ef30f36f2c3": "0992d4824690eb89a9276233573fb84cceb738ab2bfde75c4b0dd3644d376ac9"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.4064266&mlon=103.9020102",
+      "action": "approve",
+      "candidate_id": "d41d1fdbea6ff4123b0a30e43beaa61ad7ae0a2c239e008093b1f6a84af0a392",
+      "response_fingerprint": "1c5c783c6f8c3069dd1c64dc460057a7d39fa65eb322d30f771da2cb1a879f25"
+    },
+    {
+      "decision_id": "pin-5d34d0dd-2a4f-4fa9-9a94-d1daa64007f5",
+      "row_ids": [
+        "telegram:1329056215:5278:offer:e2712e553b90eec5365f422e:location:0c6d902135fbec4e5db715fb:row:5f2e0970ad1c3aabf47a39a2"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5278:offer:e2712e553b90eec5365f422e:location:0c6d902135fbec4e5db715fb:row:5f2e0970ad1c3aabf47a39a2": "ff2a13caf26a84d9cc08487f7726081471a198c4b0cf47a8dff5aab7c9564ac4"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.468Z",
+      "reviewer": "zhiyi",
       "reason": "Visually reviewed venue and offer association",
       "source": "Local pin review with cached Nominatim evidence",
       "action": "reject"
+    },
+    {
+      "decision_id": "pin-dc58f8c5-b123-4f7b-9109-d3857cd06a9e",
+      "row_ids": [
+        "telegram:1329056215:5280:offer:0396d46acda365e7a31a349b:location:6b4cd9141ce6912be4ebbe61:row:66f0cfc932a27060f72e161f"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5280:offer:0396d46acda365e7a31a349b:location:6b4cd9141ce6912be4ebbe61:row:66f0cfc932a27060f72e161f": "9a98eabe0ddc23367fe1c5d2bf9ee57b3287fec2063e9bc7627c5d32d38f2ba8"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.469Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3006333&mlon=103.8389821",
+      "action": "approve",
+      "candidate_id": "d32c53454ed53b7e79948da81c8aa3f8866098b4f93b7b5699e151a05db7ba1b",
+      "response_fingerprint": "12f0e8ec43576b63dd6c890770bd587af42ff423efb519415a76076baef8f63a"
+    },
+    {
+      "decision_id": "pin-9cf6b08a-8b5f-4548-9003-166789bbf937",
+      "row_ids": [
+        "telegram:1329056215:5281:offer:35b1aeeb5f36ac4e6035d6b9:location:1a15165d45ceb329dba41100:row:1c54e87a50bbd159ec879497"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5281:offer:35b1aeeb5f36ac4e6035d6b9:location:1a15165d45ceb329dba41100:row:1c54e87a50bbd159ec879497": "3c40dc87009a1b3e3751c0cb00897ce3e8a0890a262ac29eef271ca064252862"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.469Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.334194&mlon=103.7428671",
+      "action": "approve",
+      "candidate_id": "0e29dc0cfe019e1cb3a6b88fe07a928748e17e4763a08a9bb305c19fcd8384ea",
+      "response_fingerprint": "64a34e7eb19c2d9f195a8c368a7f743d27c98486cd3b5ea95beb3a1e24576565"
+    },
+    {
+      "decision_id": "pin-72c61a80-645b-43d9-8318-d39fefec6a97",
+      "row_ids": [
+        "telegram:1329056215:5282:offer:60725a6e01646e32bd2f6f59:location:b91b2f06c56384cf7724a8d8:row:edf8432bcb781580a5bc425b"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5282:offer:60725a6e01646e32bd2f6f59:location:b91b2f06c56384cf7724a8d8:row:edf8432bcb781580a5bc425b": "02891279ff593c866caec159a8feefac4334e53492338f0c2aac660b5055e758"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.469Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-dbc0e843-5a41-4b34-8da9-509c6e92b102",
+      "row_ids": [
+        "telegram:1329056215:5283:offer:bc5df38622e98e10fda4a900:location:fe7179bf834fb9e76453ac41:row:d9124afa9621dbfec14c119d"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5283:offer:bc5df38622e98e10fda4a900:location:fe7179bf834fb9e76453ac41:row:d9124afa9621dbfec14c119d": "0d5aa5aba1d41db5e7e0e42fc9395fcf9e6ee4390b0b7e6cd6b8a66a02268674"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.469Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-570deae7-7c86-4488-8e31-f594c6064675",
+      "row_ids": [
+        "telegram:1329056215:5284:offer:87f36df8149cdf583bc4adcc:location:207269c72a3dd03e7ac2f7b4:row:758e57c017cb4ac7eae853fe"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5284:offer:87f36df8149cdf583bc4adcc:location:207269c72a3dd03e7ac2f7b4:row:758e57c017cb4ac7eae853fe": "e3dcff902eb961855861575db32a35fe5512d472333c5682dc3d0fb43897cd22"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.469Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-e7d65b3e-07ff-43e6-96b5-c558473a187a",
+      "row_ids": [
+        "telegram:1329056215:5286:offer:d1e996b413a0b25ff776eb34:location:5497aebfa7baa397beb9c522:row:4a872a63273ed1019b683c90"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5286:offer:d1e996b413a0b25ff776eb34:location:5497aebfa7baa397beb9c522:row:4a872a63273ed1019b683c90": "7c80d43d464ae9498b5958587a5af8012a68052e71a0e8db2d0ecaa7c2bee91f"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.469Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.2912739&mlon=103.8571836",
+      "action": "approve",
+      "candidate_id": "59fbfadb323a790ecc67224ea033325d207df720eaccd5cac4fc1396f4c1f261",
+      "response_fingerprint": "dac6b5f0aa751068c2d25ea3aa6361db69ae025f04d98acb9d200aa2f91616c6"
+    },
+    {
+      "decision_id": "pin-51517d91-a90e-45cf-81d6-d4b646f2dd56",
+      "row_ids": [
+        "telegram:1329056215:5286:offer:d1e996b413a0b25ff776eb34:location:83dce82062a95046f9280fad:row:4a872a63273ed1019b683c90"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5286:offer:d1e996b413a0b25ff776eb34:location:83dce82062a95046f9280fad:row:4a872a63273ed1019b683c90": "7775fb59a225b3bdacc42deb5501dc97ce4b1d0cd01fa4820e1f8bea13739a6b"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.469Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "Local pin review with cached Nominatim evidence",
+      "action": "reject"
+    },
+    {
+      "decision_id": "pin-1895fdf3-4764-4cbb-8884-6f031afeb5e2",
+      "row_ids": [
+        "telegram:1329056215:5288:offer:f09561d815b89edc59f62e2d:location:2289f76f7797fce033832274:row:d5e57e383db7383e9faa1b6b"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5288:offer:f09561d815b89edc59f62e2d:location:2289f76f7797fce033832274:row:d5e57e383db7383e9faa1b6b": "76749b94cb005c87c4507822d2d58ba7f50d8faba91a1bcaeb1f561df31ba754"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.469Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3039479&mlon=103.8319051",
+      "action": "approve",
+      "candidate_id": "9187bfa355ada340e4598615b00b7936914f507b0bd1073b46726ec7efd6cf10",
+      "response_fingerprint": "41acba9570c60094fefbfe5a0e49dcc43994b74b38765a64c872a2053f914992"
+    },
+    {
+      "decision_id": "pin-45bac506-21ea-4653-82e1-e9392daa4506",
+      "row_ids": [
+        "telegram:1329056215:5292:offer:f26bd10fc39b7d63e5bc9429:location:0e697f7b77585df1f128ec3e:row:347eb1d84afb84861faf30b1"
+      ],
+      "location_fingerprints": {
+        "telegram:1329056215:5292:offer:f26bd10fc39b7d63e5bc9429:location:0e697f7b77585df1f128ec3e:row:347eb1d84afb84861faf30b1": "e0288200282bdd591fb69614323aa248dcdc01b50196d4e37ff5bf36be77cfed"
+      },
+      "reviewed_at": "2026-09-12T15:56:20.469Z",
+      "reviewer": "zhiyi",
+      "reason": "Visually reviewed venue and offer association",
+      "source": "https://www.openstreetmap.org/?mlat=1.3039479&mlon=103.8319051",
+      "action": "approve",
+      "candidate_id": "9187bfa355ada340e4598615b00b7936914f507b0bd1073b46726ec7efd6cf10",
+      "response_fingerprint": "41acba9570c60094fefbfe5a0e49dcc43994b74b38765a64c872a2053f914992"
     }
   ]
 }

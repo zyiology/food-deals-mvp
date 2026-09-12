@@ -1,5 +1,7 @@
 # Phase 2: LLM extraction and demo review
 
+Current run update (2026-09-12): all 136 posts were selected for extraction; 131 succeeded, three need review, and two failed. The reviewed subset is published. See the [current run record](../processing-workflow.md#latest-recorded-run). The plan and pilot findings below preserve the original scope and review history.
+
 Status: **pipeline implemented; the 30-post paid pilot ran on 2026-09-06; only five development posts have been compared against the original draft annotations**. On 2026-09-07 the user approved replacing exhaustive pilot scoring with a small visual review for the website demonstration. This plan supersedes the original Phase 2 acceptance gate and availability-grouping expectations. Next: [Phase 3 geocoding](04-geocoding.md), then [FastAPI](05-fastapi.md) and [Leaflet](06-leaflet.md).
 
 ## Outcome

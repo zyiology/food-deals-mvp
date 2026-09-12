@@ -1,5 +1,7 @@
 # Phase 2 pilot: annotation review
 
+Historical pilot record: the counts and comparisons below describe the original 30-post experiment. The local extraction report has since been replaced by the full-batch run; see the [current run record](processing-workflow.md#latest-recorded-run). It no longer contains the pilot counts quoted below.
+
 Status: **30-post paid pilot run completed on 2026-09-06; only the first five development entries have been compared; annotations remain draft**.
 
 The local [extraction report](../data/reports/extract.json) records 34 offers and 22 explicit offer/location rows, with nine posts marked `success` and 21 `needs_review`. The [partial comparison report](../data/reports/llm-pilot-review-batch-01.json) covers SGFoodDeals 4858, 4870, 4883, 4884, and 4900: one match and four mismatches against the original draft expectations. The other 25 posts, including all nine held-out posts, remain unscored. These generated files are local artifacts ignored by Git.

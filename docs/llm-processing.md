@@ -1,9 +1,13 @@
 # LLM extraction: operation and recovery
 
 The Phase 2 pipeline extracts caption-grounded offers and explicit location candidates.
-The paid 30-post pilot has already run; five development posts were compared against
-draft annotations. The current goal is a small website demonstration. See the
-[Phase 2 plan](plans/03-llm-processing.md) for the approved scope.
+The full-batch run on 2026-09-11 selected all 136 posts: 131 succeeded, three
+need review, and two failed; none remain unprocessed. Its report remains `partial`,
+with 142 offers and 86 explicit location rows. A reviewed subset was published on
+2026-09-12; see the [current run record](processing-workflow.md#latest-recorded-run).
+The original 30-post pilot and five-post comparison against draft annotations
+remain historical findings, not an accuracy evaluation of the full batch.
+See the [Phase 2 plan](plans/03-llm-processing.md) for the original approved scope.
 
 ## Offline demo review
 
@@ -13,7 +17,7 @@ uv run food-deals-mvp review-demo
 
 Open `data/demo/review.html` to compare offer cards with source captions/images.
 The default filter shows rows eligible for location lookup; switch to all rows to
-inspect skipped reasons. Select a small useful sample (roughly 10–15 cards if available)
+inspect skipped reasons. Select the reviewed rows for geocoding
 and download `demo-selection.json`. Nothing is preselected or approved automatically.
 This selection is for subsequent geocoding, not a set of verified pins.
 
@@ -41,6 +45,10 @@ annotation review or 27/30 score is required for this demo.
 uv run food-deals-mvp extract --dry-run
 uv run food-deals-mvp extract --post-ids config/llm-pilot-post-ids.json --limit 30 --dry-run
 ```
+
+Live (non-dry-run) extraction reports progress to stderr: a summary of selected,
+requested and cached posts, then one line per requested post as it completes. The
+final report stays on stdout. Dry-run prints no progress because it is instant.
 
 Dry-run requires successful normalization with matching report/posts/media identities.
 It makes no requests or writes. The pilot ID file still selects exactly 10 posts per

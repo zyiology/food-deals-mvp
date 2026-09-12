@@ -119,6 +119,19 @@ def test_success_cache_reuse_expansion_and_full_batch_gate(llm_batch):
     assert full.counts["cache_hits"] == 30 and full.counts["cache_misses"] == 3
 
 
+def test_progress_reports_each_requested_post(llm_batch):
+    messages: list[str] = []
+    run(llm_batch, progress=messages.append)
+    assert messages[0] == "extract: 30 selected, 30 to request, 0 cached"
+    per_post = messages[1:]
+    assert len(per_post) == 30
+    assert per_post[0] == "extract: [1/30] telegram:101:1: 1 offers"
+    assert per_post[-1] == "extract: [30/30] telegram:103:10: 1 offers"
+    messages.clear()
+    run(llm_batch, resume=True, progress=messages.append)
+    assert messages == ["extract: 30 selected, 0 to request, 30 cached"]
+
+
 def test_budget_survives_output_directory_and_prompt_changes(llm_batch, tmp_path):
     first = run(llm_batch, settings=Settings(max_attempts=1))
     assert first.status == "failed" and first.budget["attempts"] == 1

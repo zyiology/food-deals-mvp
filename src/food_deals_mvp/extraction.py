@@ -2,6 +2,7 @@
 
 import time
 from collections import Counter
+from collections.abc import Callable
 from decimal import Decimal
 from pathlib import Path
 from typing import Literal, Protocol
@@ -186,6 +187,7 @@ def extract(
     accept_demo: bool = False,
     client: Client | None = None,
     state_dir: Path = STATE_DIR,
+    progress: Callable[[str], None] | None = None,
 ) -> ExtractionReport:
     # Validate source completion BEFORE selection, recovery, locking or provider access.
     posts, _media, source_report = load_normalized(data_dir)
@@ -275,13 +277,19 @@ def extract(
                 apply_corrections(post, result, corrections)
         errors: list[str] = []
         attempts = 0
+        if progress is not None:
+            progress(
+                f"extract: {len(selected)} selected, {len(pending)} to request, "
+                f"{reused} cached"
+            )
         try:
             adapter = (client or OpenRouter(settings)) if pending else None
             if adapter is not None:
                 maximum = adapter.preflight()
-                for post in pending:
+                for index, post in enumerate(pending, start=1):
                     repaired = False
                     retries = 0
+                    entry: CacheEntry | None = None
                     while True:
                         if attempts >= settings.max_attempts:
                             raise BudgetStop("run attempt limit reached")
@@ -305,7 +313,7 @@ def extract(
                                     / f"{attempt.attempt_id}.json"
                                 )
                             )
-                            checkpoint(post, settings, receipt, cache_dir)
+                            entry = checkpoint(post, settings, receipt, cache_dir)
                             if not exc.transient:
                                 raise
                             if repaired or retries >= settings.retries:
@@ -353,6 +361,15 @@ def extract(
                         if repaired:
                             break
                         repaired = True
+                    if progress is not None and entry is not None:
+                        detail = entry.error or (
+                            f"{len(entry.extraction.offers)} offers"
+                            if entry.extraction is not None
+                            else "no extraction"
+                        )
+                        progress(
+                            f"extract: [{index}/{len(pending)}] {post.post_id}: {detail}"
+                        )
         except (OSError, ValueError, KeyError, TypeError) as exc:
             errors.append(error_detail(exc))
         return build_outputs(

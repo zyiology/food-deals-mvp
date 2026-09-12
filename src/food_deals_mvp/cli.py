@@ -192,6 +192,7 @@ def main() -> None:
                     corrections_path=args.corrections,
                     pilot_review=args.pilot_review,
                     accept_demo=args.accept_demo,
+                    progress=lambda message: print(message, file=sys.stderr, flush=True),
                 )
             else:
                 extraction_report = load_extraction_report(args.data_dir)

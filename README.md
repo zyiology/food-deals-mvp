@@ -121,11 +121,20 @@ The dialog's meal and day choices are currently previews and do not filter deals
 The map fits all results on the first successful load unless a submitted location
 has already positioned it. Submitting a location centers at zoom 14; nearby offers
 are determined by the visible map area, with no distance ranking or fixed radius.
-Pan or zoom to filter the list locally; numbers are reassigned to the visible rows.
-Select a card or marker to open details.
-Selection follows the offer ID through renumbering and clears when it leaves the
-view or filter results. A **+ badge** opens a chooser for offers sharing an exact
-coordinate. **Show all locations** restores the extent of the filtered results.
+Pan or zoom to filter the list locally. Numbers identify visible locations: each
+exact coordinate has one pin and one expandable list group containing all its
+deals. Locations are ordered by their newest deal; deals within a group are
+newest first. A badge such as **2 deals** shows how many rows share the pin.
+Groups start expanded; full offer details start closed.
+
+Select a shared pin to reveal its group, or select a deal card to open that offer's
+details. A single-deal pin opens its offer directly. Headings distinguish the
+active location from the selected offer, including when collapsed. Selection
+survives renumbering while its ID remains visible; collapse preferences survive
+panning and refreshes for locations still in the loaded results. Dismissing a
+popup keeps it closed until another explicit selection. **Show all locations**
+restores the extent of the filtered results. Counts distinguish deal rows from
+exact-coordinate locations, which may represent a whole building.
 
 Change the reference date or enable **Valid on selected date** to query the API.
 **Today** uses Singapore time. The posting cutoff remains a server setting.
@@ -184,6 +193,7 @@ static assets through request interception and use synthetic API responses, stub
 tiles, and deliberately broken images. They need neither a running API nor provider
 keys and make no live tile requests. See [the review record](docs/leaflet-review.md)
 for the historical live-dataset checks and remaining human review. The browser
-script does not yet handle the startup welcome dialog or test location flows;
-see the [current coverage gaps](docs/front-end.md#development-and-verification)
-before treating historical passing results as current verification.
+script dismisses the startup dialog and covers grouping, selection, collapse,
+popup/focus retention, refresh/error states, desktop/mobile layout, and submitted-
+location precedence. Live address search and device-location flows remain separate
+[coverage gaps](docs/front-end.md#development-and-verification).

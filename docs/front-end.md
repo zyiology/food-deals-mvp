@@ -4,6 +4,8 @@ This guide describes the implementation reviewed on **2026-09-15**. Update it
 when user flows, module responsibilities, or API integration change. The
 [Leaflet plan](plans/06-leaflet.md) records the original design, and the
 [Leaflet review](leaflet-review.md) records historical pilot verification.
+The [location-grouping plan](plans/07-location-grouping.md) records the subsequent
+shared-pin design, implemented and checked on 2026-09-15.
 Current dataset counts and publication history belong in the
 [processing workflow](processing-workflow.md#latest-recorded-run).
 
@@ -31,16 +33,17 @@ reverse address lookup fails. Basemap tiles also require network access.
 | Nearby | Requests device coordinates after a user action, optionally resolves an address, and centers the map when **Show map** is submitted. |
 | Location search | Suggests Singapore postal codes, buildings, and addresses; a submitted selection centers the map. |
 | Meal and day choices in the dialog | Preview controls only. They do not change the deal request, main reference date, or displayed results. The UI currently does not label them as previews. |
-| Map and list | Pan/zoom filters downloaded rows to visible bounds and assigns matching numbers to cards and markers. |
-| Selection and overlaps | Selecting a card or marker opens details; exact-coordinate overlaps have a numbered chooser and `+` badge. |
+| Map and list | Pan/zoom filters downloaded rows to visible bounds; each exact coordinate has one numbered pin and expandable list group. |
+| Selection and shared locations | Shared pins reveal their group; sole-deal pins and deal cards open individual details. Count badges replace the overlap chooser. Active location and selected offer have separate cues. |
 | Main date controls | Reference date, **Today**, and **Valid on selected date** request backend filtering. **Today** uses Singapore time. |
 | Offer details | Dates, restrictions, source images, original captions, and safe source links; building-level pins are labelled approximate. |
 | Layout and access | Desktop list beside map; map above list at widths up to 720px. Keyboard controls, focus styles, status messages, and a skip link are implemented. |
 
 “Nearby” is a map-centering action followed by viewport filtering. There is no
 fixed search radius, distance ranking, device-position marker, or continuous
-location tracking. The list remains ordered by posting time. Different nearby
-coordinates can still overlap visually; zooming and the list are the fallback.
+location tracking. Locations are ordered by their newest deal, with newest-first deals
+inside each group. Different nearby coordinates can still overlap visually;
+zooming and the list are the fallback.
 There is no clustering or spiderfy interaction.
 
 The backend publishes mapped offer/location rows, so counts are not counts of
@@ -133,22 +136,58 @@ integration is the location event; meal/day values are not included in it.
 ### Map/list state
 
 `app.js` keeps loaded rows and response metadata, request/loading/error state,
-map bounds, visible entries, display numbers, coordinate groups, a selected
-`deal_id`, and card/marker maps keyed by ID.
+map bounds, visible coordinate groups and deal-to-group lookups. Group nodes and
+markers use coordinate keys; cards and the selected offer use `deal_id`. Display
+numbers are derived presentation, never identity.
 
 On Leaflet `moveend`, `renderViewport()`:
 
-1. Reads bounds and includes rows on their boundaries.
-2. Sorts by descending `posted_at`, with ascending `deal_id` as the tie-breaker.
-3. Assigns temporary numbers `1..N` from that one visible array.
-4. Retains selection only if its ID remains visible; removes obsolete nodes and
-   renders cards and markers from the same entries.
+1. Includes rows inside geographic bounds, including boundary coordinates. With
+   Leaflet unavailable, all returned rows are included.
+2. Sorts by descending `posted_at` instant and ascending `deal_id` for ties.
+3. Groups by the original latitude/longitude pair and assigns contiguous location
+   numbers in first-appearance order. No rounding or proximity merge is used.
+4. Reconciles surviving list/marker nodes and selection by their keys; removes
+   obsolete nodes and updates headings, marker accessible names, counts and popups.
 
-Keep display numbers out of identity and storage. Exact-coordinate groups use
-the original latitude/longitude pair; chooser behavior does not offset stored
-coordinates. Selection opens the matching card details and popup. Selection from
-the map also scrolls to and focuses the card. Popup auto-pan and marker focus
-auto-pan are disabled. A `ResizeObserver` updates the map size after layout changes.
+Headings use a shared trimmed `resolved_label` when all nonempty resolved labels
+agree. Without resolved labels, every row must have the same nonempty trimmed
+`location_label`; otherwise the heading is **Shared map location**. Original
+merchant, location, unit and precision remain in each card. Groups containing any
+building-precision row show an approximation note.
+
+Groups start expanded and offer details start closed. A group disclosure changes
+only expansion. Collapse preferences survive viewport changes and successful
+refreshes for coordinates still present in the loaded results; removed coordinates
+are pruned, and reload resets preferences. Collapsed content leaves the tab order.
+
+The active coordinate, selected `deal_id`, and popup intent (`closed`, `location`,
+`deal`) are separate state. A shared pin expands and focuses its group, retaining
+only a selection already in that group, and opens a compact location popup. A
+single-deal pin selects its offer, opens details, and focuses its card control.
+Selecting a card expands its group and opens a deal popup without moving focus.
+**Read offer details**, **View deals**, and **View all N deals here** expand their
+targets before scrolling and focusing them; they retain selection and popup mode.
+A collapsed heading still indicates whether it contains the selected offer.
+
+Renumbering preserves valid identities and popup mode. User dismissal keeps the
+popup closed across pan, zoom and refresh. Removing a selected deal clears only
+that selection while its location survives; an open deal popup becomes a location
+popup. Removing the active coordinate closes its popup. Reconciliation does not
+expand collapsed groups or initiate list navigation.
+
+Surviving controls retain focus and open details during viewport reconciliation,
+including required DOM moves. Popup text and controls update in place; focus is
+restored after Leaflet reattaches popup content for measurement. If focused content
+must be hidden or removed, focus moves to its surviving group control or the list
+heading with `preventScroll`. Changed card content on refresh retains the card's
+selection control and open/closed details state; replacing focused detail content
+falls back to that selection control.
+
+Popup auto-pan and marker focus auto-pan are disabled. Popups shift horizontally
+to keep their actions inside narrow maps without changing geographic bounds.
+A `ResizeObserver` updates map size after layout changes. **Show all locations**
+fits all loaded rows, while a submitted location takes precedence over initial fit.
 
 ### Network boundary
 
@@ -165,11 +204,13 @@ statuses; the posting cutoff is displayed from `filters.max_age_days` and has no
 browser control. See the [FastAPI contract](plans/05-fastapi.md) for deal fields
 and [api.py](../src/food_deals_mvp/api.py) for the later location endpoints.
 
-Each deals load clears old cards and markers, aborts the previous request, and
-increments a request counter. Only the latest response can commit state. A
-successful refresh retains selection by ID if it remains in the new viewport
-results; a request failure clears selection. Panning and selecting do not issue
-deal API requests, though panning may load basemap tiles.
+Each deals load marks the list busy, temporarily removes the popup while retaining
+its intent, aborts the previous request, and increments a request counter. Existing
+cards and pins remain until the latest response reconciles them, preserving
+surviving controls. Only that response can commit state. A successful refresh
+retains visible selection and surviving collapse preferences; a request failure
+clears rows, pins, active location, selection and popup intent. Panning and
+selecting do not issue deal API requests, though panning may load basemap tiles.
 
 ### Rendering and recovery
 
@@ -195,35 +236,45 @@ tile downloads or basemap prefetching.
 The README lists [development commands](../README.md#development-checks),
 including Node map-state tests and the isolated Playwright browser script.
 
-| Existing checks | Scope |
+| Checks | Scope |
 | --- | --- |
-| [map-state.test.mjs](../tests/map-state.test.mjs) | Pure viewport boundaries, order/numbering, coordinate groups, and selection retention. |
-| [browser_smoke.py](../tests/browser_smoke.py) | Original map/card/filter interactions and failure states using intercepted HTTP, synthetic data, stubbed tiles, and broken images. |
+| [map-state.test.mjs](../tests/map-state.test.mjs) | Boundaries, timestamp order/ties, exact coordinates, label agreement/fallback, input immutability, contiguous numbering and deal lookups. |
+| [browser_smoke.py](../tests/browser_smoke.py) | Shared pins and headings, keyboard/disclosure access, selection and popup modes, dismissal, collapse retention, group movement/focus recovery, membership changes, filters/stale responses, error recovery, safe text/links, mobile layout and submitted-location precedence. |
 | [test_api.py](../tests/test_api.py) | Backend/API regression checks. |
-| [test_location_search.py](../tests/test_location_search.py) | Stubbed OneMap token creation/reuse/renewal, missing configuration, search result mapping, and reverse lookup. |
+| [test_location_search.py](../tests/test_location_search.py) | Stubbed OneMap authentication, missing configuration, search result mapping and reverse lookup. |
 
-**Coverage gap:** the browser script does not dismiss the startup welcome dialog
-or cover its location flows. The dialog can block its map/list interactions, and
-the script has no location endpoint stubs. The historical passing results in the
-[Leaflet review](leaflet-review.md) predate these additions and do not establish
-that the current script passes or that the new flows work in a browser.
+### Location-grouping validation — 2026-09-15
 
-This guide is based on source inspection; no new browser or live OneMap
-verification was performed for this documentation update. Recommended follow-up
-coverage is:
+The browser script now dismisses the welcome dialog on initial load and reload,
+so it can exercise map/list controls. It intercepts all HTTP traffic, uses synthetic
+snapshots and tiles, and makes no live OneMap or basemap requests. Checks cover
+both ordinary fixtures and 105 distinct coordinates including a 120-deal building,
+long labels, conflicting labels, unit/merchant retention and separate count badges.
+Desktop (1440px) and narrow mobile (375px/390px) checks found no horizontal page
+overflow; screenshots were inspected for readable headings and large counts.
 
-- Dismiss/reopen the dialog and verify keyboard focus and narrow-screen layout.
-- Stub geolocation success, denied permission, and timeout/unavailable results.
+Validation results are recorded in the [plan completion record](plans/07-location-grouping.md#implementation-and-verification).
+The earlier [Leaflet review](leaflet-review.md) remains historical pilot evidence.
+
+### Remaining limits and coverage gaps
+
+Different-coordinate marker overlap remains outside this iteration. Grouping
+preserves every returned offer/location row; it does not deduplicate offers or
+assert that a shared building coordinate identifies one restaurant.
+
+Browser checks exercise the submitted-location event and verify that a late
+initial deals response cannot override it. They do not exercise real geolocation,
+autocomplete or reverse-lookup UI flows. Follow-up coverage remains:
+
+- Reopen the dialog and inspect its keyboard focus behavior.
+- Stub geolocation success, denied permission and timeout/unavailable results.
 - Cover autocomplete keyboard selection, single-result submission, stale
-  responses, no matches, and service errors.
-- Cover reverse lookup success, null, and failure while preserving coordinates.
-- Submit a location before and after the first deals response; confirm zoom 14
-  and that a late response cannot refit the map.
-- Verify the current separation between preview meal/day choices and working
-  main date filters.
+  responses, no matches and service errors.
+- Cover reverse lookup success, null and failure while preserving coordinates.
+- Verify the separation between preview meal/day choices and working date filters.
 
-Live setup verification should separately exercise a forward postal-code search
-and a reverse address lookup with configured OneMap credentials. A browser pass
-with the current published snapshot and a physical-phone review also remain
-separate from synthetic checks. Hiding or labelling the preview controls is a
-proposed UI follow-up, not an implemented feature.
+No live OneMap verification or current-published-snapshot browser review was done
+for location grouping. Live setup verification should separately exercise a
+forward postal-code search and reverse address lookup with configured credentials.
+Physical-phone review remains separate from emulated mobile viewports. Hiding or
+labelling preview controls is a proposed UI follow-up, not an implemented feature.

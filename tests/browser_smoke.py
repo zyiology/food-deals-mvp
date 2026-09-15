@@ -84,6 +84,7 @@ def run():
             "unmapped": False,
         }
         api_requests = []
+        custom_rows = None
 
         def route_request(route):
             url = urlsplit(route.request.url)
@@ -102,6 +103,8 @@ def run():
                     route.fulfill(status=503, json={"detail": "Unavailable"})
                     return
                 data = snapshot()
+                if custom_rows is not None:
+                    data["deals"] = copy.deepcopy(custom_rows)
                 params = parse_qs(url.query)
                 data["filters"]["as_of"] = params.get("as_of", ["2026-08-26"])[0]
                 data["filters"]["validity"] = params.get("validity", ["all"])[0]
@@ -147,6 +150,23 @@ def run():
             page.locator("#as-of").fill(value)
             page.locator("#as-of").dispatch_event("change")
 
+        def refresh(expected):
+            # Dispatch without stealing focus from the control under inspection.
+            with page.expect_response(lambda response: "/api/deals" in response.url):
+                page.locator("#as-of").dispatch_event("change")
+            count(expected)
+            # Leaflet removes old popup DOM after its fade-out transition.
+            expect(page.locator('.leaflet-popup[style*="opacity: 0"]')).to_have_count(0)
+
+        def remember_focus():
+            page.evaluate("""() => {
+                window.savedControl = document.activeElement;
+                window.savedPanelScroll = document.querySelector('.offers').scrollTop;
+            }""")
+
+        def same_focus():
+            assert page.evaluate("document.activeElement === savedControl")
+
         def selected():
             return page.locator(".deal-card.selected").get_attribute("data-deal-id")
 
@@ -157,17 +177,30 @@ def run():
             )
 
         page.goto(ORIGIN)
+        page.locator("#close-welcome").click()
         count(3)
         assert page.locator("#as-of").input_value() == "2026-08-26"
         assert not page.locator("#valid-only").is_checked()
         assert "Posted within 60 days" in page.locator("#dataset-meta").inner_text()
-        assert page.locator(".pin-number").all_text_contents() == ["1", "2", "3"]
-        assert page.locator(".number").all_text_contents() == ["1", "2", "3"]
+        assert page.locator(".pin-number").all_text_contents() == ["1", "2"]
+        assert page.locator(".number").all_text_contents() == ["1", "2"]
         assert page.locator("#sample-note").is_visible()
         assert page.locator(".leaflet-control-attribution").is_visible()
         assert page.locator(".validity.unknown").inner_text() == "Validity unknown"
         assert "End date not stated" in page.locator(".deal-card").first.inner_text()
-        print("PASS initial filters, numbering, metadata, attribution")
+        expect(page.locator("#count")).to_have_text(
+            "3 deals at 2 locations in this view"
+        )
+        expect(page.locator(".pin-badge")).to_have_text("2 deals")
+        assert page.locator(".deal-card .number, .popup-choices").count() == 0
+        assert page.locator(".details[open]").count() == 0
+        for disclosure in page.locator(".group-disclosure").all():
+            expect(disclosure).to_have_attribute("aria-expanded", "true")
+            target = page.locator("#" + disclosure.get_attribute("aria-controls"))
+            expect(target).to_have_attribute(
+                "aria-labelledby", disclosure.get_attribute("id")
+            )
+        print("PASS initial grouping, disclosures, counts, metadata, attribution")
 
         request_count = len(api_requests)
         for selector, key in [
@@ -216,21 +249,21 @@ def run():
         map_view(1.30, 103.80, 15)
         count(2)
         assert selected() == "deal-1"
-        assert page.locator(".deal-card.selected .number").inner_text() == "1"
-        assert page.locator(".pin-number").all_text_contents() == ["1", "2"]
+        assert page.locator(".location-group .number").all_text_contents() == ["1"]
+        assert page.locator(".pin-number").all_text_contents() == ["1"]
         assert len(api_requests) == request_count
         expect(page.locator(".leaflet-popup-close-button")).to_have_count(1)
         page.locator(".leaflet-popup-close-button").click()
-        page.locator(".deal-pin.selected").click()
-        assert page.locator(".popup-choices button").all_text_contents() == [
-            "1. Offer 1",
-            "2. Offer 2",
-        ]
-        page.locator(".popup-choices button").nth(1).press("Enter")
-        assert selected() == "deal-2"
-        assert page.locator(".deal-card.selected .card-select").evaluate(
-            "el => el === document.activeElement"
+        expect(page.locator(".leaflet-popup")).to_have_count(0)
+        page.locator(".deal-pin.active").press("Enter")
+        expect(page.locator(".leaflet-popup-content strong")).to_have_text(
+            "1. Shared map location"
         )
+        assert selected() == "deal-1"
+        expect(page.locator(".group-disclosure")).to_be_focused()
+        page.locator(".card-select").nth(1).press("Enter")
+        assert selected() == "deal-2"
+        expect(page.locator(".deal-card.selected .card-select")).to_be_focused()
         map_view(1.43, 103.95, 15)
         count(1)
         assert page.locator(".deal-card.selected").count() == 0
@@ -240,8 +273,166 @@ def run():
         assert "No deals in this area" in page.locator("#status").inner_text()
         page.locator("#show-all").click()
         count(3)
+        print("PASS local viewport filtering, stable selection, shared pin, empty area")
+
+        shared = page.locator('[data-coordinate-key="1.3,103.8"]')
+        disclosure = shared.locator(".group-disclosure")
+        offer = page.locator('[data-deal-id="deal-1"]')
+        shared_pin = page.locator('.deal-pin[aria-label*="Shared map location"]')
+        # A location alone must not select an arbitrary deal.
+        shared_pin.press("Space")
+        assert page.locator(".deal-card.selected").count() == 0
+        expect(disclosure).to_be_focused()
+        expect(shared.locator(".group-context")).to_have_text("Active location")
+        disclosure.press("Enter")
+        expect(disclosure).to_have_attribute("aria-expanded", "false")
+        expect(shared.locator(".group-deals")).to_be_hidden()
+        page.get_by_role("button", name="View deals", exact=True).click()
+        expect(disclosure).to_be_focused()
+        expect(disclosure).to_have_attribute("aria-expanded", "true")
+        expect(page.locator(".leaflet-popup-content strong")).to_have_text(
+            "2. Shared map location"
+        )
+
+        offer.locator(".card-select").click()
+        disclosure.press("Space")
+        expect(shared.locator(".group-context")).to_contain_text(
+            "Contains selected offer"
+        )
+        page.get_by_role("button", name="Read offer details").click()
+        expect(disclosure).to_have_attribute("aria-expanded", "true")
+        expect(offer.locator("summary")).to_be_focused()
+        expect(offer.locator("details")).to_have_attribute("open", "")
+        disclosure.click()
+        page.get_by_role("button", name="View all 2 deals here").click()
+        expect(disclosure).to_be_focused()
+        assert selected() == "deal-1"
+        expect(page.locator(".leaflet-popup-content strong")).to_have_text("2. Offer 1")
+
+        # In-place popup and details reconciliation must retain the same controls.
+        page.get_by_role("button", name="Read offer details").focus()
+        remember_focus()
+        map_view(1.30, 103.80, 15)
+        count(2)
+        same_focus()
+        expect(page.locator(".leaflet-popup-content strong")).to_have_text("1. Offer 1")
+        expect(shared_pin).to_have_attribute(
+            "title", "Location 1: Shared map location; 2 deals; active location"
+        )
+        expect(shared_pin).to_have_attribute("alt", shared_pin.get_attribute("title"))
+        offer.locator("summary").focus()
+        remember_focus()
+        page.evaluate("testMap.panBy([5, 0], {animate: false})")
+        same_focus()
+        assert page.evaluate(
+            "document.querySelector('.offers').scrollTop === savedPanelScroll"
+        )
+        expect(offer.locator("details")).to_have_attribute("open", "")
+        shared_pin.press("Enter")
+        assert selected() == "deal-1"
+        page.get_by_role("button", name="View deals", exact=True).focus()
+        remember_focus()
+        page.evaluate(
+            "testMap.fitBounds([[1.43, 103.95], [1.30, 103.80]], {padding: [40,40], maxZoom: 15, animate: false})"
+        )
+        count(3)
+        same_focus()
+        expect(page.locator(".leaflet-popup-content strong")).to_have_text(
+            "2. Shared map location"
+        )
+        page.locator(".leaflet-popup-close-button").click()
+        expect(page.locator(".leaflet-popup")).to_have_count(0)
+        page.evaluate("testMap.panBy([5, 0], {animate: false})")
+        refresh(3)
+        expect(page.locator(".leaflet-popup")).to_have_count(0)
+        assert selected() == "deal-1"
+        print("PASS collapse navigation, popup modes, dismissal, renumbering and focus")
+
+        # A new latest member forces the surviving group (and its focused card) to move.
+        offer.locator("summary").focus()
+        remember_focus()
+        page.evaluate(
+            "window.savedGroup = document.querySelector('[data-coordinate-key=\"1.3,103.8\"]')"
+        )
+        custom_rows = snapshot()["deals"]
+        custom_rows[2]["posted_at"] = "2026-08-27T10:00:00+08:00"
+        refresh(3)
+        same_focus()
+        assert page.locator(".location-group").first.evaluate("el => el === savedGroup")
+        expect(offer.locator("details")).to_have_attribute("open", "")
+        assert page.evaluate(
+            "document.querySelector('.offers').scrollTop === savedPanelScroll"
+        )
+        disclosure.click()
+        refresh(3)
+        expect(disclosure).to_have_attribute("aria-expanded", "false")
+        map_view(1.43, 103.95, 15)
+        count(1)
+        map_view(1.30, 103.80, 15)
+        count(2)
+        expect(disclosure).to_have_attribute("aria-expanded", "false")
+        shared_pin.press("Enter")
+        expect(disclosure).to_have_attribute("aria-expanded", "true")
+
+        # Removing a selected member retains the location and changes only an open deal popup.
+        offer.locator(".card-select").click()
+        disclosure.click()
+        custom_rows = snapshot()["deals"][2:]
+        refresh(1)
+        assert page.locator(".deal-card.selected").count() == 0
+        expect(disclosure).to_have_attribute("aria-expanded", "false")
+        expect(page.locator(".leaflet-popup-content strong")).to_have_text("1. Venue 2")
+        expect(
+            page.get_by_role("button", name="View deals", exact=True)
+        ).to_be_visible()
+        expect(shared.locator(".group-context")).to_have_text("Active location")
+        expect(page.locator("#count")).to_have_text("1 deal at 1 location in this view")
+        expect(page.locator(".pin-badge")).to_have_count(0)
+        page.locator(".deal-pin").press("Enter")
+        assert selected() == "deal-2"
+        expect(page.locator(".card-select")).to_be_focused()
+        expect(page.locator("details")).to_have_attribute("open", "")
+
+        # Location mode remains location mode when its selected member becomes the sole deal.
+        custom_rows = snapshot()["deals"][1:]
+        refresh(2)
+        offer.locator(".card-select").click()
+        shared_pin.press("Enter")
+        custom_rows = snapshot()["deals"][1:2]
+        refresh(1)
+        assert selected() == "deal-1"
+        expect(page.locator(".leaflet-popup-content strong")).to_have_text("1. Venue 1")
+        expect(
+            page.get_by_role("button", name="View deals", exact=True)
+        ).to_be_visible()
+        page.locator(".leaflet-popup-close-button").click()
+        expect(page.locator(".leaflet-popup")).to_have_count(0)
+        custom_rows = snapshot()["deals"][2:]
+        refresh(1)
+        expect(page.locator(".leaflet-popup")).to_have_count(0)
+        assert page.locator(".deal-card.selected").count() == 0
+
+        # Focus falls back to the group for a removed card, or the list for a removed group.
+        custom_rows = snapshot()["deals"][1:]
+        refresh(2)
+        offer.locator(".card-select").click()
+        offer.locator("summary").focus()
+        custom_rows = snapshot()["deals"][2:]
+        refresh(1)
+        expect(disclosure).to_be_focused()
+        page.get_by_role("button", name="View deals", exact=True).focus()
+        custom_rows = []
+        refresh(0)
+        expect(page.locator("#count")).to_be_focused()
+        expect(page.locator(".leaflet-popup")).to_have_count(0)
+        custom_rows = snapshot()["deals"]
+        refresh(2)
+        expect(disclosure).to_have_attribute("aria-expanded", "true")
+        custom_rows = None
+        page.locator("#show-all").click()
+        count(3)
         print(
-            "PASS local viewport filtering, stable selection, overlap chooser, empty area"
+            "PASS group movement, collapse retention, membership transitions and focus fallback"
         )
 
         page.locator(".card-select").nth(1).click()
@@ -280,7 +471,7 @@ def run():
             {"older": older, "newer": newer},
         )
         date("2026-08-09")
-        assert page.locator(".deal-card").count() == 0
+        assert page.locator("#deal-list").get_attribute("aria-busy") == "true"
         date("2026-08-18")
         count(2)
         page.evaluate(
@@ -302,6 +493,7 @@ def run():
         count(3)
         mode["tile_error"] = True
         page.reload()
+        page.locator("#close-welcome").click()
         count(3)
         page.locator("#map-error").wait_for(state="visible")
         page.locator(".card-select").first.click()
@@ -313,17 +505,24 @@ def run():
 
         mode["unmapped"] = True
         page.reload()
+        page.locator("#close-welcome").click()
         count(0)
         assert "No mapped locations yet" in page.locator("#status").inner_text()
         mode["unmapped"] = False
         mode["no_map"] = True
         page.reload()
+        page.locator("#close-welcome").click()
         count(3)
         assert "Map assets are unavailable" in page.locator("#map-error").inner_text()
+        expect(page.locator("#count")).to_have_text(
+            "3 deals at 2 locations in the list"
+        )
+        expect(page.locator(".location-group")).to_have_count(2)
         page.locator(".card-select").first.click()
         assert selected() == "deal-0"
         mode["no_map"] = False
         page.reload()
+        page.locator("#close-welcome").click()
         count(3)
         print("PASS empty dataset and missing Leaflet fallback")
 
@@ -336,8 +535,86 @@ def run():
         page.locator(".card-select").first.focus()
         page.locator(".card-select").first.press("Space")
         assert selected() == "deal-0"
+        page.locator(".deal-pin").nth(1).press("Enter")
+        popup_box = page.locator(".leaflet-popup").bounding_box()
+        map_box = page.locator("#map").bounding_box()
+        assert popup_box["x"] >= map_box["x"]
+        assert popup_box["x"] + popup_box["width"] <= map_box["x"] + map_box["width"]
+        print("PASS narrow layout, resize, popup containment and keyboard selection")
+
+        # Large numbers/counts and long shared building labels remain readable on both layouts.
+        custom_rows = []
+        template = snapshot()["deals"][0]
+        for index in range(104):
+            row = copy.deepcopy(template)
+            row.update(
+                deal_id=f"single-{index:03}",
+                latitude=1.25 + index * 0.001,
+                longitude=103.80,
+                image_url=None,
+            )
+            custom_rows.append(row)
+        for index in range(120):
+            row = copy.deepcopy(template)
+            row.update(
+                deal_id=f"shared-{index:03}",
+                latitude=1.30,
+                longitude=103.86,
+                posted_at="2026-08-01T10:00:00+08:00",
+                image_url=None,
+                resolved_label="A long shared building name with multiple entrances and shopping levels "
+                * 3,
+                merchant=f"Merchant {index}",
+                unit=f"01-{index:03}",
+            )
+            custom_rows.append(row)
+        with page.expect_response(lambda response: "/api/deals" in response.url):
+            page.locator("#as-of").dispatch_event("change")
+        expect(page.locator("#deal-list")).to_have_attribute("aria-busy", "false")
+        page.locator("#show-all").click()
+        count(224)
+        large = page.locator('[data-coordinate-key="1.3,103.86"]')
+        expect(large.locator(".number")).to_have_text("105")
+        expect(large.locator(".group-count")).to_have_text("120 deals")
+        expect(page.locator(".pin-badge")).to_have_text("120 deals")
+        expect(page.locator("#count")).to_have_text(
+            "224 deals at 105 locations in this view"
+        )
+        for width, height in [(1440, 1000), (375, 812)]:
+            page.set_viewport_size({"width": width, "height": height})
+            page.locator("#show-all").click()
+            count(224)
+            large.locator(".group-disclosure").focus()
+            assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+            pin = page.locator('.deal-pin[aria-label^="Location 105:"]')
+            number_box = pin.locator(".pin-number").bounding_box()
+            badge_box = pin.locator(".pin-badge").bounding_box()
+            assert number_box["x"] + number_box["width"] <= badge_box["x"]
+            assert pin.locator(".pin-number").evaluate(
+                "el => el.scrollWidth <= el.clientWidth"
+            )
+            page.screenshot(path=f"/tmp/location-grouping-{width}.png")
+        print(
+            "PASS long labels, 105 locations, 120-deal badge and desktop/mobile layout"
+        )
+
+        # A submitted location must win over a delayed initial snapshot fit.
+        page.add_init_script("""const realFetch = window.fetch;
+            window.fetch = (url, options) => url === '/api/deals'
+                ? new Promise(resolve => { window.finishInitial = data => resolve(new Response(JSON.stringify(data))); })
+                : realFetch(url, options);""")
+        page.reload()
+        page.locator("#close-welcome").click()
+        page.wait_for_function("window.finishInitial && window.testMap")
+        page.evaluate(
+            "window.dispatchEvent(new CustomEvent('welcome:location', {detail: {latitude: 1.30, longitude: 103.80}}))"
+        )
+        page.evaluate("data => finishInitial(data)", snapshot())
+        count(2)
+        assert page.evaluate("testMap.getZoom()") == 14
+        assert page.evaluate("testMap.getCenter().distanceTo([1.30, 103.80]) < 1")
         assert not errors, errors
-        print("PASS narrow layout, resize, keyboard selection; no JavaScript errors")
+        print("PASS submitted-location precedence; no JavaScript errors")
         context.close()
         browser.close()
 

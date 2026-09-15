@@ -48,13 +48,12 @@ summary { cursor: pointer; font-weight: 650; padding: .25rem 0; }
 .map-note { padding: .35rem 1rem; margin: 0; }
 .map-error { padding: .6rem 1rem; background: #fff1d4; font-size: .85rem; }
 .deal-pin { background: transparent; border: 0; }
-.pin { display: block; width: 32px; height: 32px; border: 2px solid white; border-radius: 50% 50% 50% 8%; transform: rotate(-45deg); background: #236747; color: white; box-shadow: 0 2px 5px #0005; }
-.pin-number { display: block; text-align: center; font: 700 13px/28px system-ui; transform: rotate(45deg); }
-.pin-badge { position: absolute; right: -8px; top: -8px; background: #f8e0a1; color: #54431f; border-radius: 9px; padding: 0 4px; font: 700 11px/17px system-ui; border: 1px solid white; }
-.deal-pin.selected .pin { background: #ad4a21; border-width: 3px; }
+.pin-content { display: flex; align-items: center; gap: 4px; width: max-content; }
+.pin-number { display: block; min-width: 36px; height: 36px; padding: 0 7px; border: 2px solid white; border-radius: 50%; background: #236747; color: white; box-shadow: 0 2px 5px #0005; text-align: center; font: 700 14px/32px system-ui; }
+.pin-badge { white-space: nowrap; background: #f8e0a1; color: #54431f; border-radius: 9px; padding: 1px 5px; font: 700 11px/17px system-ui; border: 1px solid white; box-shadow: 0 1px 3px #0003; }
+.deal-pin.active .pin-number { background: #ad4a21; outline: 2px solid #ad4a21; }
 .leaflet-popup-content { max-height: 260px; overflow: auto; line-height: 1.5; }
-.popup-choices { display: grid; gap: .4rem; }
-.popup-choices button { text-align: left; font-size: .85rem; }
+.leaflet-popup-content button { margin: .2rem .3rem .2rem 0; }
 .skip-link { position: absolute; left: 1rem; top: -100px; z-index: 2000; background: white; padding: .6rem; }
 .skip-link:focus { top: 1rem; }
 @media (max-width: 720px) {
@@ -68,3 +67,16 @@ summary { cursor: pointer; font-weight: 650; padding: .25rem 0; }
   .toggle { margin-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+
+.location-group { min-width: 0; border: 1px solid #c9d6c8; border-radius: .75rem; background: #eef3e9; overflow-wrap: anywhere; }
+.location-group.active { border-color: #ad4a21; box-shadow: 0 0 0 1px #ad4a21; }
+.group-disclosure { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; width: 100%; text-align: left; padding: .75rem; border: 0; background: transparent; }
+.group-label { flex: 1 1 100px; min-width: 0; }
+.group-count { font-size: .8rem; font-weight: 500; }
+.disclosure-icon { margin-left: auto; }
+.group-context, .group-approximation { margin: 0 .75rem .6rem; font-size: .8rem; }
+.group-context { color: #84391b; font-weight: 700; }
+.group-approximation { color: #627267; }
+.group-deals { display: grid; gap: .65rem; padding: 0 .6rem .6rem; }
+.group-disclosure:focus-visible, .card-select:focus-visible { outline-offset: -3px; }
+.number { padding: 0 .3rem; }

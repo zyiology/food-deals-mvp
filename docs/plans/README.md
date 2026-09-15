@@ -32,6 +32,12 @@ The completed pilot contains 10 posts per channel. Preserve its original caches 
 
 The [geocoding plan](04-geocoding.md) is implemented, and the current selection has 76 reviewed rows. [FastAPI](05-fastapi.md) loads the 52 published rows on restart with the snapshot’s suggested historical date, `validity=all`, and a server-configurable 60-day posting cutoff. The [Leaflet plan](06-leaflet.md) is aligned with that mapped-only contract; map implementation and browser interaction checks are complete; the user usefulness review remains.
 
+The subsequent [location-grouping plan](07-location-grouping.md) replaces per-deal
+numbering and the exact-overlap chooser with one pin and expandable list group per
+coordinate. Implementation, focused regression tests, and current browsing docs
+were approved. See its [verification record](07-location-grouping.md#implementation-and-verification)
+for current synthetic checks; `06-leaflet.md` remains the original design history.
+
 ## MVP scope
 
 Included:

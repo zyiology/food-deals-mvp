@@ -1,5 +1,9 @@
 # Phase 5: Leaflet interface and end-to-end evaluation
 
+This document preserves the original implementation plan. For the current
+interface, including the later welcome dialog and location search, see the
+[front-end developer guide](../front-end.md).
+
 Status: implemented and verified on 2026-09-08 against the mapped-only API. Node regression checks, Chromium desktop/narrow-screen checks, and a cache-only rebuild pass. User usefulness review and any expansion decision remain open. See the [verification record](../leaflet-review.md). Uses [FastAPI's public contract](05-fastapi.md) and preserves numbered viewport markers with matching deal cards.
 
 ## Outcome and layout

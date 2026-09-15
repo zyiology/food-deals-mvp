@@ -1,5 +1,9 @@
 # Leaflet verification and demo review
 
+For the current implementation and coverage gaps around the later welcome and
+location flows, see the [front-end developer guide](front-end.md). The passing
+results below predate those additions.
+
 Historical verification record: the checks and counts below concern the 15-row pilot snapshot. It was superseded by a 52-row snapshot published on 2026-09-12; see the [current run record](processing-workflow.md#latest-recorded-run). These earlier browser checks do not verify the new snapshot.
 
 Implementation and verification completed on **2026-09-08**. The published demo

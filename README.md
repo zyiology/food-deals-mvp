@@ -98,10 +98,12 @@ From another directory, use `uv run --project /absolute/path/to/food-deals-mvp`
 before the same Uvicorn arguments.
 
 The app reads and validates the snapshot once at startup. **Restart after publishing
-or changing settings**, including after fixing missing/invalid data. It makes no
-LLM or geocoding calls and needs no provider keys, raw exports, or pipeline caches
-at runtime. Unknown or unavailable images return 404. Missing/invalid snapshots or
-invalid settings return 503 from the API while the page stays accessible with a retry action.
+or changing settings**, including after fixing missing/invalid data. Serving the
+published deals needs no LLM calls, pipeline geocoding, raw exports, or pipeline
+caches. Interactive location search and reverse address lookup make live OneMap
+calls using the configuration above. Unknown or unavailable images return 404.
+Missing/invalid snapshots or invalid settings return 503 from the API while the
+page stays accessible with a retry action.
 A valid dataset with no matching rows returns 200 with an empty list. Invalid dates,
 validity values, and unsupported query parameters return 422.
 
@@ -109,8 +111,18 @@ See the [FastAPI contract](docs/plans/05-fastapi.md) for response fields and cac
 
 ## Browse the map
 
-The map fits all results on the first load. Pan or zoom to filter the list locally;
-numbers are reassigned to the visible rows. Select a card or marker to open details.
+The **Find deals** dialog opens on startup. Choose a suggested postal code,
+building, or address, then select **Show map** to center on it. **Nearby** requests
+your device location; **Show map** with an empty address uses that location.
+Location access is requested after these actions, not simply by opening the page.
+You can also close the dialog to browse directly and reopen it with **Find deals**.
+The dialog's meal and day choices are currently previews and do not filter deals.
+
+The map fits all results on the first successful load unless a submitted location
+has already positioned it. Submitting a location centers at zoom 14; nearby offers
+are determined by the visible map area, with no distance ranking or fixed radius.
+Pan or zoom to filter the list locally; numbers are reassigned to the visible rows.
+Select a card or marker to open details.
 Selection follows the offer ID through renumbering and clears when it leaves the
 view or filter results. A **+ badge** opens a chooser for offers sharing an exact
 coordinate. **Show all locations** restores the extent of the filtered results.
@@ -128,6 +140,9 @@ Configure the tile provider and attribution in
 [src/food_deals_mvp/static/map-config.js](src/food_deals_mvp/static/map-config.js).
 The default uses OpenStreetMap standard tiles with visible attribution and normal
 browser caching; do not add bulk prefetching or offline tile downloads.
+
+See the [front-end developer guide](docs/front-end.md) for current features,
+startup flows, module responsibilities, API integration, and known limitations.
 
 ## Development checks
 
@@ -168,4 +183,7 @@ The installation downloads Chromium into the user cache. Browser checks serve lo
 static assets through request interception and use synthetic API responses, stubbed
 tiles, and deliberately broken images. They need neither a running API nor provider
 keys and make no live tile requests. See [the review record](docs/leaflet-review.md)
-for the separate live-dataset checks and remaining human review.
+for the historical live-dataset checks and remaining human review. The browser
+script does not yet handle the startup welcome dialog or test location flows;
+see the [current coverage gaps](docs/front-end.md#development-and-verification)
+before treating historical passing results as current verification.

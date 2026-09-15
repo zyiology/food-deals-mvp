@@ -1,4 +1,3 @@
-// Location search is live; meal and day matching remain a preview.
 const dialog = document.getElementById("welcome");
 const openButton = document.getElementById("open-welcome");
 const form = document.getElementById("welcome-form");
@@ -24,7 +23,23 @@ let searchTimer = null;
 const searchCache = new Map();
 
 const todayParts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Singapore", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
-dateInput.value = ["year", "month", "day"].map(type => todayParts.find(part => part.type === type).value).join("-");
+const today = ["year", "month", "day"].map(type => todayParts.find(part => part.type === type).value).join("-");
+dateInput.value = today;
+
+function addDays(value, days) {
+  const [year, month, day] = value.split("-").map(Number);
+  const result = new Date(Date.UTC(year, month - 1, day + days));
+  return result.toISOString().slice(0, 10);
+}
+
+function criteria() {
+  const values = new FormData(form);
+  const day = values.get("day");
+  return {
+    meal: values.get("meal"),
+    asOf: day === "custom" ? dateInput.value : day === "tomorrow" ? addDays(today, 1) : today,
+  };
+}
 
 function hasRecentPosition() {
   return locatedPosition && Date.now() - locatedPosition.timestamp < 60000;
@@ -59,10 +74,16 @@ function getPosition() {
   return pendingPosition;
 }
 
-function openMap(coordinates) {
+function openMap(coordinates, filters) {
   hideSuggestions();
   window.dispatchEvent(new CustomEvent("welcome:location", {
-    detail: { latitude: coordinates.latitude, longitude: coordinates.longitude },
+    detail: {
+      latitude: coordinates.latitude,
+      longitude: coordinates.longitude,
+      meal: filters.meal,
+      asOf: filters.asOf,
+      locationLabel: coordinates.addressLabel || coordinates.label || "Selected area",
+    },
   }));
   dialog.close();
 }
@@ -88,7 +109,7 @@ async function resolveAddress(coordinates) {
   }
 }
 
-async function locate(showMap = false) {
+async function locate(showMap = false, filters = null) {
   const request = ++locationRequest;
   nearby.textContent = "Locating…";
   nearby.setAttribute("aria-busy", "true");
@@ -102,7 +123,7 @@ async function locate(showMap = false) {
     if (request !== locationRequest || !dialog.open) return;
     locationSuccess.textContent = addressLabel;
     locationSuccess.hidden = false;
-    if (showMap) openMap(coordinates);
+    if (showMap) openMap(coordinates, filters);
   } catch (error) {
     if (request !== locationRequest || !dialog.open) return;
     locationError.textContent = error.code === 1
@@ -259,24 +280,27 @@ nearby.addEventListener("click", () => {
   updateArea();
   locate();
 });
-form.addEventListener("change", () => {
+function updateCustomDay() {
   const custom = new FormData(form).get("day") === "custom";
   const wasHidden = customDay.hidden;
   customDay.hidden = !custom;
   dateInput.required = custom;
   dateInput.disabled = !custom;
   if (custom && wasHidden) dateInput.focus();
-});
+}
+
+form.addEventListener("change", updateCustomDay);
 form.addEventListener("submit", event => {
   event.preventDefault();
+  const filters = criteria();
   if (!areaInput.value.trim()) {
     hideSuggestions();
-    locate(true);
+    locate(true, filters);
   } else if (selectedLocation) {
-    openMap(selectedLocation);
+    openMap(selectedLocation, filters);
   } else if (matchesQuery === areaInput.value.trim() && matches.length === 1) {
     selectLocation(matches[0]);
-    openMap(selectedLocation);
+    openMap(selectedLocation, filters);
   } else {
     areaInput.focus();
     locationError.textContent = "Choose a suggested location.";
@@ -286,6 +310,18 @@ form.addEventListener("submit", event => {
 });
 
 function openWelcome() {
+  const activeMeal = document.getElementById("meal-filter").value;
+  const activeDate = document.getElementById("as-of").value;
+  if (activeMeal) {
+    form.querySelector(`[name="meal"][value="${activeMeal}"]`).checked = true;
+  }
+  if (activeDate) {
+    const tomorrow = addDays(today, 1);
+    const day = activeDate === today ? "today" : activeDate === tomorrow ? "tomorrow" : "custom";
+    form.querySelector(`[name="day"][value="${day}"]`).checked = true;
+    dateInput.value = activeDate;
+    updateCustomDay();
+  }
   if (!dialog.open) dialog.showModal();
   dialog.scrollTop = 0;
   updateArea();

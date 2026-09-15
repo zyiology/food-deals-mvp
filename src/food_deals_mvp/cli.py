@@ -114,8 +114,41 @@ def main() -> None:
     )
     publisher.add_argument("--allow-partial", action="store_true")
     publisher.add_argument("--sources", type=Path, default=Path("config/sources.json"))
+    meal_classifier = subcommands.add_parser(
+        "classify-meals", help="Classify published deals with Gemini"
+    )
+    meal_classifier.add_argument(
+        "--published-dir", type=Path, default=Path("data/published")
+    )
+    meal_classifier.add_argument("--limit", type=int)
+    meal_classifier.add_argument(
+        "--dry-run", action="store_true", help="Print labels without changing files"
+    )
     args = parser.parse_args()
     try:
+        if args.command == "classify-meals":
+            if args.limit is not None and args.limit <= 0:
+                raise ValueError("--limit must be positive")
+            if not args.dry_run and args.limit is not None:
+                raise ValueError("--limit is only valid with --dry-run")
+            from .meal_classification import (
+                classify_published_dry_run,
+                enrich_published_meals,
+            )
+
+            if args.dry_run:
+                result = classify_published_dry_run(
+                    args.published_dir, limit=args.limit
+                )
+                print(result.model_dump_json(indent=2))
+            else:
+                snapshot, backup = enrich_published_meals(args.published_dir)
+                print(
+                    f"classify-meals: {len(snapshot.deals)} rows "
+                    f"(dataset {snapshot.dataset_id[:12]})"
+                )
+                print(f"backup: {backup}")
+            return
         if args.command == "publish":
             from .publishing import publish
 

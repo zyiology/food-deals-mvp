@@ -13,6 +13,7 @@ from .api_models import (
 )
 from .api_settings import ApiSettings
 from .availability import singapore_date, valid_on
+from .meal_models import MealType
 from .public_models import PublishedDataset, safe_url
 from .storage import file_hash, fingerprint, read_json
 
@@ -74,13 +75,17 @@ class DealRepository:
     def dataset_id(self) -> str:
         return self._snapshot.dataset_id
 
-    def query(self, as_of: date | None, validity: Validity) -> DealsResponse:
+    def query(
+        self, as_of: date | None, validity: Validity, meal: MealType | None = None
+    ) -> DealsResponse:
         snapshot = self._snapshot
         reference = as_of or snapshot.suggested_reference_date
         deals = []
         for row in self._rows:
             age = (reference - singapore_date(row.posted_at)).days
             if not 0 <= age < self._max_age_days:
+                continue
+            if meal is not None and meal not in row.meal_types:
                 continue
             valid = valid_on(row.availability, row.posted_at, reference)
             if validity == "valid" and valid is not True:
@@ -112,7 +117,10 @@ class DealRepository:
             processing_summary=snapshot.processing_summary.copy(),
             attribution=[item.model_copy(deep=True) for item in snapshot.attribution],
             filters=Filters(
-                as_of=reference, validity=validity, max_age_days=self._max_age_days
+                as_of=reference,
+                validity=validity,
+                meal=meal,
+                max_age_days=self._max_age_days,
             ),
             counts=Counts(
                 matched_rows=len(deals),

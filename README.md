@@ -1,7 +1,7 @@
 # Food deals MVP
 
 A local application for exploring Telegram food offers around Singapore.
-**Preprocessing, LLM extraction, geocoding/publication, FastAPI, and the Leaflet interface are implemented.**
+**Preprocessing, LLM extraction, geocoding/publication, Gemini meal classification, FastAPI, and the Leaflet interface are implemented.**
 Full-batch processing of all 136 posts produced a partial published snapshot on
 **2026-09-12**: 52 approved rows at 30 distinct coordinates, with 24 selected rows
 rejected. Extraction has 131 successful posts, three needing review, and two
@@ -31,6 +31,12 @@ uv sync --locked
 This installs the application and development tools (Ruff, ty, and pytest).
 No provider keys are required for preprocessing.
 
+A Git pull includes the application, Gemini classifier, tests, documentation, and
+`.env.example`. It does not include `.env` or `data/published/`; both are ignored.
+An existing server checkout keeps its ignored local files during a pull. A fresh
+checkout must receive the prepared `data/published/deals.json` and
+`data/published/media/` before the API can serve deals.
+
 Keep the supplied exports at these paths, including their exported media folders:
 
 ```text
@@ -44,17 +50,18 @@ The exports and generated artifacts are ignored by Git. Normalization reads
 exports without modifying them. See the [processing workflow](docs/processing-workflow.md)
 for the normalize commands and expected counts.
 
-## Run the local API
+## Run the website
 
-With the published demo already present, configure Singapore address search once:
+With `data/published/` present, configure the server once:
 
 1. Register for a free [OneMap API account](https://www.onemap.gov.sg/apidocs/register).
-2. Copy `.env.example` to `.env` and enter the account email and password.
+2. Copy `.env.example` to `.env` and enter the OneMap account email/password and
+   Gemini API key.
 
 The credentials stay in the ignored local `.env` file. The server uses them only
 to obtain a short-lived OneMap token, keeps the token in memory, and renews it
-automatically. They are never returned to the browser. Then start the app from
-the repository root:
+automatically. They are never returned to the browser. The Gemini key is used only
+by the offline `classify-meals` command. Start the app from the repository root:
 
 ```bash
 uv run --env-file .env uvicorn food_deals_mvp.api:app --host 127.0.0.1 --port 8000
@@ -69,10 +76,11 @@ snapshot's suggested **August 31, 2026** reference date and `validity=all`.
 Each row includes `validity_status`; showing a row does not mean it is redeemable
 on that date. The snapshot has 46 rows with building-level precision and six with outlet-level precision.
 
-The API accepts `as_of=YYYY-MM-DD` and `validity=all|valid`, for example:
+The API accepts `as_of=YYYY-MM-DD`, `validity=all|valid`, and
+`meal=drink|breakfast|lunch|dinner|snack`, for example:
 
 ```text
-http://127.0.0.1:8000/api/deals?as_of=2026-08-31&validity=valid
+http://127.0.0.1:8000/api/deals?as_of=2026-08-31&validity=valid&meal=lunch
 ```
 
 The agreed two-month posting cutoff is implemented as **60 days**, measured
@@ -91,6 +99,8 @@ FOOD_DEALS_MAX_AGE_DAYS=60 uv run uvicorn food_deals_mvp.api:app --host 127.0.0.
 | `ONEMAP_EMAIL` | None | OneMap account email used server-side to obtain and renew search tokens. |
 | `ONEMAP_PASSWORD` | None | OneMap account password used server-side to obtain and renew search tokens. |
 | `ONEMAP_TOKEN` | None | Optional three-day token for temporary use; cannot renew without the account credentials. |
+| `GEMINI_API_KEY` | None | Used only by the offline meal-classification command. It is not used while serving or browsing deals. |
+| `GEMINI_MODEL` | `gemini-3.8-flash` | Gemini model used by the offline meal-classification command. |
 
 Export variables, pass them with the command, or use `uv run --env-file .env` as
 shown above. Uvicorn does not load `.env` automatically.
@@ -105,7 +115,21 @@ calls using the configuration above. Unknown or unavailable images return 404.
 Missing/invalid snapshots or invalid settings return 503 from the API while the
 page stays accessible with a retry action.
 A valid dataset with no matching rows returns 200 with an empty list. Invalid dates,
-validity values, and unsupported query parameters return 422.
+validity values, meal values, and unsupported query parameters return 422.
+
+## Classify published deals by meal
+
+After publishing or replacing `data/published/deals.json`, classify every published
+deal and save its `meal_types` directly into that snapshot:
+
+```bash
+uv run --env-file .env food-deals-mvp classify-meals
+```
+
+The command validates that Gemini returns every deal ID exactly once, writes only
+after all batches succeed, recalculates the dataset fingerprint, and saves the
+previous snapshot under `data/backups/`. Restart the server after it completes.
+Serving and filtering the saved labels makes no Gemini requests.
 
 See the [FastAPI contract](docs/plans/05-fastapi.md) for response fields and caching.
 
@@ -116,7 +140,9 @@ building, or address, then select **Show map** to center on it. **Nearby** reque
 your device location; **Show map** with an empty address uses that location.
 Location access is requested after these actions, not simply by opening the page.
 You can also close the dialog to browse directly and reopen it with **Find deals**.
-The dialog's meal and day choices are currently previews and do not filter deals.
+Submitting the dialog sends its meal and day choices to the deals API, enables
+valid-only filtering, updates the visible main controls, and centers the selected
+location. The selected location appears once below the main controls.
 
 The map fits all results on the first successful load unless a submitted location
 has already positioned it. Submitting a location centers at zoom 14; nearby offers
@@ -136,7 +162,7 @@ popup keeps it closed until another explicit selection. **Show all locations**
 restores the extent of the filtered results. Counts distinguish deal rows from
 exact-coordinate locations, which may represent a whole building.
 
-Change the reference date or enable **Valid on selected date** to query the API.
+Change the meal, reference date, or **Valid on selected date** setting to query the API.
 **Today** uses Singapore time. The posting cutoff remains a server setting.
 Cards distinguish valid, outside-period, and unknown availability; expanding details
 shows terms, the original caption, and source links. Building-level pins are labelled

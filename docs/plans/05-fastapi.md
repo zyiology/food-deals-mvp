@@ -13,7 +13,7 @@ notes. Importing the API does not import pipeline or provider adapters.
 
 FastAPI serves the API and packaged static assets from one origin. No database,
 authentication system, separate frontend server, or CORS configuration is needed
-for this local MVP. See [the run instructions](../../README.md#run-the-local-api).
+for this local MVP. See [the run instructions](../../README.md#run-the-website).
 
 ## HTTP contract
 
@@ -31,6 +31,7 @@ for this local MVP. See [the run instructions](../../README.md#run-the-local-api
 | --- | --- | --- |
 | `as_of` | Snapshot's `suggested_reference_date` (August 26, 2026 for this pilot) | Calendar date in exact `YYYY-MM-DD` format, evaluated in Singapore time. |
 | `validity` | `all` | `all` includes offers outside their advertised period or with unknown validity; `valid` includes only rows for which the shared evaluator returns true. |
+| `meal` | None | One of `drink`, `breakfast`, `lunch`, `dinner`, or `snack`; matches labels saved in the published snapshot. |
 
 All queries apply the server-configured posting-age cutoff:
 `FOOD_DEALS_MAX_AGE_DAYS`, default **60**, accepted range 1–3650. This implements the
@@ -51,7 +52,7 @@ schema_version, dataset_id, generated_at, timezone: Asia/Singapore
 source_date_range, selected_source_date_range
 suggested_reference_date, suggested_validity
 dataset_complete, processing_summary, attribution
-filters: effective as_of, validity, max_age_days
+filters: effective as_of, validity, meal, max_age_days
 counts: matched_rows, mapped_rows, distinct_locations, distinct_offers, distinct_posts
 deals: public rows plus validity_status
 ```
@@ -64,7 +65,7 @@ No unmapped rows or counts are exposed.
 
 Each row includes its identity, source name/links, title, description, original
 caption, posting date, terms, display availability, location/scope, precision,
-media IDs, and safe image URL. Display availability contains start/end dates,
+media IDs, safe image URL, and saved `meal_types`. Display availability contains start/end dates,
 explicit dates, weekdays, restrictions, and date status. Extraction evidence and
 interpretation notes are excluded. Captions are plain data; the browser must render
 them as text, never trusted HTML.
@@ -114,7 +115,7 @@ and Leaflet assets remain Phase 5 work.
 ## Verification
 
 `tests/test_api.py` uses synthetic snapshots and temporary media with the suite's
-network prohibition. Its 43 cases cover:
+network prohibition. Its 48 cases cover:
 
 - Defaults, sorting, reconciled counts, public field projection, and provider-free imports.
 - Singapore dates, future posts, advertised date constraints, unknown validity, and cutoff boundaries.

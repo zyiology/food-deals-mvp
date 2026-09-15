@@ -8,6 +8,7 @@ from pydantic import AwareDatetime, Field, model_validator
 
 from .extraction_models import Availability
 from .geocoding_models import Coordinates
+from .meal_models import MealType
 from .models import Contract, Envelope
 
 
@@ -39,6 +40,7 @@ class DealFields(Coordinates):
     precision: Literal["building", "outlet"]
     media_ids: list[str]
     image_url: str | None
+    meal_types: list[MealType] = Field(default_factory=list)
 
 
 class PublicDeal(DealFields):

@@ -1,6 +1,6 @@
 # Front-end developer guide
 
-This guide describes the implementation reviewed on **2026-09-15**. Update it
+This guide describes the implementation reviewed on **2026-09-16**. Update it
 when user flows, module responsibilities, or API integration change. The
 [Leaflet plan](plans/06-leaflet.md) records the original design, and the
 [Leaflet review](leaflet-review.md) records historical pilot verification.
@@ -12,7 +12,7 @@ Current dataset counts and publication history belong in the
 ## Start here
 
 Follow the README's [setup](../README.md#setup) and
-[local API instructions](../README.md#run-the-local-api), then open the app's `/`
+[website instructions](../README.md#run-the-website), then open the app's `/`
 route. FastAPI serves plain HTML, CSS, JavaScript modules, and bundled Leaflet
 1.9.4 assets. There is no frontend framework, package installation, or build step.
 Serve the page through the application so its absolute `/api`, `/static`, and
@@ -32,11 +32,11 @@ reverse address lookup fails. Basemap tiles also require network access.
 | Welcome dialog | Opens on every page load; close it to browse directly or reopen it with **Find deals**. |
 | Nearby | Requests device coordinates after a user action, optionally resolves an address, and centers the map when **Show map** is submitted. |
 | Location search | Suggests Singapore postal codes, buildings, and addresses; a submitted selection centers the map. |
-| Meal and day choices in the dialog | Preview controls only. They do not change the deal request, main reference date, or displayed results. The UI currently does not label them as previews. |
+| Meal and day choices in the dialog | Submit `meal`, `as_of`, and `validity=valid` to the deals API and synchronize the visible main controls. |
 | Map and list | Pan/zoom filters downloaded rows to visible bounds; each exact coordinate has one numbered pin and expandable list group. |
 | Selection and shared locations | Shared pins reveal their group; sole-deal pins and deal cards open individual details. Count badges replace the overlap chooser. Active location and selected offer have separate cues. |
-| Main date controls | Reference date, **Today**, and **Valid on selected date** request backend filtering. **Today** uses Singapore time. |
-| Offer details | Dates, restrictions, source images, original captions, and safe source links; building-level pins are labelled approximate. |
+| Main filters | Meal, reference date, **Today**, and **Valid on selected date** request backend filtering. **Today** uses Singapore time. |
+| Offer details | Dates, restrictions, source images, original captions, and safe source links. |
 | Layout and access | Desktop list beside map; map above list at widths up to 720px. Keyboard controls, focus styles, status messages, and a skip link are implemented. |
 
 “Nearby” is a map-centering action followed by viewport filtering. There is no
@@ -47,8 +47,8 @@ zooming and the list are the fallback.
 There is no clustering or spiderfy interaction.
 
 The backend publishes mapped offer/location rows, so counts are not counts of
-unique restaurants. The frontend displays the returned validity status and
-incomplete-dataset notice. It does not establish current stock, opening hours,
+unique restaurants. The frontend displays the returned validity status. It does
+not establish current stock, opening hours,
 holiday availability, or user eligibility. A historical dataset can legitimately
 show no results for today's date.
 
@@ -68,12 +68,12 @@ first response leaves the initial Singapore view and still consumes this one-tim
 fit. Subsequent date/filter loads preserve the viewport. **Show all locations**
 explicitly fits all currently matching rows.
 
-Submitting a location dispatches `welcome:location` on `window` with
-`detail: { latitude, longitude }`, then closes the dialog. `app.js` validates
-finite coordinates and their geographic ranges, sets `state.fitted = true`, and
-centers the map at zoom 14. That flag prevents a late initial deals response from
-overwriting the chosen view. Location selection does not fetch deals or change
-their date filters.
+Submitting a location dispatches `welcome:location` on `window` with coordinates,
+meal, date, and location label, then closes the dialog. `app.js` validates those
+values, sets `state.fitted = true`, centers the map at zoom 14, requests matching
+deals with `validity=valid`, updates the main controls, and shows the selected
+location once below them. The fitted flag prevents a late initial response from
+overwriting the chosen view.
 
 ### Device location
 
@@ -117,10 +117,10 @@ Paths below are relative to the repository root.
 | File | Responsibility / where to make changes |
 | --- | --- |
 | [static/index.html](../src/food_deals_mvp/static/index.html) | Page structure, main filters, map/list containers, welcome form, accessibility attributes, and script/style loading. |
-| [static/app.js](../src/food_deals_mvp/static/app.js) | Deals requests, map lifecycle, viewport rendering, cards, selection/popups, metadata, and recovery actions. Receives `welcome:location`. |
+| [static/app.js](../src/food_deals_mvp/static/app.js) | Deals requests, meal/date/validity state, map lifecycle, viewport rendering, cards, selection/popups, and recovery actions. Receives `welcome:location`. |
 | [static/map-state.js](../src/food_deals_mvp/static/map-state.js) | Pure viewport membership, stable ordering/numbering, exact-coordinate grouping, and selection retention. |
 | [static/map-config.js](../src/food_deals_mvp/static/map-config.js) | Initial Singapore center/zoom, tile URL, tile maximum zoom, and provider attribution. Fit-to-results and location-selection zooms are in `app.js`. |
-| [static/welcome.js](../src/food_deals_mvp/static/welcome.js) | Dialog lifecycle, preview controls, device location, reverse lookup, autocomplete, and the location event. |
+| [static/welcome.js](../src/food_deals_mvp/static/welcome.js) | Dialog lifecycle, meal/day criteria, device location, reverse lookup, autocomplete, and the location event. |
 | [static/app.css](../src/food_deals_mvp/static/app.css) | Main layout, cards, numbered pins, popup styling, focus states, and mobile layout. |
 | [static/welcome.css](../src/food_deals_mvp/static/welcome.css) | Dialog layout, input states, suggestions, and responsive meal/day choices. |
 | [static/vendor/leaflet/](../src/food_deals_mvp/static/vendor/leaflet/) | Bundled Leaflet assets and licence. |
@@ -128,8 +128,8 @@ Paths below are relative to the repository root.
 | [location_search.py](../src/food_deals_mvp/location_search.py) | OneMap authentication, provider requests, and normalized location results. |
 | [api_models.py](../src/food_deals_mvp/api_models.py), [deal_repository.py](../src/food_deals_mvp/deal_repository.py) | Public deal response contract, snapshot loading, and server-side filtering. |
 
-The two entry modules share the page but keep their state separate. Their
-integration is the location event; meal/day values are not included in it.
+The location event carries the submitted coordinates, location label, meal, and
+date from the dialog into the main application state.
 
 ## State and API boundaries
 
@@ -153,8 +153,7 @@ On Leaflet `moveend`, `renderViewport()`:
 Headings use a shared trimmed `resolved_label` when all nonempty resolved labels
 agree. Without resolved labels, every row must have the same nonempty trimmed
 `location_label`; otherwise the heading is **Shared map location**. Original
-merchant, location, unit and precision remain in each card. Groups containing any
-building-precision row show an approximation note.
+merchant, location, unit and precision remain in each card.
 
 Groups start expanded and offer details start closed. A group disclosure changes
 only expansion. Collapse preferences survive viewport changes and successful
@@ -194,14 +193,14 @@ fits all loaded rows, while a submitted location takes precedence over initial f
 | Request | Trigger and response use |
 | --- | --- |
 | `GET /api/deals` | Initial load; response provides rows, effective filters, source range, generation time, completeness, and location attribution. |
-| `GET /api/deals?as_of=YYYY-MM-DD&validity=all\|valid` | Main date/toggle changes and retries with initialized controls. Backend computes validity and applies its posting-age cutoff. |
+| `GET /api/deals?as_of=YYYY-MM-DD&validity=all\|valid&meal=...` | Main filter changes, welcome submission, and retries. Backend filters saved meal labels, computes validity, and applies its posting-age cutoff. |
 | `GET /api/locations?q=...` | Autocomplete; consumes `results` containing labels, addresses, postal codes, and coordinates. |
 | `POST /api/locations/reverse` | Device coordinates in a JSON body; returns a location object or null for the dialog's address label. |
 | `/media/...` and configured tile URL | Source images from the app; basemap tiles from the configured provider. |
 
-Date evaluation stays in the backend. The frontend formats the supplied dates and
-statuses; the posting cutoff is displayed from `filters.max_age_days` and has no
-browser control. See the [FastAPI contract](plans/05-fastapi.md) for deal fields
+Date evaluation and meal matching stay in the backend. The frontend formats the
+supplied dates and statuses; the posting cutoff has no browser control. See the
+[FastAPI contract](plans/05-fastapi.md) for deal fields
 and [api.py](../src/food_deals_mvp/api.py) for the later location endpoints.
 
 Each deals load marks the list busy, temporarily removes the popup while retaining
@@ -227,8 +226,8 @@ they load lazily and show a text fallback on failure.
 | Missing Leaflet | After dismissing the welcome dialog, all matching rows remain browsable as a list; map retry reloads the page. Location events cannot position a missing map. |
 | Broken source image | The image is replaced with “Source image unavailable.” |
 
-Tile attribution comes from `map-config.js`; published location attribution comes
-from the deals response. Keep both visible. The app does not implement offline
+Visible tile attribution comes from `map-config.js`; published location attribution
+remains in the deals response. The app does not implement offline
 tile downloads or basemap prefetching.
 
 ## Development and verification
@@ -239,7 +238,7 @@ including Node map-state tests and the isolated Playwright browser script.
 | Checks | Scope |
 | --- | --- |
 | [map-state.test.mjs](../tests/map-state.test.mjs) | Boundaries, timestamp order/ties, exact coordinates, label agreement/fallback, input immutability, contiguous numbering and deal lookups. |
-| [browser_smoke.py](../tests/browser_smoke.py) | Shared pins and headings, keyboard/disclosure access, selection and popup modes, dismissal, collapse retention, group movement/focus recovery, membership changes, filters/stale responses, error recovery, safe text/links, mobile layout and submitted-location precedence. |
+| [browser_smoke.py](../tests/browser_smoke.py) | Welcome meal/date/location submission, synchronized main controls, shared pins and headings, keyboard access, selection, filters, stale responses, recovery, safe rendering, mobile layout, and submitted-location precedence. |
 | [test_api.py](../tests/test_api.py) | Backend/API regression checks. |
 | [test_location_search.py](../tests/test_location_search.py) | Stubbed OneMap authentication, missing configuration, search result mapping and reverse lookup. |
 
@@ -271,10 +270,8 @@ autocomplete or reverse-lookup UI flows. Follow-up coverage remains:
 - Cover autocomplete keyboard selection, single-result submission, stale
   responses, no matches and service errors.
 - Cover reverse lookup success, null and failure while preserving coordinates.
-- Verify the separation between preview meal/day choices and working date filters.
 
 No live OneMap verification or current-published-snapshot browser review was done
 for location grouping. Live setup verification should separately exercise a
 forward postal-code search and reverse address lookup with configured credentials.
-Physical-phone review remains separate from emulated mobile viewports. Hiding or
-labelling preview controls is a proposed UI follow-up, not an implemented feature.
+Physical-phone review remains separate from emulated mobile viewports.

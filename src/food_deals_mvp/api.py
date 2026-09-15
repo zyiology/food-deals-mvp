@@ -22,6 +22,7 @@ from .location_search import (
     reverse_location,
     search_locations,
 )
+from .meal_models import MealType
 from .models import Contract
 
 logger = logging.getLogger(__name__)
@@ -33,6 +34,7 @@ class DealQuery(Contract):
     # accepted as substitutes for an explicit Singapore calendar date.
     as_of: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
     validity: Validity = "all"
+    meal: MealType | None = None
 
 
 def create_app(settings: ApiSettings | None = None) -> FastAPI:
@@ -126,7 +128,7 @@ def create_app(settings: ApiSettings | None = None) -> FastAPI:
                     status_code=422, detail="as_of must be a valid YYYY-MM-DD date"
                 ) from None
         response.headers["Cache-Control"] = "no-store"
-        return require_repository().query(reference, query.validity)
+        return require_repository().query(reference, query.validity, query.meal)
 
     @app.get("/media/{media_id}", include_in_schema=False)
     def media(media_id: str, request: Request) -> Response:

@@ -34,6 +34,7 @@ def snapshot():
                 "posted_at": f"2026-08-{26 - index}T10:00:00+08:00",
                 "precision": "building",
                 "validity_status": ["valid", "outside_period", "unknown"][index],
+                "meal_types": [["lunch"], ["dinner"], ["lunch", "snack"]][index],
                 "image_url": "/media/example",
                 "description": "A sample offer",
                 "terms": ["While stocks last"],
@@ -54,7 +55,12 @@ def snapshot():
         )
     return {
         "deals": rows,
-        "filters": {"as_of": "2026-08-26", "validity": "all", "max_age_days": 60},
+        "filters": {
+            "as_of": "2026-08-26",
+            "validity": "all",
+            "meal": None,
+            "max_age_days": 60,
+        },
         "generated_at": "2026-09-07T08:30:00Z",
         "source_date_range": ["2026-08-01", "2026-08-31"],
         "dataset_complete": False,
@@ -108,6 +114,13 @@ def run():
                 params = parse_qs(url.query)
                 data["filters"]["as_of"] = params.get("as_of", ["2026-08-26"])[0]
                 data["filters"]["validity"] = params.get("validity", ["all"])[0]
+                data["filters"]["meal"] = params.get("meal", [None])[0]
+                if data["filters"]["meal"]:
+                    data["deals"] = [
+                        row
+                        for row in data["deals"]
+                        if data["filters"]["meal"] in row["meal_types"]
+                    ]
                 if data["filters"]["validity"] == "valid":
                     data["deals"] = data["deals"][:1]
                 if data["filters"]["as_of"] == "2026-01-01" or mode["unmapped"]:
@@ -115,6 +128,20 @@ def run():
                 if mode["unmapped"]:
                     data["processing_summary"]["published_rows"] = 0
                 route.fulfill(json=data)
+            elif url.path == "/api/locations":
+                route.fulfill(
+                    json={
+                        "results": [
+                            {
+                                "label": "Venue 0",
+                                "address": "Venue 0, Singapore 123456",
+                                "postal_code": "123456",
+                                "latitude": 1.43,
+                                "longitude": 103.95,
+                            }
+                        ]
+                    }
+                )
             elif url.path.startswith("/media/"):
                 route.fulfill(status=404)
             else:
@@ -176,21 +203,54 @@ def run():
                 [lat, lng, zoom],
             )
 
+        popup_page = context.new_page()
+        popup_page.set_default_timeout(5000)
+        popup_page.goto(ORIGIN)
+        popup_page.locator('[name="day"][value="custom"]').check()
+        popup_page.locator("#welcome-date").fill("2026-08-26")
+        popup_page.locator("#welcome-area").fill("123456")
+        popup_page.locator("#welcome-suggestions li[role=option]").click()
+        popup_page.locator("#welcome-submit").click()
+        popup_page.wait_for_function(
+            "document.querySelectorAll('.deal-card').length === 1 && "
+            "document.querySelector('#deal-list').getAttribute('aria-busy') === 'false'"
+        )
+        assert "meal=lunch" in api_requests[-1]
+        assert "as_of=2026-08-26" in api_requests[-1]
+        assert "validity=valid" in api_requests[-1]
+        assert popup_page.locator("#as-of").input_value() == "2026-08-26"
+        assert popup_page.locator("#valid-only").is_checked()
+        assert popup_page.locator("#meal-filter").input_value() == "lunch"
+        expect(popup_page.locator("#open-welcome")).to_have_text("Find deals")
+        expect(popup_page.locator("#selected-area")).to_have_text("Near Venue 0")
+        assert popup_page.evaluate(
+            "testMap.getCenter().distanceTo([1.43, 103.95]) < 1"
+        )
+        popup_page.locator("#open-welcome").click()
+        assert popup_page.locator('[name="meal"][value="lunch"]').is_checked()
+        assert popup_page.locator('[name="day"][value="custom"]').is_checked()
+        assert popup_page.locator("#welcome-date").input_value() == "2026-08-26"
+        popup_page.close()
+        print("PASS popup meal, date and selected location drive the deals request")
+
         page.goto(ORIGIN)
         page.locator("#close-welcome").click()
         count(3)
         assert page.locator("#as-of").input_value() == "2026-08-26"
         assert not page.locator("#valid-only").is_checked()
-        assert "Posted within 60 days" in page.locator("#dataset-meta").inner_text()
         assert page.locator(".pin-number").all_text_contents() == ["1", "2"]
         assert page.locator(".number").all_text_contents() == ["1", "2"]
-        assert page.locator("#sample-note").is_visible()
         assert page.locator(".leaflet-control-attribution").is_visible()
         assert page.locator(".validity.unknown").inner_text() == "Validity unknown"
         assert "End date not stated" in page.locator(".deal-card").first.inner_text()
         expect(page.locator("#count")).to_have_text(
             "3 deals at 2 locations in this view"
         )
+        page.locator("#meal-filter").select_option("snack")
+        count(1)
+        assert "meal=snack" in api_requests[-1]
+        page.locator("#meal-filter").select_option("")
+        count(3)
         expect(page.locator(".pin-badge")).to_have_text("2 deals")
         assert page.locator(".deal-card .number, .popup-choices").count() == 0
         assert page.locator(".details[open]").count() == 0
@@ -270,7 +330,7 @@ def run():
         expect(page.locator(".leaflet-popup")).to_have_count(0)
         map_view(1.2, 103.6, 15)
         count(0)
-        assert "No deals in this area" in page.locator("#status").inner_text()
+        assert "No matching deals in this area" in page.locator("#status").inner_text()
         page.locator("#show-all").click()
         count(3)
         print("PASS local viewport filtering, stable selection, shared pin, empty area")
@@ -445,7 +505,7 @@ def run():
         count(3)
         date("2026-01-01")
         count(0)
-        assert "No deals match this date/filter" in page.locator("#status").inner_text()
+        assert "No matching deals" in page.locator("#status").inner_text()
         # Freeze time while the browser uses a non-Singapore default timezone.
         page.clock.install(time=datetime.fromisoformat("2026-09-07T17:00:00+00:00"))
         page.locator("#today").click()
@@ -599,18 +659,21 @@ def run():
         )
 
         # A submitted location must win over a delayed initial snapshot fit.
+        custom_rows = None
         page.add_init_script("""const realFetch = window.fetch;
             window.fetch = (url, options) => url === '/api/deals'
-                ? new Promise(resolve => { window.finishInitial = data => resolve(new Response(JSON.stringify(data))); })
+                ? new Promise(resolve => {
+                    window.finishInitial = data => resolve(new Response(JSON.stringify(data)));
+                  })
                 : realFetch(url, options);""")
         page.reload()
         page.locator("#close-welcome").click()
         page.wait_for_function("window.finishInitial && window.testMap")
         page.evaluate(
-            "window.dispatchEvent(new CustomEvent('welcome:location', {detail: {latitude: 1.30, longitude: 103.80}}))"
+            "window.dispatchEvent(new CustomEvent('welcome:location', {detail: {latitude: 1.30, longitude: 103.80, meal: 'dinner', asOf: '2026-08-26'}}))"
         )
         page.evaluate("data => finishInitial(data)", snapshot())
-        count(2)
+        count(1)
         assert page.evaluate("testMap.getZoom()") == 14
         assert page.evaluate("testMap.getCenter().distanceTo([1.30, 103.80]) < 1")
         assert not errors, errors

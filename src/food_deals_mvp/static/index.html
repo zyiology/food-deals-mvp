@@ -5,23 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Food deals · Singapore</title>
     <link rel="stylesheet" href="/static/vendor/leaflet/leaflet.css">
-    <link rel="stylesheet" href="/static/app.css">
-    <link rel="stylesheet" href="/static/welcome.css">
+    <link rel="stylesheet" href="/static/app.css?v=6">
+    <link rel="stylesheet" href="/static/welcome.css?v=6">
     <script src="/static/vendor/leaflet/leaflet.js" defer></script>
-    <script type="module" src="/static/app.js"></script>
-    <script type="module" src="/static/welcome.js"></script>
+    <script type="module" src="/static/app.js?v=6"></script>
+    <script type="module" src="/static/welcome.js?v=6"></script>
   </head>
   <body>
     <a class="skip-link" href="#deal-list">Skip to offers</a>
     <header class="page-header">
-      <div class="heading"><div><p class="eyebrow">Singapore · Food around you</p><h1>Good food. Nearby.</h1></div><button id="open-welcome" class="welcome-open" type="button" hidden>Find deals</button></div>
+      <div class="heading"><h1>Good food. Nearby.</h1><button id="open-welcome" class="welcome-open" type="button" hidden>Find deals</button></div>
       <form id="filters" class="filters">
+        <label for="meal-filter">Meal
+          <select id="meal-filter" disabled>
+            <option value="">All meals</option>
+            <option value="drink">Drink</option>
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="snack">Snack</option>
+          </select>
+        </label>
         <label for="as-of">Reference date <input id="as-of" type="date" required disabled></label>
         <button id="today" type="button" disabled>Today</button>
         <label class="toggle"><input id="valid-only" type="checkbox" disabled> Valid on selected date</label>
       </form>
-      <p id="dataset-meta" class="muted"></p>
-      <p id="sample-note" class="sample-note" hidden></p>
+      <p id="selected-area" class="selected-area" hidden></p>
     </header>
     <main class="workspace">
       <section class="offers" aria-label="Offers in the map area">
@@ -29,11 +38,9 @@
         <div id="deal-list" tabindex="-1" aria-busy="true"></div>
       </section>
       <section class="map-panel" aria-label="Offer map">
-        <div class="map-toolbar"><span>Pan or zoom to explore an area</span><button id="show-all" type="button" disabled>Show all locations</button></div>
+        <div class="map-toolbar"><button id="show-all" type="button" disabled>Show all locations</button></div>
         <div id="map" aria-label="Map of offers in Singapore"></div>
         <div id="map-error" class="map-error" role="status" hidden><span id="map-error-text"></span> <button id="retry-map" type="button">Retry map</button></div>
-        <p class="map-note">Numbers match locations in the list. Each pin groups all deals at that exact map location.</p>
-        <p id="location-attribution" class="map-note"></p>
       </section>
     </main>
     <dialog id="welcome" class="welcome" aria-label="Find deals">

@@ -69,6 +69,10 @@ def published(tmp_path):
             }
         )
     by_id = {row["deal_id"]: row for row in rows}
+    by_id["a"]["meal_types"] = ["lunch"]
+    by_id["b"]["meal_types"] = ["dinner"]
+    by_id["c"]["meal_types"] = ["lunch", "snack"]
+    by_id["d"]["meal_types"] = ["breakfast"]
     by_id["b"]["availability"].update(end_date="2026-08-25", date_status="parsed")
     by_id["c"]["availability"]["date_status"] = "needs_review"
     by_id["d"]["availability"].update(
@@ -134,6 +138,7 @@ def test_default_contract_counts_sorting_and_public_projection(published, monkey
         assert data["filters"] == {
             "as_of": "2026-08-26",
             "validity": "all",
+            "meal": None,
             "max_age_days": 60,
         }
         assert [row["deal_id"] for row in data["deals"]] == list("abcd")
@@ -202,6 +207,22 @@ def test_date_and_age_filters(published, query, expected):
 
 
 @pytest.mark.parametrize(
+    ("query", "expected"),
+    [
+        ("meal=lunch", "ac"),
+        ("meal=dinner", "b"),
+        ("meal=snack&validity=valid", ""),
+        ("meal=breakfast&validity=valid", "d"),
+    ],
+)
+def test_saved_meal_filter_combines_with_validity(published, query, expected):
+    with TestClient(create_app(ApiSettings(published_dir=published[0]))) as client:
+        data = client.get("/api/deals?" + query).json()
+        assert [row["deal_id"] for row in data["deals"]] == list(expected)
+        assert data["filters"]["meal"] == query.split("meal=", 1)[1].split("&", 1)[0]
+
+
+@pytest.mark.parametrize(
     "query",
     [
         "as_of=2026-02-30",
@@ -210,6 +231,7 @@ def test_date_and_age_filters(published, query, expected):
         "as_of=1787673600",
         "as_of=",
         "validity=unknown",
+        "meal=brunch",
         "mapping=all",
         "max_age_days=1",
     ],

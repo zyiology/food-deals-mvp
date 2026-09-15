@@ -221,6 +221,7 @@ def publish(
                     precision=result.precision,
                     media_ids=media_ids,
                     image_url=f"/media/{media_ids[0]}" if media_ids else None,
+                    meal_types=[],
                 )
             )
         summary = {

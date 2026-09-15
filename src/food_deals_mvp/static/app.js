@@ -2,15 +2,16 @@ import { coordinateKey, groupCoordinates } from "./map-state.js";
 import { mapConfig } from "./map-config.js";
 
 const el = Object.fromEntries([
-  "status", "retry", "filters", "as-of", "today", "valid-only", "dataset-meta",
-  "sample-note", "count", "deal-list", "map", "map-error", "map-error-text",
-  "retry-map", "show-all", "location-attribution",
+  "status", "retry", "filters", "meal-filter", "as-of", "today", "valid-only",
+  "selected-area", "count", "deal-list", "map", "map-error", "map-error-text",
+  "retry-map", "show-all",
 ].map(id => [id, document.getElementById(id)]));
 const state = {
   rows: [], data: null, groups: new Map(), byDealId: new Map(),
   groupNodes: new Map(), collapsed: new Set(), activeKey: null, popupMode: "closed",
   selectedId: null, bounds: null, request: 0, controller: null,
-  loading: false, error: false, fitted: false, markers: new Map(), cards: new Map(),
+  loading: false, error: false, fitted: false, meal: null, locationLabel: null,
+  markers: new Map(), cards: new Map(),
 };
 let map = null;
 let tiles = null;
@@ -77,7 +78,6 @@ function createCard(row) {
   body.append(node("p", dateSummary(row.availability)));
   for (const restriction of row.availability.restrictions_text) body.append(node("p", restriction));
   body.append(node("p", `${row.source_name} · Posted ${singaporeDate(new Date(row.posted_at))}`, "muted"));
-  if (row.precision === "building") body.append(node("p", "Approximate building location", "muted"));
   if (row.image_url) {
     const url = new URL(row.image_url, location.origin);
     if (url.origin === location.origin && url.pathname.startsWith("/media/")) {
@@ -97,7 +97,6 @@ function createCard(row) {
     for (const term of row.terms) terms.append(node("li", term));
     details.append(terms);
   }
-  details.append(node("p", "Time, holiday, stock and eligibility restrictions may still apply.", "muted"));
   const links = node("div", null, "source-links");
   const telegram = externalLink("Telegram post ↗", row.telegram_url);
   if (telegram) links.append(telegram);
@@ -177,15 +176,14 @@ function createGroup(key) {
   button.append(number, label, count, disclosure);
   heading.append(button);
   const context = node("p", null, "group-context");
-  const approximation = node("p", "Includes approximate building locations", "group-approximation");
   const deals = node("div", null, "group-deals");
   deals.id = `location-deals-${groupSerial}`;
   deals.setAttribute("role", "region");
   deals.setAttribute("aria-labelledby", button.id);
   button.setAttribute("aria-controls", deals.id);
   button.addEventListener("click", () => setExpanded(key, state.collapsed.has(key)));
-  section.append(heading, context, approximation, deals);
-  return { section, heading, button, number, label, count, disclosure, context, approximation, deals };
+  section.append(heading, context, deals);
+  return { section, heading, button, number, label, count, disclosure, context, deals };
 }
 
 // Programmatic teardown preserves intent; only a user dismissal closes it.
@@ -380,7 +378,6 @@ function renderViewport() {
     item.label.textContent = group.label;
     item.count.textContent = dealCount(group.rows.length);
     item.button.setAttribute("aria-label", `Location ${group.number}: ${group.label}, ${dealCount(group.rows.length)}`);
-    item.approximation.hidden = !group.rows.some(row => row.precision === "building");
     placeNode(el["deal-list"], item.section, index++);
     group.rows.forEach((row, rowIndex) => {
       let card = state.cards.get(row.deal_id);
@@ -421,11 +418,11 @@ function renderViewport() {
   if (!total) {
     el.status.textContent = state.data.processing_summary.published_rows === 0
       ? "No mapped locations yet."
-      : "No deals match this date/filter. Try another reference date or turn off the validity filter.";
+      : "No matching deals.";
   } else if (!count) {
-    el.status.textContent = "No deals in this area. Move the map or show all locations.";
+    el.status.textContent = "No matching deals in this area.";
   } else {
-    el.status.textContent = `${count} of ${total} matching rows · ${state.data.filters.as_of}. Each row is one offer at one location.`;
+    el.status.textContent = "";
   }
 }
 
@@ -468,6 +465,8 @@ function initMap() {
 }
 
 async function load(initial = false) {
+  const offersPanel = document.querySelector(".offers");
+  const panelScroll = offersPanel.scrollTop;
   const request = ++state.request;
   state.controller?.abort();
   state.controller = new AbortController();
@@ -480,13 +479,12 @@ async function load(initial = false) {
   el["deal-list"].setAttribute("aria-busy", "true");
   el.count.textContent = "Offers in this view";
   el.status.textContent = "Loading offers…";
-  el["dataset-meta"].textContent = "";
-  el["sample-note"].hidden = true;
   const params = new URLSearchParams();
   if (!initial && el["as-of"].value) {
     params.set("as_of", el["as-of"].value);
     params.set("validity", el["valid-only"].checked ? "valid" : "all");
   }
+  if (state.meal) params.set("meal", state.meal);
   try {
     const response = await fetch(`/api/deals${params.size ? `?${params}` : ""}`, { signal: state.controller.signal });
     if (!response.ok) throw new Error(response.status === 503 ? "Dataset unavailable. Prepare a valid published dataset and restart the server, then retry." : "Could not load offers. Check the server and try again.");
@@ -494,24 +492,18 @@ async function load(initial = false) {
     if (request !== state.request) return;
     state.data = data;
     state.rows = data.deals;
+    state.meal = data.filters.meal;
     const loadedKeys = new Set(state.rows.map(coordinateKey));
     for (const key of state.collapsed) if (!loadedKeys.has(key)) state.collapsed.delete(key);
     state.loading = false;
     el["as-of"].value = data.filters.as_of;
     el["valid-only"].checked = data.filters.validity === "valid";
-    for (const id of ["as-of", "valid-only", "today"]) el[id].disabled = false;
+    el["meal-filter"].value = data.filters.meal || "";
+    for (const id of ["meal-filter", "as-of", "valid-only", "today"]) el[id].disabled = false;
     el["show-all"].disabled = !map || !state.rows.length;
-    const updated = new Intl.DateTimeFormat("en-SG", { timeZone: "Asia/Singapore", dateStyle: "medium", timeStyle: "short" }).format(new Date(data.generated_at));
-    el["dataset-meta"].textContent = `Posted within ${data.filters.max_age_days} days · Source posts: ${data.source_date_range.join(" – ")} · Updated: ${updated} SGT`;
-    el["sample-note"].hidden = data.dataset_complete;
-    el["sample-note"].textContent = "Selected historical sample — coverage is incomplete. Past dates use saved posts, including later edits.";
-    el["location-attribution"].replaceChildren();
-    for (const attribution of data.attribution) {
-      const link = externalLink(attribution.text, attribution.url);
-      if (link) el["location-attribution"].append(node("span", "Location data: "), link, node("span", ` (${attribution.licence}) `));
-    }
     if (!state.fitted) { state.fitted = true; fitRows(); }
     renderViewport();
+    offersPanel.scrollTop = panelScroll;
   } catch (error) {
     if (request !== state.request || error.name === "AbortError") return;
     state.loading = false;
@@ -530,18 +522,28 @@ async function load(initial = false) {
 }
 
 el.filters.addEventListener("submit", event => { event.preventDefault(); if (el.filters.reportValidity()) load(); });
+el["meal-filter"].addEventListener("change", () => { state.meal = el["meal-filter"].value || null; load(); });
 el["as-of"].addEventListener("change", () => { if (el.filters.reportValidity()) load(); });
 el["valid-only"].addEventListener("change", () => { if (el.filters.reportValidity()) load(); });
 el.today.addEventListener("click", () => { el["as-of"].value = singaporeDate(); load(); });
 el.retry.addEventListener("click", () => load(!el["as-of"].value));
 el["show-all"].addEventListener("click", fitRows);
 window.addEventListener("welcome:location", event => {
-  const { latitude, longitude } = event.detail ?? {};
-  if (!map || !Number.isFinite(latitude) || !Number.isFinite(longitude)
+  const { latitude, longitude, meal, asOf, locationLabel } = event.detail ?? {};
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)
       || Math.abs(latitude) > 90 || Math.abs(longitude) > 180) return;
-  // Preserve the user's location if the initial dataset request is still loading.
+  if (!["drink", "breakfast", "lunch", "dinner", "snack"].includes(meal)
+      || !/^\d{4}-\d{2}-\d{2}$/.test(asOf)) return;
+  state.meal = meal;
+  state.locationLabel = typeof locationLabel === "string"
+    ? locationLabel.replace(/^Near\s+/i, "") : "Selected area";
+  el["selected-area"].textContent = `Near ${state.locationLabel}`;
+  el["selected-area"].hidden = false;
+  el["as-of"].value = asOf;
+  el["valid-only"].checked = true;
   state.fitted = true;
-  map.setView([latitude, longitude], 14, { animate: false });
+  if (map) map.setView([latitude, longitude], 14, { animate: false });
+  load();
 });
 el["retry-map"].addEventListener("click", () => {
   if (!map) { location.reload(); return; }

@@ -3,6 +3,7 @@
 from datetime import date
 from typing import Literal
 
+from .meal_models import MealType
 from .models import Contract, Envelope
 from .public_models import Attribution, DealFields
 
@@ -27,6 +28,7 @@ class DealResponse(DealFields):
 class Filters(Contract):
     as_of: date
     validity: Validity
+    meal: MealType | None
     max_age_days: int
 
 

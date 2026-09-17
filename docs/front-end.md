@@ -32,7 +32,7 @@ reverse address lookup fails. Basemap tiles also require network access.
 | Welcome dialog | Opens on every page load; close it to browse directly or reopen it with **Find deals**. |
 | Nearby | Requests device coordinates after a user action, optionally resolves an address, and centers the map when **Show map** is submitted. |
 | Location search | Suggests Singapore postal codes, buildings, and addresses; a submitted selection centers the map. |
-| Meal and day choices in the dialog | Submit `meal`, `as_of`, and `validity=valid` to the deals API and synchronize the visible main controls. |
+| Meal and day choices in the dialog | Submit `meal` (omitted for All meals) and `as_of`, preserving the main validity toggle, to the deals API and synchronize the visible main controls. |
 | Map and list | Pan/zoom filters downloaded rows to visible bounds; each exact coordinate has one numbered pin and expandable list group. |
 | Selection and shared locations | Shared pins reveal their group; sole-deal pins and deal cards open individual details. Count badges replace the overlap chooser. Active location and selected offer have separate cues. |
 | Main filters | Meal, reference date, **Today**, and **Valid on selected date** request backend filtering. **Today** uses Singapore time. |
@@ -58,7 +58,9 @@ show no results for today's date.
 
 `app.js` initializes the map at `[1.3521, 103.8198]`, zoom 11, and requests
 `/api/deals` without filters. Independently, `welcome.js` opens the dialog and
-focuses the selected meal. Opening the dialog alone does not request device
+focuses **All meals** by default. The dialog defaults to **31 August 2026**
+for this historical MVP snapshot; validity filtering starts off and location
+submission does not enable it. Opening the dialog alone does not request device
 location. The map and deals load behind it.
 
 The first successful deals response supplies the effective reference date and
@@ -71,7 +73,7 @@ explicitly fits all currently matching rows.
 Submitting a location dispatches `welcome:location` on `window` with coordinates,
 meal, date, and location label, then closes the dialog. `app.js` validates those
 values, sets `state.fitted = true`, centers the map at zoom 14, requests matching
-deals with `validity=valid`, updates the main controls, and shows the selected
+deals with the existing validity toggle, updates the main controls, and shows the selected
 location once below them. The fitted flag prevents a late initial response from
 overwriting the chosen view.
 

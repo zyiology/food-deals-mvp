@@ -24,7 +24,6 @@ const searchCache = new Map();
 
 const todayParts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Singapore", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
 const today = ["year", "month", "day"].map(type => todayParts.find(part => part.type === type).value).join("-");
-dateInput.value = today;
 
 function addDays(value, days) {
   const [year, month, day] = value.split("-").map(Number);
@@ -312,7 +311,7 @@ form.addEventListener("submit", event => {
 function openWelcome() {
   const activeMeal = document.getElementById("meal-filter").value;
   const activeDate = document.getElementById("as-of").value;
-  if (activeMeal) {
+  if (activeMeal !== undefined) {
     form.querySelector(`[name="meal"][value="${activeMeal}"]`).checked = true;
   }
   if (activeDate) {

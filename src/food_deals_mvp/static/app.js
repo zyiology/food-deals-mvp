@@ -532,15 +532,14 @@ window.addEventListener("welcome:location", event => {
   const { latitude, longitude, meal, asOf, locationLabel } = event.detail ?? {};
   if (!Number.isFinite(latitude) || !Number.isFinite(longitude)
       || Math.abs(latitude) > 90 || Math.abs(longitude) > 180) return;
-  if (!["drink", "breakfast", "lunch", "dinner", "snack"].includes(meal)
+  if (!["", "drink", "breakfast", "lunch", "dinner", "snack"].includes(meal)
       || !/^\d{4}-\d{2}-\d{2}$/.test(asOf)) return;
-  state.meal = meal;
+  state.meal = meal || null;
   state.locationLabel = typeof locationLabel === "string"
     ? locationLabel.replace(/^Near\s+/i, "") : "Selected area";
   el["selected-area"].textContent = `Near ${state.locationLabel}`;
   el["selected-area"].hidden = false;
   el["as-of"].value = asOf;
-  el["valid-only"].checked = true;
   state.fitted = true;
   if (map) map.setView([latitude, longitude], 14, { animate: false });
   load();

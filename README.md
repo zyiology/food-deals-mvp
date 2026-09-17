@@ -140,9 +140,10 @@ building, or address, then select **Show map** to center on it. **Nearby** reque
 your device location; **Show map** with an empty address uses that location.
 Location access is requested after these actions, not simply by opening the page.
 You can also close the dialog to browse directly and reopen it with **Find deals**.
-Submitting the dialog sends its meal and day choices to the deals API, enables
-valid-only filtering, updates the visible main controls, and centers the selected
-location. The selected location appears once below the main controls.
+The MVP defaults to **All meals**, **31 August 2026** (the snapshot reference
+date), and **Valid on selected date** unchecked. Submitting the dialog sends its
+meal and day choices to the deals API, preserves the validity toggle, updates
+the visible main controls, and centers the selected location. The selected location appears once below the main controls.
 
 The map fits all results on the first successful load unless a submitted location
 has already positioned it. Submitting a location centers at zoom 14; nearby offers

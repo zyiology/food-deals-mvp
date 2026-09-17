@@ -206,6 +206,8 @@ def run():
         popup_page = context.new_page()
         popup_page.set_default_timeout(5000)
         popup_page.goto(ORIGIN)
+        assert popup_page.locator('[name="meal"][value=""]').is_checked()
+        assert popup_page.locator("#welcome-date").input_value() == "2026-08-31"
         popup_page.locator('[name="day"][value="custom"]').check()
         popup_page.locator("#welcome-date").fill("2026-08-26")
         popup_page.locator("#welcome-area").fill("123456")
@@ -215,19 +217,19 @@ def run():
             "document.querySelectorAll('.deal-card').length === 1 && "
             "document.querySelector('#deal-list').getAttribute('aria-busy') === 'false'"
         )
-        assert "meal=lunch" in api_requests[-1]
+        assert "meal=" not in api_requests[-1]
         assert "as_of=2026-08-26" in api_requests[-1]
-        assert "validity=valid" in api_requests[-1]
+        assert "validity=all" in api_requests[-1]
         assert popup_page.locator("#as-of").input_value() == "2026-08-26"
-        assert popup_page.locator("#valid-only").is_checked()
-        assert popup_page.locator("#meal-filter").input_value() == "lunch"
+        assert not popup_page.locator("#valid-only").is_checked()
+        assert popup_page.locator("#meal-filter").input_value() == ""
         expect(popup_page.locator("#open-welcome")).to_have_text("Find deals")
         expect(popup_page.locator("#selected-area")).to_have_text("Near Venue 0")
         assert popup_page.evaluate(
             "testMap.getCenter().distanceTo([1.43, 103.95]) < 1"
         )
         popup_page.locator("#open-welcome").click()
-        assert popup_page.locator('[name="meal"][value="lunch"]').is_checked()
+        assert popup_page.locator('[name="meal"][value=""]').is_checked()
         assert popup_page.locator('[name="day"][value="custom"]').is_checked()
         assert popup_page.locator("#welcome-date").input_value() == "2026-08-26"
         popup_page.close()

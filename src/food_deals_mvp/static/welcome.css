@@ -8,7 +8,7 @@
 .welcome-close { position: absolute; top: 8px; right: 8px; display: grid; place-items: center; padding: 0; width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; font-size: 1.65rem !important; line-height: 1; }
 .welcome-close:hover { background: #f2ebde; }
 .welcome-fieldset { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
-.welcome-meals { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.welcome-meals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .welcome-meal { position: relative; cursor: pointer; display: flex; align-items: center; flex-direction: column; gap: 9px; padding: 17px 4px; border: 1px solid #dedfd2; border-radius: 12px; background: #fffefa; font-size: .875rem; font-weight: 600; }
 .welcome-meal input, .welcome-day input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
 .welcome-meal:has(:focus-visible), .welcome-day:has(:focus-visible) { outline: 3px solid var(--orange); outline-offset: 3px; }
@@ -45,7 +45,6 @@ body:has(#welcome[open]) { overflow: hidden; }
   .welcome { padding: 54px 20px 24px; border-radius: 16px; }
   .welcome-meals { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .welcome-meal { grid-column: span 2; padding: 12px 4px; }
-  .welcome-meal:nth-last-child(-n+2) { grid-column: span 3; }
   .welcome-days { gap: 6px; }
   .welcome-open { margin-top: 12px; }
 }

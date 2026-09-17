@@ -49,9 +49,10 @@
         <fieldset class="welcome-fieldset">
           <legend class="welcome-sr-only">Meal</legend>
           <div class="welcome-meals">
+            <label class="welcome-meal"><input type="radio" name="meal" value="" checked><span class="meal-face" aria-hidden="true">🍽️</span><span>All meals</span></label>
             <label class="welcome-meal"><input type="radio" name="meal" value="drink"><span class="meal-face" aria-hidden="true">🧋</span><span>Drink</span></label>
             <label class="welcome-meal"><input type="radio" name="meal" value="breakfast"><span class="meal-face" aria-hidden="true">🍳</span><span>Breakfast</span></label>
-            <label class="welcome-meal"><input type="radio" name="meal" value="lunch" checked><span class="meal-face" aria-hidden="true">🍜</span><span>Lunch</span></label>
+            <label class="welcome-meal"><input type="radio" name="meal" value="lunch"><span class="meal-face" aria-hidden="true">🍜</span><span>Lunch</span></label>
             <label class="welcome-meal"><input type="radio" name="meal" value="dinner"><span class="meal-face" aria-hidden="true">🍛</span><span>Dinner</span></label>
             <label class="welcome-meal"><input type="radio" name="meal" value="snack"><span class="meal-face" aria-hidden="true">🍟</span><span>Snack</span></label>
           </div>
@@ -59,11 +60,11 @@
         <fieldset class="welcome-fieldset">
           <legend class="welcome-sr-only">Day</legend>
           <div class="welcome-days">
-            <label class="welcome-day"><input type="radio" name="day" value="today" checked>Today</label>
+            <label class="welcome-day"><input type="radio" name="day" value="today">Today</label>
             <label class="welcome-day"><input type="radio" name="day" value="tomorrow">Tomorrow</label>
-            <label class="welcome-day"><input type="radio" name="day" value="custom">Pick a day</label>
+            <label class="welcome-day"><input type="radio" name="day" value="custom" checked>Pick a day</label>
           </div>
-          <div id="welcome-custom-day" class="welcome-custom-day" hidden><label class="welcome-sr-only" for="welcome-date">Date</label><input id="welcome-date" type="date" disabled></div>
+          <div id="welcome-custom-day" class="welcome-custom-day"><label class="welcome-sr-only" for="welcome-date">Date</label><input id="welcome-date" type="date" value="2026-08-31" required></div>
         </fieldset>
         <div class="welcome-location">
           <label class="welcome-sr-only" for="welcome-area">Postal code, building, or address</label>
